@@ -38,7 +38,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-transparent text-slate-900 overflow-x-hidden">
-      {/* Hero Section */}
+      {/* Hero Section - Updated Deployment Trigger */}
       <div className="relative min-h-[80vh] flex flex-col">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center opacity-60"></div>
