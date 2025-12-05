@@ -41,7 +41,7 @@ export default function RecipeFilter({ categories }: RecipeFilterProps) {
     }
 
     return (
-        <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 h-fit sticky top-24">
+        <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto custom-scrollbar">
             <div className="flex items-center gap-2 mb-6 pb-4 border-b border-slate-100">
                 <FiFilter className="text-primary w-5 h-5" />
                 <h3 className="font-bold text-lg text-slate-900">Filteri</h3>
@@ -68,33 +68,28 @@ export default function RecipeFilter({ categories }: RecipeFilterProps) {
                         <FiGrid className="w-4 h-4" /> Kategorija
                     </label>
                     <div className="space-y-2">
-                        <label className="flex items-center gap-3 cursor-pointer group">
-                            <input
-                                type="radio"
-                                name="category"
-                                value=""
-                                checked={selectedCategory === ''}
-                                onChange={() => updateFilters('category', '')}
-                                className="w-4 h-4 text-primary border-slate-300 focus:ring-primary"
-                            />
-                            <span className={`text-sm group-hover:text-primary transition-colors ${selectedCategory === '' ? 'font-bold text-slate-900' : 'text-slate-600'}`}>
-                                Sve kategorije
-                            </span>
-                        </label>
+                        <button
+                            onClick={() => updateFilters('category', '')}
+                            className={`w-full text-left px-4 py-2 rounded-xl text-sm transition-all flex items-center justify-between group ${selectedCategory === ''
+                                ? 'bg-primary text-white shadow-md shadow-primary/20 font-medium'
+                                : 'hover:bg-slate-50 text-slate-600'
+                                }`}
+                        >
+                            <span>Sve kategorije</span>
+                            {selectedCategory === '' && <span className="bg-white/20 px-2 py-0.5 rounded-full text-xs">✓</span>}
+                        </button>
                         {categories.map((cat) => (
-                            <label key={cat.id} className="flex items-center gap-3 cursor-pointer group">
-                                <input
-                                    type="radio"
-                                    name="category"
-                                    value={cat.id}
-                                    checked={selectedCategory === cat.id}
-                                    onChange={() => updateFilters('category', cat.id)}
-                                    className="w-4 h-4 text-primary border-slate-300 focus:ring-primary"
-                                />
-                                <span className={`text-sm group-hover:text-primary transition-colors ${selectedCategory === cat.id ? 'font-bold text-slate-900' : 'text-slate-600'}`}>
-                                    {cat.name}
-                                </span>
-                            </label>
+                            <button
+                                key={cat.id}
+                                onClick={() => updateFilters('category', cat.id)}
+                                className={`w-full text-left px-4 py-2 rounded-xl text-sm transition-all flex items-center justify-between group ${selectedCategory === cat.id
+                                    ? 'bg-primary text-white shadow-md shadow-primary/20 font-medium'
+                                    : 'hover:bg-slate-50 text-slate-600'
+                                    }`}
+                            >
+                                <span>{cat.name}</span>
+                                {selectedCategory === cat.id && <span className="bg-white/20 px-2 py-0.5 rounded-full text-xs">✓</span>}
+                            </button>
                         ))}
                     </div>
                 </div>
