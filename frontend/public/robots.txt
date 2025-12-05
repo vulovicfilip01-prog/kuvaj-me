@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /auth/
+Disallow: /search/results
+
+# Sitemap will be added when domain is configured
+# Sitemap: https://kuvaj.me/sitemap.xml

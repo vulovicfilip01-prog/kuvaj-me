@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #6B7E4F;
+  --color-primary-light: #8B9D6F;
+  --color-primary-dark: #4A5E37;
+  --color-accent: #D4C5A9;
+  --color-accent-light: #E8DCC4;
+  --color-accent-dark: #B8A88A;
+
+  --font-heading: 'Outfit', sans-serif;
+  --font-sans: 'Inter', sans-serif;
+}
+
+body {
+  background-color: #F2E6D9;
+  /* Solid beige */
+  color: #1e293b;
+  /* slate-800 for text */
+  font-family: 'Inter', sans-serif;
+}
+
+.heading-font {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Utility Classes */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.4);
+  /* More opaque white for light theme */
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.glass-button {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(107, 126, 79, 0.2);
+  /* Primary color border low opacity */
+  color: #4A5E37;
+  /* Primary dark text */
+}
+
+@media print {
+  /* Hide UI elements */
+  nav, footer, button, .no-print {
+    display: none !important;
+  }
+
+  /* Reset layout for print */
+  body {
+    background: white;
+    color: black;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Typography adjustments */
+  h1 { font-size: 24pt !important; }
+  p, li { font-size: 12pt !important; }
+  
+  /* Ensure images don't break across pages */
+  img {
+    break-inside: avoid;
+    max-width: 300px !important; /* Limit image size to save ink/space */
+  }
+}
+.text-gradient {
+  color: #6B7E4F;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.8s ease-out;
+}
+
+@keyframes heart-pop {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.animate-heart-pop {
+  animation: heart-pop 0.3s ease-in-out;
+}
