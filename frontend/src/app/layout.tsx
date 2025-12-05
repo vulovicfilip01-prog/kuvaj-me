@@ -55,11 +55,8 @@ export const metadata: Metadata = {
 };
 
 import { GoogleAnalytics } from '@next/third-parties/google'
-import dynamic from 'next/dynamic'
+import WelcomeModal from '@/components/WelcomeModalClient'
 
-const WelcomeModal = dynamic(() => import('@/components/WelcomeModal'), {
-  ssr: false
-})
 
 export default function RootLayout({
   children,
