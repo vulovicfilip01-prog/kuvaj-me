@@ -41,8 +41,8 @@ export default async function Home() {
       {/* Hero Section - Updated Deployment Trigger */}
       <div className="relative min-h-[80vh] flex flex-col">
         {/* Background Effects */}
-        <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center opacity-60"></div>
-        <div className="absolute inset-0 bg-transparent"></div>
+        <div className="absolute inset-0 bg-[url('/hero-bg-beige.png')] bg-cover bg-center opacity-90"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#F2E6D9]"></div>
 
         {/* Navbar */}
         <Navbar transparent />
