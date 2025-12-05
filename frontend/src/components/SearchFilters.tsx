@@ -1,5 +1,7 @@
 'use client';
 
+import { FiFilter } from 'react-icons/fi';
+
 interface SearchFiltersProps {
     categories: string[];
     selectedCategory: string;
@@ -27,7 +29,7 @@ export default function SearchFilters({
         <div className="glass-panel rounded-3xl p-6 space-y-6 sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto custom-scrollbar">
             <div className="flex justify-between items-center">
                 <h3 className="text-xl font-bold heading-font flex items-center gap-2 text-slate-900">
-                    🎯 Filteri
+                    <FiFilter className="text-primary w-6 h-6" /> Filteri
                 </h3>
                 {hasActiveFilters && (
                     <button
