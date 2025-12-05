@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import VegetableIcon from '@/components/VegetableIcon';
 import MilkIcon from '@/components/MilkIcon';
-import CheeseIcon from '@/components/CheeseIcon';
+import WheatIcon from '@/components/WheatIcon';
 
 interface IngredientSelectorProps {
     selectedIngredients: string[];
@@ -40,12 +40,12 @@ export default function IngredientSelector({
         <div className="w-full max-w-2xl mx-auto glass-panel rounded-3xl p-8 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary-dark"></div>
 
-            <h2 className="text-3xl font-bold text-slate-900 mb-4 text-center heading-font">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4 text-center heading-font flex items-center justify-center gap-3 flex-wrap">
                 Šta imaš u frižideru?
-                <div className="flex items-center gap-2 ml-3">
-                    <VegetableIcon className="w-8 h-8" />
-                    <MilkIcon className="w-8 h-8" />
-                    <CheeseIcon className="w-8 h-8" />
+                <div className="inline-flex items-center gap-2">
+                    <VegetableIcon className="w-12 h-12" />
+                    <MilkIcon className="w-12 h-12" />
+                    <WheatIcon className="w-12 h-12" />
                 </div>
             </h2>
             <p className="text-slate-600 text-center mb-8 text-lg">
