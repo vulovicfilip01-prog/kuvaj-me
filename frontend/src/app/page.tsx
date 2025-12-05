@@ -41,7 +41,7 @@ export default async function Home() {
       {/* Hero Section */}
       <div className="relative min-h-[80vh] flex flex-col">
         {/* Background Effects */}
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556910103-1c02745a30bf?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
         <div className="absolute inset-0 bg-transparent"></div>
 
         {/* Navbar */}
@@ -78,12 +78,6 @@ export default async function Home() {
                 className="px-8 py-4 bg-white text-slate-700 hover:text-primary border border-slate-200 hover:border-primary/30 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center gap-2"
               >
                 <span>🔍</span> Istraži recepte
-              </Link>
-              <Link
-                href="/recipes/new"
-                className="px-8 py-4 bg-white text-slate-700 hover:text-primary border border-slate-200 hover:border-primary/30 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center gap-2"
-              >
-                <span>+</span> Dodaj svoj recept
               </Link>
             </div>
 
