@@ -7,11 +7,11 @@ interface SearchSortProps {
 
 export default function SearchSort({ sortBy, onSortChange }: SearchSortProps) {
     const sortOptions = [
-        { value: 'relevance', label: '🎯 Najrelevantnije', icon: '⭐' },
-        { value: 'time-asc', label: '⏱️ Najbrže prvo', icon: '⚡' },
-        { value: 'time-desc', label: '⏱️ Najduže prvo', icon: '🐢' },
-        { value: 'name-asc', label: '🔤 A-Z', icon: '📝' },
-        { value: 'name-desc', label: '🔤 Z-A', icon: '📝' },
+        { value: 'relevance', label: 'Najrelevantnije', icon: '⭐' },
+        { value: 'time-asc', label: 'Najbrže prvo', icon: '⚡' },
+        { value: 'time-desc', label: 'Najduže prvo', icon: '🐢' },
+        { value: 'name-asc', label: 'A-Z', icon: '📝' },
+        { value: 'name-desc', label: 'Z-A', icon: '📝' },
     ];
 
     return (

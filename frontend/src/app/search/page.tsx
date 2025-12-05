@@ -7,6 +7,7 @@ import SearchFilters from '@/components/SearchFilters';
 import SearchSort from '@/components/SearchSort';
 import RecipeGrid from '@/components/RecipeGrid';
 import ChefHatIcon from '@/components/ChefHatIcon';
+import ForkKnifeIcon from '@/components/ForkKnifeIcon';
 import Link from 'next/link';
 
 export default function SearchPage() {
@@ -164,7 +165,7 @@ export default function SearchPage() {
                 {searched && (
                     <div className="animate-fadeIn" style={{ animationDelay: '0.2s' }}>
                         <h2 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 heading-font">
-                            {filteredRecipes.length > 0 ? <><span className="text-primary">🍽️</span> Recepti koje možeš da napraviš</> : '😕 Nema rezultata'}
+                            {filteredRecipes.length > 0 ? <><ForkKnifeIcon className="w-10 h-10" /> Recepti koje možeš da napraviš</> : '😕 Nema rezultata'}
                         </h2>
 
                         {filteredRecipes.length > 0 ? (
