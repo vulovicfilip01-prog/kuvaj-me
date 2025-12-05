@@ -3,6 +3,8 @@ import Image from 'next/image'
 import { createClient } from '@/utils/supabase/server'
 import ChefHatIcon from '@/components/ChefHatIcon'
 import HeartIcon from '@/components/HeartIcon'
+import CollectionIcon from '@/components/CollectionIcon'
+import ListIcon from '@/components/ListIcon'
 import SearchBar from '@/components/SearchBar'
 import MobileSearchButton from '@/components/MobileSearchButton'
 import { FiUser, FiSettings, FiLogOut, FiGrid } from 'react-icons/fi'
@@ -63,14 +65,14 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
                             href="/collections"
                             className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2"
                         >
-                            <span className="text-xl">📚</span>
+                            <CollectionIcon className="w-8 h-8" />
                             <span className="hidden lg:inline">Kolekcije</span>
                         </Link>
                         <Link
                             href="/shopping-list"
                             className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2"
                         >
-                            <span className="text-xl">🛒</span>
+                            <ListIcon className="w-8 h-8" />
                             <span className="hidden lg:inline">Lista</span>
                         </Link>
 
