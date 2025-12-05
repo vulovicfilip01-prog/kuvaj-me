@@ -2,9 +2,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { createClient } from '@/utils/supabase/server'
 import ChefHatIcon from '@/components/ChefHatIcon'
+import HeartIcon from '@/components/HeartIcon'
 import SearchBar from '@/components/SearchBar'
 import MobileSearchButton from '@/components/MobileSearchButton'
-import { HiHeart } from 'react-icons/hi'
 import { FiUser, FiSettings, FiLogOut, FiGrid } from 'react-icons/fi'
 
 interface NavbarProps {
@@ -56,7 +56,7 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
                             href="/favorites"
                             className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2"
                         >
-                            <HiHeart className="w-5 h-5 text-red-500" />
+                            <HeartIcon className="w-8 h-8" />
                             <span className="hidden lg:inline">Favoriti</span>
                         </Link>
                         <Link
