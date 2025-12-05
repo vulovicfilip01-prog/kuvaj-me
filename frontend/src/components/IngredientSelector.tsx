@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import VegetableIcon from '@/components/VegetableIcon';
-import MeatIcon from '@/components/MeatIcon';
+import MilkIcon from '@/components/MilkIcon';
 import CheeseIcon from '@/components/CheeseIcon';
 
 interface IngredientSelectorProps {
@@ -44,7 +44,7 @@ export default function IngredientSelector({
                 Šta imaš u frižideru?
                 <div className="flex items-center gap-2 ml-3">
                     <VegetableIcon className="w-8 h-8" />
-                    <MeatIcon className="w-8 h-8" />
+                    <MilkIcon className="w-8 h-8" />
                     <CheeseIcon className="w-8 h-8" />
                 </div>
             </h2>
