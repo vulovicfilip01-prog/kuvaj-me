@@ -4,6 +4,7 @@ import { useState } from 'react';
 import VegetableIcon from '@/components/VegetableIcon';
 import MilkIcon from '@/components/MilkIcon';
 import WheatIcon from '@/components/WheatIcon';
+import SearchIcon from '@/components/SearchIcon';
 
 interface IngredientSelectorProps {
     selectedIngredients: string[];
@@ -100,14 +101,17 @@ export default function IngredientSelector({
             <button
                 onClick={onSearch}
                 disabled={selectedIngredients.length === 0 || loading}
-                className="w-full py-5 bg-gradient-to-r from-primary to-primary-dark text-white font-bold text-xl rounded-2xl hover:from-primary-dark hover:to-primary-dark transition-all shadow-xl shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1 active:translate-y-0 disabled:hover:translate-y-0"
+                className="w-full py-4 bg-[#E8DCC4] text-slate-800 hover:bg-[#D4C5A9] hover:text-slate-900 border border-[#D4C5A9] hover:border-[#B8A88A] rounded-2xl font-bold text-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:hover:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
             >
                 {loading ? (
                     <span className="flex items-center justify-center gap-2">
                         <span className="animate-spin">⏳</span> Tražim recepte...
                     </span>
                 ) : (
-                    '🔍 Pronađi recepte'
+                    <>
+                        <SearchIcon className="w-8 h-8" />
+                        Pronađi recepte
+                    </>
                 )}
             </button>
         </div>
