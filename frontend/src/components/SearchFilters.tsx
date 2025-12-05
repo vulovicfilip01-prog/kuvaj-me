@@ -24,7 +24,7 @@ export default function SearchFilters({
     const hasActiveFilters = selectedCategory !== 'sve' || difficulty !== 'sve' || maxTime < 300;
 
     return (
-        <div className="glass-panel rounded-3xl p-6 space-y-6">
+        <div className="glass-panel rounded-3xl p-6 space-y-6 sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto custom-scrollbar">
             <div className="flex justify-between items-center">
                 <h3 className="text-xl font-bold heading-font flex items-center gap-2 text-slate-900">
                     🎯 Filteri
