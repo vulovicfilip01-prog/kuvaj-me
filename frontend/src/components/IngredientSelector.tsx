@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import VegetableIcon from '@/components/VegetableIcon';
+import MeatIcon from '@/components/MeatIcon';
+import CheeseIcon from '@/components/CheeseIcon';
 
 interface IngredientSelectorProps {
     selectedIngredients: string[];
@@ -38,7 +41,12 @@ export default function IngredientSelector({
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary-dark"></div>
 
             <h2 className="text-3xl font-bold text-slate-900 mb-4 text-center heading-font">
-                Šta imaš u frižideru? <span className="text-4xl align-middle">🥦🥩🧀</span>
+                Šta imaš u frižideru?
+                <div className="flex items-center gap-2 ml-3">
+                    <VegetableIcon className="w-8 h-8" />
+                    <MeatIcon className="w-8 h-8" />
+                    <CheeseIcon className="w-8 h-8" />
+                </div>
             </h2>
             <p className="text-slate-600 text-center mb-8 text-lg">
                 Unesi sastojke koje imaš, a mi ćemo ti naći <span className="text-primary font-medium">savršen recept</span>!
