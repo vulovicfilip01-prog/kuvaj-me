@@ -5,6 +5,7 @@ import { getRecipes, getTrendingRecipes, getNewestRecipes } from './recipes/acti
 import RecipeGrid from '@/components/RecipeGrid';
 import RecipeCarousel from '@/components/RecipeCarousel';
 import ChefHatIcon from '@/components/ChefHatIcon';
+import SearchIcon from '@/components/SearchIcon';
 import { LuCookingPot, LuFlame, LuClock } from 'react-icons/lu';
 import { HiHeart } from 'react-icons/hi';
 import HeroImages from '@/components/HeroImages';
@@ -75,9 +76,10 @@ export default async function Home() {
               </Link>
               <Link
                 href="/explore"
-                className="px-8 py-4 bg-white text-slate-700 hover:text-primary border border-slate-200 hover:border-primary/30 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center gap-2"
+                className="px-8 py-4 bg-[#E8DCC4] text-slate-800 hover:bg-[#D4C5A9] hover:text-slate-900 border border-[#D4C5A9] hover:border-[#B8A88A] rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center gap-3"
               >
-                <span>🔍</span> Istraži recepte
+                <SearchIcon className="w-8 h-8" />
+                Istraži recepte
               </Link>
             </div>
 
