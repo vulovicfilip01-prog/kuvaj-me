@@ -67,7 +67,7 @@ export default async function Home() {
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start animate-slideUp" style={{ animationDelay: '0.4s' }}>
               <Link
-                href="/explore"
+                href="/search"
                 className="px-8 py-4 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary-dark text-white rounded-full font-bold text-lg shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all transform hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center gap-2"
               >
                 <LuCookingPot className="w-6 h-6" />
