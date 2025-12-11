@@ -22,6 +22,7 @@ export default function SearchPage() {
     const [selectedCategory, setSelectedCategory] = useState('sve');
     const [difficulty, setDifficulty] = useState('sve');
     const [maxTime, setMaxTime] = useState(300); // 300 = "neograničeno"
+    const [isPosno, setIsPosno] = useState(false);
 
     // Sort state
     const [sortBy, setSortBy] = useState('relevance');
@@ -57,6 +58,11 @@ export default function SearchPage() {
             filtered = filtered.filter(r => (r.prep_time + r.cook_time) <= maxTime);
         }
 
+        // Apply posno filter
+        if (isPosno) {
+            filtered = filtered.filter(r => r.is_posno);
+        }
+
         // Apply sorting
         switch (sortBy) {
             case 'time-asc':
@@ -78,7 +84,7 @@ export default function SearchPage() {
         }
 
         setFilteredRecipes(filtered);
-    }, [recipes, selectedCategory, difficulty, maxTime, sortBy]);
+    }, [recipes, selectedCategory, difficulty, maxTime, isPosno, sortBy]);
 
     const handleAddIngredient = (ingredient: string) => {
         if (!selectedIngredients.includes(ingredient)) {
@@ -107,6 +113,7 @@ export default function SearchPage() {
         setSelectedCategory('sve');
         setDifficulty('sve');
         setMaxTime(300);
+        setIsPosno(false);
         setSortBy('relevance');
     };
 
@@ -147,6 +154,8 @@ export default function SearchPage() {
                                 onDifficultyChange={setDifficulty}
                                 maxTime={maxTime}
                                 onMaxTimeChange={setMaxTime}
+                                isPosno={isPosno}
+                                onPosnoChange={setIsPosno}
                                 onClearFilters={handleClearFilters}
                             />
                         </div>

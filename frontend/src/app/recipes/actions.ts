@@ -113,10 +113,10 @@ export async function getCategories() {
   return { data, error: null }
 }
 
-export async function getRecipes() {
+export async function getRecipes(searchParams?: { posno?: string }) {
   const supabase = await createClient();
   
-  const { data: recipes, error } = await supabase
+  let query = supabase
     .from("recipes")
     .select(`
       *,
@@ -128,7 +128,13 @@ export async function getRecipes() {
       )
     `)
     .eq("is_public", true)
-    .order("created_at", { ascending: false });
+    
+  // Apply filters
+  if (searchParams?.posno === 'true') {
+    query = query.eq('is_posno', true)
+  }
+    
+  const { data: recipes, error } = await query.order("created_at", { ascending: false });
 
   if (error) {
     console.error("Error fetching recipes:", error);
@@ -559,7 +565,7 @@ export async function getNewestRecipes(limit: number = 8) {
   return recipes
 }
 
-export async function searchRecipes(query: string) {
+export async function searchRecipes(query: string, filters?: { posnoOnly?: boolean }) {
   const supabase = await createClient()
   
   if (!query || query.trim().length < 2) {
@@ -569,7 +575,7 @@ export async function searchRecipes(query: string) {
   const searchTerm = query.trim()
   
   // Search in title and description
-  const { data: recipes, error } = await supabase
+  let dbQuery = supabase
     .from('recipes')
     .select(`
       *,
@@ -579,7 +585,12 @@ export async function searchRecipes(query: string) {
     `)
     .eq('is_public', true)
     .or(`title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`)
-    .order('created_at', { ascending: false })
+
+  if (filters?.posnoOnly) {
+    dbQuery = dbQuery.eq('is_posno', true)
+  }
+
+  const { data: recipes, error } = await dbQuery.order('created_at', { ascending: false })
   
   if (error) {
     console.error('Error searching recipes:', error)
@@ -596,7 +607,7 @@ export async function searchRecipes(query: string) {
   
   if (ingredientRecipeIds.length > 0) {
     // Fetch recipes found via ingredients
-    const { data: ingredientRecipes } = await supabase
+    let ingredientQuery = supabase
       .from('recipes')
       .select(`
         *,
@@ -606,6 +617,12 @@ export async function searchRecipes(query: string) {
       `)
       .in('id', ingredientRecipeIds)
       .eq('is_public', true)
+
+    if (filters?.posnoOnly) {
+      ingredientQuery = ingredientQuery.eq('is_posno', true)
+    }
+    
+    const { data: ingredientRecipes } = await ingredientQuery
     
     // Combine and deduplicate results
     const allRecipes = [...recipes, ...(ingredientRecipes || [])]

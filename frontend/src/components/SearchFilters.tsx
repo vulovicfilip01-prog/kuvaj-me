@@ -10,6 +10,8 @@ interface SearchFiltersProps {
     onDifficultyChange: (difficulty: string) => void;
     maxTime: number;
     onMaxTimeChange: (time: number) => void;
+    isPosno: boolean;
+    onPosnoChange: (isPosno: boolean) => void;
     onClearFilters: () => void;
 }
 
@@ -21,9 +23,11 @@ export default function SearchFilters({
     onDifficultyChange,
     maxTime,
     onMaxTimeChange,
+    isPosno,
+    onPosnoChange,
     onClearFilters
 }: SearchFiltersProps) {
-    const hasActiveFilters = selectedCategory !== 'sve' || difficulty !== 'sve' || maxTime < 300;
+    const hasActiveFilters = selectedCategory !== 'sve' || difficulty !== 'sve' || maxTime < 300 || isPosno;
 
     return (
         <div className="glass-panel rounded-3xl p-6 space-y-6 sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto custom-scrollbar">
@@ -39,6 +43,23 @@ export default function SearchFilters({
                         Obriši sve
                     </button>
                 )}
+            </div>
+
+            {/* Posno Filter */}
+            <div className="flex items-center justify-between p-3 bg-green-50 rounded-xl border border-green-100">
+                <span className="font-bold text-green-800 flex items-center gap-2 text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-leaf-icon lucide-leaf"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /></svg>
+                    Samo posno
+                </span>
+                <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                        type="checkbox"
+                        checked={isPosno}
+                        onChange={(e) => onPosnoChange(e.target.checked)}
+                        className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-600"></div>
+                </label>
             </div>
 
             {/* Category Filter */}

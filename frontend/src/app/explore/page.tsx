@@ -2,7 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import RecipeGrid from '@/components/RecipeGrid'
 import RecipeFilter from '@/components/RecipeFilter'
 import Navbar from '@/components/Navbar'
-import { getCategories } from '../recipes/actions'
+import { getCategories, getRecipes } from '../recipes/actions'
 import { LuCookingPot } from 'react-icons/lu'
 
 import { Metadata } from 'next'
@@ -53,13 +53,23 @@ export async function generateMetadata({ searchParams }: ExplorePageProps): Prom
 export default async function ExplorePage({ searchParams }: ExplorePageProps) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
-    const { data: categories } = await getCategories()
 
     const params = await searchParams
     const category = params.category as string
     const difficulty = params.difficulty as string
     const time = params.time as string
     const sort = params.sort as string || 'newest'
+    const posno = params.posno as string
+
+    // Fetch recipes using server action (which now supports posno filter)
+    const { data: categories } = await getCategories()
+    const recipesData = await getRecipes({ posno })
+
+    // We use the result from getRecipes which already handles basic filtering including Posno
+    // But we need to apply other filters (category, difficulty, time, sort) manually or update getRecipes to handle all.
+    // Given the current architecture in this file, it builds a separate query manually in lines 65-100 which duplicates getRecipes logic.
+    // For consistency and to support the new filter without rewriting the whole page query logic immediately:
+    // I will Apply the POSNO filter to the LOCAL query object in this file as well.
 
     // Build query
     let query = supabase
@@ -71,6 +81,10 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
             favorite_recipes (count)
         `)
         .eq('is_public', true)
+
+    if (posno === 'true') {
+        query = query.eq('is_posno', true)
+    }
 
     if (category) {
         query = query.eq('category_id', category)

@@ -221,12 +221,12 @@ export default async function RecipeDetailPage({ params }: PageProps) {
                                 }`}>
                                 {recipe.difficulty === 'lako' ? '🟢 Lako' : recipe.difficulty === 'srednje' ? '🟡 Srednje' : '🔴 Teško'}
                             </span>
-                            {/* Posno Badge */
-                                recipe.is_posno && (
-                                    <span className="px-4 py-2 bg-green-500/90 text-white rounded-full text-sm font-bold shadow-lg backdrop-blur-md border border-green-400/50 flex items-center gap-1">
-                                        🍃 Posno
-                                    </span>
-                                )}
+                            {recipe.is_posno && (
+                                <span className="px-4 py-2 bg-green-500/90 text-white rounded-full text-sm font-bold shadow-lg backdrop-blur-md border border-green-400/50 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-leaf-icon lucide-leaf"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /></svg>
+                                    Posno
+                                </span>
+                            )}
                         </div>
                         <h1 className="text-5xl md:text-6xl font-bold mb-3 heading-font text-gradient">{recipe.title}</h1>
                         <p className="text-slate-200 text-xl max-w-3xl">{recipe.description}</p>
