@@ -51,6 +51,8 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
 
     // Image URL
     const [imageUrl, setImageUrl] = useState<string | null>(initialData?.image_url || null)
+    const [videoUrl, setVideoUrl] = useState<string>(initialData?.video_url || '')
+
 
     // Nutrition (optional)
     const [calories, setCalories] = useState(initialData?.calories?.toString() || '')
@@ -135,7 +137,9 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
             difficulty,
             is_public: isPublic,
             image_url: imageUrl,
+            video_url: videoUrl ? videoUrl : null,
             ingredients: validIngredients,
+
             steps: validSteps,
             // Nutrition (optional)
             calories: calories ? parseInt(calories) : null,
@@ -233,8 +237,25 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                             </div>
 
                             <ImageUpload onImageUploaded={setImageUrl} currentImageUrl={imageUrl} />
+
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">
+                                    Video Recept (YouTube / TikTok URL)
+                                </label>
+                                <input
+                                    type="url"
+                                    value={videoUrl}
+                                    onChange={(e) => setVideoUrl(e.target.value)}
+                                    className="w-full px-5 py-4 bg-white/50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all text-lg"
+                                    placeholder="https://www.youtube.com/watch?v=..."
+                                />
+                                <p className="text-xs text-slate-500 mt-2">
+                                    Nalepite link do videa. Podržani: YouTube, TikTok, Vimeo.
+                                </p>
+                            </div>
                         </div>
                     </div>
+
 
                     {/* Details Section */}
                     <div className="glass-panel rounded-3xl p-8">

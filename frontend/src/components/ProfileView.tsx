@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { FiMapPin, FiLink, FiEdit2, FiGrid, FiLayers, FiHeart, FiGlobe, FiInstagram, FiTwitter } from 'react-icons/fi'
 import RecipeCard from '@/components/RecipeCard'
 import CollectionCard from '@/components/CollectionCard'
+import FollowButton from './FollowButton'
+
 
 interface ProfileViewProps {
     profile: any
@@ -16,10 +18,16 @@ interface ProfileViewProps {
         collectionsCount: number
     }
     isOwner: boolean
+    isFollowing?: boolean
+    followCounts?: {
+        followers: number
+        following: number
+    }
 }
 
-export default function ProfileView({ profile, recipes, collections, stats, isOwner }: ProfileViewProps) {
+export default function ProfileView({ profile, recipes, collections, stats, isOwner, isFollowing = false, followCounts }: ProfileViewProps) {
     const [activeTab, setActiveTab] = useState<'recipes' | 'collections'>('recipes')
+
 
     const socialLinks = profile.social_links || {}
 
@@ -59,15 +67,21 @@ export default function ProfileView({ profile, recipes, collections, stats, isOw
                             <h1 className="text-4xl font-bold heading-font text-slate-900">
                                 {profile.display_name}
                             </h1>
-                            {isOwner && (
+                            {isOwner ? (
                                 <Link
                                     href="/profile/edit"
                                     className="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl text-sm font-bold hover:bg-slate-200 transition-colors"
                                 >
                                     Uredi profil
                                 </Link>
+                            ) : (
+                                <FollowButton
+                                    targetUserId={profile.id}
+                                    initialIsFollowing={isFollowing}
+                                />
                             )}
                         </div>
+
 
                         {profile.bio && (
                             <p className="text-slate-600 text-lg mb-6 max-w-2xl">
@@ -114,7 +128,20 @@ export default function ProfileView({ profile, recipes, collections, stats, isOw
                                 <span className="block text-2xl font-bold text-slate-900">{stats.collectionsCount}</span>
                                 <span className="text-sm text-slate-500 uppercase tracking-wide">Kolekcija</span>
                             </div>
+                            {followCounts && (
+                                <>
+                                    <div className="text-center md:text-left border-l border-slate-200 pl-8">
+                                        <span className="block text-2xl font-bold text-slate-900">{followCounts.followers}</span>
+                                        <span className="text-sm text-slate-500 uppercase tracking-wide">Pratilaca</span>
+                                    </div>
+                                    <div className="text-center md:text-left">
+                                        <span className="block text-2xl font-bold text-slate-900">{followCounts.following}</span>
+                                        <span className="text-sm text-slate-500 uppercase tracking-wide">Prati</span>
+                                    </div>
+                                </>
+                            )}
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -125,8 +152,8 @@ export default function ProfileView({ profile, recipes, collections, stats, isOw
                     <button
                         onClick={() => setActiveTab('recipes')}
                         className={`pb-4 text-lg font-bold flex items-center gap-2 transition-all relative ${activeTab === 'recipes'
-                                ? 'text-primary'
-                                : 'text-slate-500 hover:text-slate-800'
+                            ? 'text-primary'
+                            : 'text-slate-500 hover:text-slate-800'
                             }`}
                     >
                         <FiGrid className="w-5 h-5" />
@@ -142,8 +169,8 @@ export default function ProfileView({ profile, recipes, collections, stats, isOw
                     <button
                         onClick={() => setActiveTab('collections')}
                         className={`pb-4 text-lg font-bold flex items-center gap-2 transition-all relative ${activeTab === 'collections'
-                                ? 'text-primary'
-                                : 'text-slate-500 hover:text-slate-800'
+                            ? 'text-primary'
+                            : 'text-slate-500 hover:text-slate-800'
                             }`}
                     >
                         <FiLayers className="w-5 h-5" />

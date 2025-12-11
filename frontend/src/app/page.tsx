@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { createClient } from '@/utils/supabase/server';
-import { getRecipes, getTrendingRecipes, getNewestRecipes } from './recipes/actions';
+import { getRecipes, getTrendingRecipes, getNewestRecipes, getFeedRecipes } from './recipes/actions';
 import RecipeGrid from '@/components/RecipeGrid';
+
 import RecipeCarousel from '@/components/RecipeCarousel';
 import ChefHatIcon from '@/components/ChefHatIcon';
 import SearchIcon from '@/components/SearchIcon';
@@ -21,10 +22,12 @@ export default async function Home() {
   const { data: { user } } = await supabase.auth.getUser();
 
   // Fetch data in parallel
-  const [trendingRecipes, newestRecipes] = await Promise.all([
+  const [trendingRecipes, newestRecipes, feedRecipes] = await Promise.all([
     getTrendingRecipes(6),
-    getNewestRecipes(8)
+    getNewestRecipes(8),
+    user ? getFeedRecipes(8) : Promise.resolve([])
   ]);
+
 
   // Get favorite IDs for the current user
   let favoriteIds: string[] = [];
@@ -105,24 +108,49 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Trending Section */}
-      <section className="py-20 bg-white/50 backdrop-blur-sm">
-        <div className="container mx-auto px-6">
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <h2 className="text-4xl font-bold text-slate-900 mb-4 heading-font flex items-center gap-3">
-                <LuFlame className="text-orange-500" /> Popularno sada
-              </h2>
-              <p className="text-slate-600 text-lg">Recepti koje naša zajednica obožava ove nedelje</p>
+      {/* Feed Section - Only for logged in users with following */}
+      {feedRecipes.length > 0 && (
+        <section className="py-20 bg-orange-50/50">
+          <div className="container mx-auto px-6">
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <h2 className="text-4xl font-bold text-slate-900 mb-4 heading-font flex items-center gap-3">
+                  <span className="text-primary">👨‍🍳</span> Od kuvara koje pratite
+                </h2>
+                <p className="text-slate-600 text-lg">Novi recepti od vaših omiljenih autora</p>
+              </div>
             </div>
-            <Link href="/explore?sort=popular" className="hidden md:flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
-              Pogledaj sve <span className="text-xl">→</span>
-            </Link>
-          </div>
 
-          <RecipeCarousel recipes={trendingRecipes} />
-        </div>
-      </section>
+            <RecipeGrid
+              recipes={feedRecipes}
+              favoriteIds={favoriteIds}
+              isAuthenticated={!!user}
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Trending Section */}
+
+      {trendingRecipes.length > 0 && (
+        <section className="py-20 bg-white/50 backdrop-blur-sm">
+          <div className="container mx-auto px-6">
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <h2 className="text-4xl font-bold text-slate-900 mb-4 heading-font flex items-center gap-3">
+                  <LuFlame className="text-orange-500" /> Popularno sada
+                </h2>
+                <p className="text-slate-600 text-lg">Recepti koje naša zajednica obožava ove nedelje</p>
+              </div>
+              <Link href="/explore?sort=popular" className="hidden md:flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
+                Pogledaj sve <span className="text-xl">→</span>
+              </Link>
+            </div>
+
+            <RecipeCarousel recipes={trendingRecipes} />
+          </div>
+        </section>
+      )}
 
       {/* Newest Recipes Section */}
       <section className="py-20">

@@ -14,9 +14,11 @@ interface RecipeData {
   difficulty: 'lako' | 'srednje' | 'teško'
   is_public: boolean
   image_url: string | null
+  video_url?: string | null
   ingredients: Array<{ name: string; quantity: string }>
   steps: Array<{ instruction: string }>
 }
+
 
 export async function createRecipe(data: RecipeData) {
   const supabase = await createClient()
@@ -41,7 +43,10 @@ export async function createRecipe(data: RecipeData) {
       difficulty: data.difficulty,
       is_public: data.is_public,
       image_url: data.image_url,
+      video_url: data.video_url,
     })
+
+
     .select()
     .single()
 
@@ -388,8 +393,10 @@ export async function updateRecipe(id: string, data: RecipeData) {
       difficulty: data.difficulty,
       is_public: data.is_public,
       image_url: data.image_url,
+      video_url: data.video_url,
       updated_at: new Date().toISOString(),
     })
+
     .eq('id', id)
 
   if (recipeError) {
@@ -608,3 +615,45 @@ export async function searchRecipes(query: string) {
   
   return recipes
 }
+
+export async function getFeedRecipes(limit: number = 10) {
+  const supabase = await createClient()
+  
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
+  if (userError || !user) {
+    return []
+  }
+
+  // 1. Get list of followed user IDs
+  const { data: follows, error: followsError } = await supabase
+    .from('follows')
+    .select('following_id')
+    .eq('follower_id', user.id)
+
+  if (followsError || !follows || follows.length === 0) {
+    return []
+  }
+
+  const followingIds = follows.map(f => f.following_id)
+
+  // 2. Fetch recipes from these users
+  const { data: recipes, error: recipesError } = await supabase
+    .from('recipes')
+    .select(`
+      *,
+      profiles (display_name),
+      categories (name)
+    `)
+    .in('user_id', followingIds)
+    .eq('is_public', true)
+    .order('created_at', { ascending: false })
+    .limit(limit)
+
+  if (recipesError) {
+    console.error('Error fetching feed recipes:', recipesError)
+    return []
+  }
+
+  return recipes
+}
+

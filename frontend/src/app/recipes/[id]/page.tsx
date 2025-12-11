@@ -9,7 +9,6 @@ import FavoriteButton from '@/components/FavoriteButton';
 import RecipePlaceholder from '@/components/RecipePlaceholder';
 import RecipeImage from '@/components/RecipeImage';
 import DeleteRecipeButton from '@/components/DeleteRecipeButton';
-import AddToShoppingListButton from '@/components/AddToShoppingListButton';
 import ReviewsList from '@/components/ReviewsList';
 import StarRating from '@/components/StarRating';
 import ShareButton from '@/components/ShareButton';
@@ -17,6 +16,11 @@ import AddToCollectionButton from '@/components/AddToCollectionButton';
 import CommentsSection from '@/components/CommentsSection';
 import NutritionDisplay from '@/components/NutritionDisplay';
 import PrintRecipeButton from '@/components/PrintRecipeButton';
+import RecipeIngredients from '@/components/RecipeIngredients';
+import { LuClock, LuFlame, LuNotepadText } from 'react-icons/lu';
+import { ImSpoonKnife } from 'react-icons/im';
+import VideoPlayer from '@/components/VideoPlayer';
+
 
 interface PageProps {
     params: Promise<{ id: string }>;
@@ -185,12 +189,6 @@ export default async function RecipeDetailPage({ params }: PageProps) {
                                 size="lg"
                             />
 
-                            {/* Shopping List Button */}
-                            <AddToShoppingListButton
-                                ingredients={recipe.ingredients}
-                                isAuthenticated={!!user}
-                            />
-
                             {/* Add to Collection Button */}
                             {user && (
                                 <AddToCollectionButton recipeId={recipe.id} />
@@ -236,51 +234,53 @@ export default async function RecipeDetailPage({ params }: PageProps) {
 
                         {/* Stats Bar */}
                         <div className="grid grid-cols-3 gap-6 glass-panel rounded-3xl p-8 animate-fadeIn">
-                            <div className="text-center">
-                                <div className="text-4xl mb-2">⏱️</div>
-                                <span className="block text-slate-600 text-sm mb-2 uppercase tracking-wide">Priprema</span>
-                                <span className="text-2xl font-bold text-primary">{recipe.prep_time} min</span>
+                            <div className="flex flex-col items-center justify-center text-center group hover:scale-105 transition-transform duration-300">
+                                <div className="p-4 bg-primary/10 text-primary rounded-full mb-3 shadow-sm group-hover:shadow-md transition-all">
+                                    <LuClock className="w-8 h-8" />
+                                </div>
+                                <span className="block text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">Priprema</span>
+                                <span className="text-xl md:text-2xl font-black text-slate-900 heading-font">{recipe.prep_time} min</span>
                             </div>
-                            <div className="text-center border-x border-slate-200">
-                                <div className="text-4xl mb-2">🔥</div>
-                                <span className="block text-slate-600 text-sm mb-2 uppercase tracking-wide">Kuvanje</span>
-                                <span className="text-2xl font-bold text-primary">{recipe.cook_time} min</span>
+                            <div className="flex flex-col items-center justify-center text-center border-x border-slate-200/60 group hover:scale-105 transition-transform duration-300">
+                                <div className="p-4 bg-primary/10 text-primary rounded-full mb-3 shadow-sm group-hover:shadow-md transition-all">
+                                    <LuFlame className="w-8 h-8" />
+                                </div>
+                                <span className="block text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">Kuvanje</span>
+                                <span className="text-xl md:text-2xl font-black text-slate-900 heading-font">{recipe.cook_time} min</span>
                             </div>
-                            <div className="text-center">
-                                <div className="text-4xl mb-2">🍽️</div>
-                                <span className="block text-slate-600 text-sm mb-2 uppercase tracking-wide">Porcije</span>
-                                <span className="text-2xl font-bold text-primary">{recipe.servings}</span>
+                            <div className="flex flex-col items-center justify-center text-center group hover:scale-105 transition-transform duration-300">
+                                <div className="p-4 bg-primary/10 text-primary rounded-full mb-3 shadow-sm group-hover:shadow-md transition-all">
+                                    <ImSpoonKnife className="w-8 h-8" />
+                                </div>
+                                <span className="block text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">Porcije</span>
+                                <span className="text-xl md:text-2xl font-black text-slate-900 heading-font">{recipe.servings}</span>
                             </div>
                         </div>
 
+                        {/* Video Player */}
+                        {recipe.video_url && (
+                            <section className="animate-fadeIn">
+                                <h2 className="text-2xl font-bold mb-6 heading-font flex items-center gap-2">
+                                    <span className="text-primary">🎬</span> Video Recept
+                                </h2>
+                                <VideoPlayer url={recipe.video_url} />
+                            </section>
+                        )}
+
                         {/* Ingredients - Grid with Checkboxes */}
-                        <section>
-                            <h2 className="text-3xl font-bold mb-6 heading-font flex items-center gap-3">
-                                <span className="text-4xl">🥕</span> Sastojci
-                            </h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {recipe.ingredients?.map((ing: any) => (
-                                    <label
-                                        key={ing.id}
-                                        className="glass-panel rounded-2xl p-5 hover:border-primary/50 transition-all cursor-pointer group flex items-center gap-4 border border-slate-200"
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            className="w-5 h-5 rounded border-2 border-primary bg-transparent checked:bg-primary focus:ring-2 focus:ring-primary/50 cursor-pointer no-print"
-                                        />
-                                        <div className="flex-1 flex justify-between items-center">
-                                            <span className="font-medium text-slate-900 group-hover:text-primary transition-colors">{ing.name}</span>
-                                            <span className="text-slate-600 font-bold">{ing.quantity}</span>
-                                        </div>
-                                    </label>
-                                ))}
-                            </div>
-                        </section>
+
+                        <RecipeIngredients
+                            ingredients={recipe.ingredients}
+                            isAuthenticated={!!user}
+                        />
 
                         {/* Steps - Large Numbered */}
                         <section>
                             <h2 className="text-3xl font-bold mb-8 heading-font flex items-center gap-3">
-                                <span className="text-4xl">👨‍🍳</span> Priprema
+                                <span className="p-3 bg-primary/10 text-primary rounded-full shadow-sm">
+                                    <LuNotepadText className="w-8 h-8" />
+                                </span>
+                                Priprema
                             </h2>
                             <div className="space-y-8">
                                 {recipe.steps?.map((step: any, index: number) => (

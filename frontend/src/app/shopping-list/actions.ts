@@ -133,8 +133,11 @@ export async function removeItem(id: string) {
     .eq('user_id', user.id)
 
   if (error) {
+    console.error('Error removing item:', error)
     return { error: error.message }
   }
+
+  console.log('Item removed successfully:', id)
 
   // Fetch updated list
   const { data: items } = await supabase
@@ -162,8 +165,11 @@ export async function clearChecked() {
     .eq('is_checked', true)
 
   if (error) {
+    console.error('Error clearing checked items:', error)
     return { error: error.message }
   }
+
+  console.log('Checked items cleared successfully')
 
   // Fetch updated list
   const { data: items } = await supabase

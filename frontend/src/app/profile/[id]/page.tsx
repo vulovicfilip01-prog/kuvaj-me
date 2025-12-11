@@ -2,7 +2,9 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import { getProfile, getUserRecipes, getUserStats, getUserCollections } from '../actions'
+import { getFollowStatus, getFollowCounts } from '../user-actions'
 import ProfileView from '@/components/ProfileView'
+
 import Navbar from '@/components/Navbar'
 
 interface PageProps {
@@ -47,10 +49,12 @@ export default async function ProfilePage({ params }: PageProps) {
     const isOwner = user?.id === id
 
     // Fetch data in parallel
-    const [recipes, collections, stats] = await Promise.all([
+    const [recipes, collections, stats, isFollowing, followCounts] = await Promise.all([
         getUserRecipes(id, isOwner),
         getUserCollections(id, isOwner),
-        getUserStats(id)
+        getUserStats(id),
+        user ? getFollowStatus(id) : Promise.resolve(false),
+        getFollowCounts(id)
     ])
 
     return (
@@ -62,7 +66,10 @@ export default async function ProfilePage({ params }: PageProps) {
                 collections={collections}
                 stats={stats}
                 isOwner={isOwner}
+                isFollowing={isFollowing}
+                followCounts={followCounts}
             />
         </main>
     )
+
 }
