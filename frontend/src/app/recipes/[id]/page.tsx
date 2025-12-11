@@ -221,6 +221,12 @@ export default async function RecipeDetailPage({ params }: PageProps) {
                                 }`}>
                                 {recipe.difficulty === 'lako' ? '🟢 Lako' : recipe.difficulty === 'srednje' ? '🟡 Srednje' : '🔴 Teško'}
                             </span>
+                            {/* Posno Badge */
+                                recipe.is_posno && (
+                                    <span className="px-4 py-2 bg-green-500/90 text-white rounded-full text-sm font-bold shadow-lg backdrop-blur-md border border-green-400/50 flex items-center gap-1">
+                                        🍃 Posno
+                                    </span>
+                                )}
                         </div>
                         <h1 className="text-5xl md:text-6xl font-bold mb-3 heading-font text-gradient">{recipe.title}</h1>
                         <p className="text-slate-200 text-xl max-w-3xl">{recipe.description}</p>

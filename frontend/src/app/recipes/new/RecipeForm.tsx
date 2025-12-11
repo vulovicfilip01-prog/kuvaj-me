@@ -38,6 +38,7 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
     const [servings, setServings] = useState(initialData?.servings?.toString() || '')
     const [difficulty, setDifficulty] = useState<'lako' | 'srednje' | 'teško'>(initialData?.difficulty || 'srednje')
     const [isPublic, setIsPublic] = useState(initialData?.is_public ?? true)
+    const [isPosno, setIsPosno] = useState(initialData?.is_posno ?? false)
 
     // Ingredients
     const [ingredients, setIngredients] = useState<Ingredient[]>(
@@ -138,6 +139,7 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
             is_public: isPublic,
             image_url: imageUrl,
             video_url: videoUrl ? videoUrl : null,
+            is_posno: isPosno,
             ingredients: validIngredients,
 
             steps: validSteps,
@@ -322,7 +324,9 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                             </div>
                         </div>
 
-                        <div className="mt-6">
+
+
+                        <div className="mt-6 flex flex-wrap gap-6">
                             <label className="flex items-center gap-3 text-slate-700 cursor-pointer group select-none">
                                 <div className="relative">
                                     <input
@@ -334,6 +338,21 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                                     <div className="w-11 h-6 bg-slate-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                                 </div>
                                 <span className="font-medium group-hover:text-slate-900 transition-colors">Javno vidljiv recept</span>
+                            </label>
+
+                            <label className="flex items-center gap-3 text-slate-700 cursor-pointer group select-none">
+                                <div className="relative">
+                                    <input
+                                        type="checkbox"
+                                        checked={isPosno}
+                                        onChange={(e) => setIsPosno(e.target.checked)}
+                                        className="sr-only peer"
+                                    />
+                                    <div className="w-11 h-6 bg-slate-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                </div>
+                                <span className="font-medium group-hover:text-slate-900 transition-colors flex items-center gap-2">
+                                    <span>🍃</span> Posno (Vegansko/Riba)
+                                </span>
                             </label>
                         </div>
                     </div>
@@ -534,7 +553,7 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                         </Link>
                     </div>
                 </form>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }

@@ -18,6 +18,7 @@ interface RecipeCardProps {
         user_id: string;
         average_rating?: number | null;
         review_count?: number | null;
+        is_posno?: boolean;
         categories: {
             name: string;
         } | null;
@@ -89,6 +90,12 @@ export default function RecipeCard({ recipe, isFavorite = false, isAuthenticated
                             }`}>
                             {recipe.difficulty}
                         </span>
+                        {/* Posno Badge */
+                            recipe.is_posno && (
+                                <span className="text-xs font-bold text-green-600 bg-green-100 px-2 py-1 rounded-md border border-green-200 flex items-center gap-1">
+                                    🍃 Posno
+                                </span>
+                            )}
                     </div>
 
                     {/* Average Rating */}

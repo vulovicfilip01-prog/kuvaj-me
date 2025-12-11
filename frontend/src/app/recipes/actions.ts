@@ -15,6 +15,7 @@ interface RecipeData {
   is_public: boolean
   image_url: string | null
   video_url?: string | null
+  is_posno: boolean
   ingredients: Array<{ name: string; quantity: string }>
   steps: Array<{ instruction: string }>
 }
@@ -44,6 +45,7 @@ export async function createRecipe(data: RecipeData) {
       is_public: data.is_public,
       image_url: data.image_url,
       video_url: data.video_url,
+      is_posno: data.is_posno,
     })
 
 
@@ -394,6 +396,7 @@ export async function updateRecipe(id: string, data: RecipeData) {
       is_public: data.is_public,
       image_url: data.image_url,
       video_url: data.video_url,
+      is_posno: data.is_posno,
       updated_at: new Date().toISOString(),
     })
 
