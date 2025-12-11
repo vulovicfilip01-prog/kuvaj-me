@@ -8,6 +8,8 @@ import ListIcon from '@/components/ListIcon'
 import SearchBar from '@/components/SearchBar'
 import MobileSearchButton from '@/components/MobileSearchButton'
 import { FiUser, FiSettings, FiLogOut, FiGrid } from 'react-icons/fi'
+import NotificationBell from '@/components/NotificationBell'
+import { getUnreadCount } from '@/app/notifications/actions'
 
 interface NavbarProps {
     transparent?: boolean
@@ -27,6 +29,8 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
             .single()
         profile = data
     }
+
+    const unreadCount = user ? await getUnreadCount() : 0
 
     return (
         <nav className={`relative z-50 container mx-auto px-6 py-6 flex justify-between items-center gap-4 ${!transparent ? 'bg-white/80 backdrop-blur-md shadow-sm rounded-b-3xl mb-8' : ''}`}>
@@ -76,8 +80,11 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
                             <span className="hidden lg:inline">Lista</span>
                         </Link>
 
+
                         {/* User Dropdown / Menu */}
-                        <div className="flex items-center gap-3 pl-2 border-l border-slate-200 ml-2">
+                        <div className="flex items-center gap-2 pl-2 border-l border-slate-200 ml-2">
+                            <NotificationBell initialUnreadCount={unreadCount} />
+
                             <Link
                                 href={`/profile/${user.id}`}
                                 className="flex items-center gap-2 hover:bg-slate-100 rounded-full pr-4 pl-1 py-1 transition-all"

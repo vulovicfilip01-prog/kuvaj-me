@@ -17,7 +17,7 @@ import CommentsSection from '@/components/CommentsSection';
 import NutritionDisplay from '@/components/NutritionDisplay';
 import PrintRecipeButton from '@/components/PrintRecipeButton';
 import RecipeIngredients from '@/components/RecipeIngredients';
-import { LuClock, LuFlame, LuNotepadText } from 'react-icons/lu';
+import { LuClock, LuFlame, LuNotepadText, LuPencil } from 'react-icons/lu';
 import { ImSpoonKnife } from 'react-icons/im';
 import VideoPlayer from '@/components/VideoPlayer';
 
@@ -173,9 +173,10 @@ export default async function RecipeDetailPage({ params }: PageProps) {
                                 <>
                                     <Link
                                         href={`/recipes/${recipe.id}/edit`}
-                                        className="px-4 py-2 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-all border border-white/20 font-medium backdrop-blur-md"
+                                        className="px-4 py-2 bg-primary/90 text-white rounded-xl hover:bg-primary transition-all border border-primary/50 font-medium backdrop-blur-md flex items-center gap-2 shadow-lg"
                                     >
-                                        ✏️ Izmeni
+                                        <LuPencil className="w-5 h-5" />
+                                        Izmeni
                                     </Link>
                                     <DeleteRecipeButton recipeId={recipe.id} />
                                 </>

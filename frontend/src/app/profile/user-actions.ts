@@ -2,6 +2,7 @@
 
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
+import { createNotification } from '../notifications/actions';
 
 export async function followUser(targetUserId: string) {
   const supabase = await createClient()
@@ -26,6 +27,9 @@ export async function followUser(targetUserId: string) {
     console.error('Error following user:', error)
     return { error: 'Došlo je do greške prilikom praćenja korisnika' }
   }
+
+  // Create notification
+  await createNotification(targetUserId, 'follow');
 
   revalidatePath(`/profile/${targetUserId}`)
   return { success: true }
