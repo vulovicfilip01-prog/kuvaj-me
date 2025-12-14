@@ -4,29 +4,39 @@ import { createClient } from '@/utils/supabase/server';
 export default async function TestDB() {
     const supabase = await createClient();
 
-    // Results holder (using simple object for server rendering)
+    // Results holder - initialized with safe strings
     const results = {
-        totalCount: 'Pending' as any,
-        publicCount: 'Pending' as any,
-        firstRecipe: 'Pending' as any,
-        error: null as any
+        totalCount: 'Pending',
+        publicCount: 'Pending',
+        firstRecipe: 'Pending',
+        error: ''
     };
 
     try {
         // 1. Total Count (Head only)
         const total = await supabase.from('recipes').select('*', { count: 'exact', head: true });
-        results.totalCount = total.error ? `Error: ${total.error.message}` : total.count;
+        results.totalCount = total.error
+            ? `Error: ${total.error.message}`
+            : (total.count !== null ? String(total.count) : '0');
 
         // 2. Public Count (Head only)
         const publicData = await supabase.from('recipes').select('*', { count: 'exact', head: true }).eq('is_public', true);
-        results.publicCount = publicData.error ? `Error: ${publicData.error.message}` : publicData.count;
+        results.publicCount = publicData.error
+            ? `Error: ${publicData.error.message}`
+            : (publicData.count !== null ? String(publicData.count) : '0');
 
         // 3. Fetch Actual Data (First row)
         const first = await supabase.from('recipes').select('id, title, is_public').limit(1).single();
-        results.firstRecipe = first.error ? `Error: ${first.error.message}` : first.data;
+        if (first.error) {
+            results.firstRecipe = `Error: ${first.error.message}`;
+        } else if (first.data) {
+            results.firstRecipe = JSON.stringify(first.data, null, 2);
+        } else {
+            results.firstRecipe = 'No Data Found';
+        }
 
     } catch (e: any) {
-        results.error = e.message;
+        results.error = typeof e === 'string' ? e : (typeof e.message === 'string' ? e.message : 'Unknown Error');
     }
 
     return (
@@ -49,8 +59,8 @@ export default async function TestDB() {
                         <p><strong>Public Recipes (is_public=true):</strong> {results.publicCount}</p>
                         <div className="mt-2">
                             <strong>First Recipe Data:</strong>
-                            <pre className="mt-1 text-xs bg-white p-2 border rounded overflow-auto">
-                                {typeof results.firstRecipe === 'object' ? JSON.stringify(results.firstRecipe, null, 2) : results.firstRecipe}
+                            <pre className="mt-1 text-xs bg-white p-2 border rounded overflow-auto whitespace-pre-wrap">
+                                {results.firstRecipe}
                             </pre>
                         </div>
                     </div>
