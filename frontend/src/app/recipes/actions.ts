@@ -567,10 +567,7 @@ export async function getTrendingRecipes(limit: number = 6) {
   const { data: recipes, error } = await supabase
     .from('recipes')
     .select(`
-      *,
-      profiles (display_name),
-      categories (name),
-      favorite_recipes (count)
+      *
     `)
     .eq('is_public', true)
     .order('created_at', { ascending: false })
@@ -599,9 +596,7 @@ export async function getNewestRecipes(limit: number = 8) {
   const { data: recipes, error } = await supabase
     .from('recipes')
     .select(`
-      *,
-      profiles (display_name),
-      categories (name)
+      *
     `)
     .eq('is_public', true)
     .order('created_at', { ascending: false })
