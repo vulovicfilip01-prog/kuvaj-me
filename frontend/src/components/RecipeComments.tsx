@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { addComment, deleteComment } from '@/app/recipes/comment-actions'
+import { createComment, deleteComment } from '@/app/recipes/comment-actions'
 import { FiTrash2, FiUser } from 'react-icons/fi'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -37,12 +37,12 @@ export default function RecipeComments({ recipeId, initialComments, user }: Reci
         setLoading(true)
         setError(null)
 
-        const result = await addComment(recipeId, newComment)
+        const result = await createComment(recipeId, newComment)
 
         if (result.error) {
             setError(result.error)
-        } else if (result.data) {
-            setComments([result.data, ...comments])
+        } else if (result.comment) {
+            setComments([result.comment, ...comments])
             setNewComment('')
         }
 

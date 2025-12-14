@@ -177,8 +177,9 @@ export default async function RecipePage({ params }: { params: { id: string } })
                                     <div className="flex gap-2">
                                         <PrintButton recipeId={recipe.id} />
                                         <ShareButton
-                                            title={recipe.title}
-                                            text={`Pogledaj ovaj recept za ${recipe.title} na Kuvaj.me!`}
+                                            recipeTitle={recipe.title}
+                                            recipeDescription={recipe.description || ''}
+                                            recipeUrl={recipeUrl}
                                         />
                                     </div>
                                 </div>
