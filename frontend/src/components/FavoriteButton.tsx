@@ -42,7 +42,7 @@ export default function FavoriteButton({
             try {
                 if (newIsFavorite) {
                     await addToFavorites(recipeId)
-                    Analytics.addToFavorite('recipe', recipeId)
+                    Analytics.addToFavorite(recipeId)
                 } else {
                     await removeFromFavorites(recipeId)
                 }
@@ -65,7 +65,7 @@ export default function FavoriteButton({
             onClick={handleToggleFavorite}
             disabled={isPending}
             className={`
-                group flex items-center justify-center gap-2 rounded-xl transition-all duration-200 border
+                group relative flex items-center justify-center gap-2 rounded-xl transition-all duration-200 border
                 ${sizeClasses[size]}
                 ${isFavorite
                     ? 'bg-red-50 text-red-500 border-red-200 hover:bg-red-100'
@@ -90,6 +90,6 @@ export default function FavoriteButton({
                     </div>
                 </div>
             )}
-        </div>
+        </button>
     )
 }

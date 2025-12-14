@@ -54,7 +54,7 @@ export default async function RecipePage({ params }: { params: { id: string } })
 
     const { average, count, myRating } = await getRecipeRating(recipe.id);
     const recipeIsFavorite = await isFavorite(recipe.id);
-    const comments = await getRecipeComments(recipe.id);
+    const { comments } = await getRecipeComments(recipe.id);
 
     // Schema.org Structured Data
     const recipeSchema = {

@@ -1,0 +1,46 @@
+
+> frontend@0.1.0 build
+> next build
+
+   Γû▓ Next.js 16.0.7 (Turbopack)
+   - Environments: .env.local
+   - Experiments (use with caution):
+     Γ£ô optimizeCss
+
+   Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 1 errors:
+./src/components/FavoriteButton.tsx:93:11
+Parsing ecmascript source code failed
+  91 |                 </div>
+  92 |             )}
+> 93 |         </div>
+     |           ^^^
+  94 |     )
+  95 | }
+  96 |
+
+Expected corresponding JSX closing tag for <button>
+
+Import traces:
+  Server Component:
+    ./src/components/FavoriteButton.tsx
+    ./src/app/recipes/[id]/page.tsx
+
+  Client Component Browser:
+    ./src/components/FavoriteButton.tsx [Client Component Browser]
+    ./src/components/RecipeCard.tsx [Client Component Browser]
+    ./src/components/ProfileView.tsx [Client Component Browser]
+    ./src/components/ProfileView.tsx [Server Component]
+    ./src/app/profile/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/FavoriteButton.tsx [Client Component SSR]
+    ./src/components/RecipeCard.tsx [Client Component SSR]
+    ./src/components/ProfileView.tsx [Client Component SSR]
+    ./src/components/ProfileView.tsx [Server Component]
+    ./src/app/profile/[id]/page.tsx [Server Component]
+
+
+    at <unknown> (./src/components/FavoriteButton.tsx:93:11)
