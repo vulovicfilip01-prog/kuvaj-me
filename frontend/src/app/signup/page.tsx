@@ -3,6 +3,7 @@
 import { signup } from '../actions'
 import { useState } from 'react'
 import Link from 'next/link'
+import { Analytics } from '@/utils/analytics'
 
 export default function SignupPage() {
     const [error, setError] = useState<string | null>(null)
@@ -18,6 +19,7 @@ export default function SignupPage() {
             setError(result.error)
             setLoading(false)
         } else if (result?.success) {
+            Analytics.signup('email')
             setSuccess(true)
             setLoading(false)
         }

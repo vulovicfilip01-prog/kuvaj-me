@@ -1,0 +1,16 @@
+{
+    "name": "Kuvaj.me",
+    "short_name": "Kuvaj.me",
+    "description": "Tvoja digitalna knjiga recepata",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#556B2F",
+    "icons": [
+        {
+            "src": "/icon.png",
+            "sizes": "192x192 512x512",
+            "type": "image/png"
+        }
+    ]
+}

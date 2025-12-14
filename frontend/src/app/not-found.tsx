@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
+import NotFoundSearch from '@/components/NotFoundSearch'
 
 export default function NotFound() {
     return (
@@ -16,18 +17,15 @@ export default function NotFound() {
                         Izgleda da smo zagubili ovaj recept. Možda je obrisan ili nikada nije ni postojao.
                     </p>
 
+                    {/* Search Form (Client Component) */}
+                    <NotFoundSearch />
+
                     <div className="flex gap-4 justify-center flex-col sm:flex-row">
                         <Link
                             href="/"
                             className="px-8 py-3 bg-primary text-white rounded-full font-bold hover:bg-primary-dark transition-all shadow-lg shadow-primary/20"
                         >
                             Vrati se na početnu
-                        </Link>
-                        <Link
-                            href="/search"
-                            className="px-8 py-3 bg-white border border-slate-200 text-slate-700 rounded-full font-bold hover:border-primary/30 hover:text-primary transition-all"
-                        >
-                            Pretraži recepte
                         </Link>
                     </div>
                 </div>

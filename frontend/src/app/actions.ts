@@ -51,9 +51,31 @@ export async function signup(formData: FormData) {
   redirect('/')
 }
 
+
 export async function signOut() {
   const supabase = await createClient()
   await supabase.auth.signOut()
   revalidatePath('/', 'layout')
   redirect('/login')
+}
+
+export async function subscribeToNewsletter(email: string) {
+    if (!email || !email.includes('@')) {
+        return { success: false, error: 'Email nije validan.' }
+    }
+
+    const supabase = await createClient()
+    
+    const { error } = await supabase
+        .from('newsletter_subscribers')
+        .insert({ email })
+
+    if (error) {
+        if (error.code === '23505') { // Unique constraint violation
+            return { success: false, error: 'Ovaj email je već prijavljen!' }
+        }
+        return { success: false, error: 'Došlo je do greške. Pokušajte ponovo.' }
+    }
+
+    return { success: true }
 }

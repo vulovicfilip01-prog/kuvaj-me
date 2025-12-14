@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect } from 'react'
-import Navbar from '@/components/Navbar'
+import Link from 'next/link'
+import ChefHatIcon from '@/components/ChefHatIcon'
 
 export default function Error({
     error,
@@ -16,6 +17,17 @@ export default function Error({
 
     return (
         <main className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
+            {/* Static Navbar for Error Page */}
+            <nav className="container mx-auto px-6 py-6 flex justify-between items-center bg-white/80 backdrop-blur-md shadow-sm rounded-b-3xl mb-8">
+                <Link href="/" className="flex items-center gap-3 group">
+                    <ChefHatIcon className="w-10 h-10 transform group-hover:rotate-12 transition-transform duration-300" />
+                    <span className="text-2xl font-bold text-gradient heading-font tracking-tight">Kuvaj.me</span>
+                </Link>
+                <Link href="/" className="px-5 py-2.5 text-slate-600 hover:text-slate-900 transition-colors font-medium">
+                    Početna
+                </Link>
+            </nav>
+
             <div className="container mx-auto px-6 py-20 text-center">
                 <div className="max-w-2xl mx-auto glass-panel rounded-3xl p-12 border-red-100 bg-red-50/50">
                     <div className="text-8xl mb-6">🔥</div>
@@ -34,12 +46,12 @@ export default function Error({
                         >
                             Pokušaj ponovo
                         </button>
-                        <a
+                        <Link
                             href="/"
                             className="px-8 py-3 bg-white border border-slate-200 text-slate-700 rounded-full font-bold hover:border-primary/30 hover:text-primary transition-all"
                         >
                             Idi na početnu
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

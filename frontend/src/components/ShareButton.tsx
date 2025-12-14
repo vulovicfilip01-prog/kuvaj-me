@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Analytics } from '@/utils/analytics'
 
 interface ShareButtonProps {
     recipeTitle: string
@@ -20,6 +21,7 @@ export default function ShareButton({ recipeTitle, recipeDescription, recipeUrl 
                     text: recipeDescription,
                     url: recipeUrl
                 })
+                Analytics.share('native', recipeUrl)
                 setShowMenu(false)
             } catch (err) {
                 console.log('Share cancelled')
@@ -32,6 +34,7 @@ export default function ShareButton({ recipeTitle, recipeDescription, recipeUrl 
     const handleCopyLink = async () => {
         try {
             await navigator.clipboard.writeText(recipeUrl)
+            Analytics.share('clipboard', recipeUrl)
             setCopied(true)
             setTimeout(() => {
                 setCopied(false)
@@ -69,7 +72,10 @@ export default function ShareButton({ recipeTitle, recipeDescription, recipeUrl 
                     {/* Menu */}
                     <div className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 min-w-[200px] z-50 animate-fadeIn">
                         <button
-                            onClick={() => window.open(shareLinks.facebook, '_blank')}
+                            onClick={() => {
+                                Analytics.share('facebook', recipeUrl)
+                                window.open(shareLinks.facebook, '_blank')
+                            }}
                             className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center gap-3"
                         >
                             <span className="text-xl">📘</span>
@@ -77,7 +83,10 @@ export default function ShareButton({ recipeTitle, recipeDescription, recipeUrl 
                         </button>
 
                         <button
-                            onClick={() => window.open(shareLinks.twitter, '_blank')}
+                            onClick={() => {
+                                Analytics.share('twitter', recipeUrl)
+                                window.open(shareLinks.twitter, '_blank')
+                            }}
                             className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center gap-3"
                         >
                             <span className="text-xl">🐦</span>
@@ -85,7 +94,10 @@ export default function ShareButton({ recipeTitle, recipeDescription, recipeUrl 
                         </button>
 
                         <button
-                            onClick={() => window.open(shareLinks.whatsapp, '_blank')}
+                            onClick={() => {
+                                Analytics.share('whatsapp', recipeUrl)
+                                window.open(shareLinks.whatsapp, '_blank')
+                            }}
                             className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center gap-3"
                         >
                             <span className="text-xl">💬</span>

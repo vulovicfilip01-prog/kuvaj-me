@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { FiSearch, FiX } from 'react-icons/fi'
+import { Analytics } from '@/utils/analytics'
 
 interface MobileSearchModalProps {
     isOpen: boolean
@@ -16,6 +17,7 @@ export default function MobileSearchModal({ isOpen, onClose }: MobileSearchModal
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault()
         if (query.trim()) {
+            Analytics.search(query.trim())
             router.push(`/search/results?q=${encodeURIComponent(query.trim())}`)
             onClose()
             setQuery('')

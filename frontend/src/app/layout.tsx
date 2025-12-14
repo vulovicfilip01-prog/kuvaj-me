@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 
@@ -12,7 +12,20 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  themeColor: '#556B2F',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
+
 export const metadata: Metadata = {
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Kuvaj.me',
+  },
   title: {
     default: "Kuvaj.me - Tvoja digitalna knjiga recepata",
     template: "%s | Kuvaj.me"
@@ -56,6 +69,7 @@ export const metadata: Metadata = {
 
 import { GoogleAnalytics } from '@next/third-parties/google'
 import WelcomeModal from '@/components/WelcomeModalClient'
+import Footer from '@/components/Footer'
 
 
 export default function RootLayout({
@@ -72,6 +86,7 @@ export default function RootLayout({
       </body>
       <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
       <WelcomeModal />
+      <Footer />
     </html>
   );
 }

@@ -3,46 +3,53 @@
 import { useState, useTransition } from 'react'
 import { addToFavorites, removeFromFavorites } from '@/app/recipes/actions'
 import { HiOutlineHeart, HiHeart } from 'react-icons/hi'
+import { Analytics } from '@/utils/analytics'
 
 interface FavoriteButtonProps {
     recipeId: string
     initialIsFavorite: boolean
     isAuthenticated: boolean
     size?: 'sm' | 'md' | 'lg'
+    className?: string
 }
 
 export default function FavoriteButton({
     recipeId,
     initialIsFavorite,
     isAuthenticated,
-    size = 'md'
+    size = 'md',
+    className
 }: FavoriteButtonProps) {
     const [isFavorite, setIsFavorite] = useState(initialIsFavorite)
     const [isPending, startTransition] = useTransition()
     const [showTooltip, setShowTooltip] = useState(false)
 
-    const handleClick = async (e: React.MouseEvent) => {
+    const handleToggleFavorite = async (e: React.MouseEvent) => {
         e.preventDefault()
         e.stopPropagation()
 
         if (!isAuthenticated) {
             setShowTooltip(true)
-            setTimeout(() => setShowTooltip(false), 2000)
+            setTimeout(() => setShowTooltip(false), 3000)
             return
         }
 
-        // Optimistic update
-        setIsFavorite(!isFavorite)
-
         startTransition(async () => {
-            const result = isFavorite
-                ? await removeFromFavorites(recipeId)
-                : await addToFavorites(recipeId)
+            // Optimistic update
+            const newIsFavorite = !isFavorite
+            setIsFavorite(newIsFavorite)
 
-            if (result.error) {
+            try {
+                if (newIsFavorite) {
+                    await addToFavorites(recipeId)
+                    Analytics.addToFavorite('recipe', recipeId)
+                } else {
+                    await removeFromFavorites(recipeId)
+                }
+            } catch (error) {
                 // Revert on error
-                setIsFavorite(isFavorite)
-                console.error(result.error)
+                setIsFavorite(!newIsFavorite)
+                console.error('Failed to toggle favorite:', error)
             }
         })
     }
@@ -54,19 +61,25 @@ export default function FavoriteButton({
     }
 
     return (
-        <div className="relative">
-            <button
-                onClick={handleClick}
-                disabled={isPending}
-                className={`${sizeClasses[size]} flex items-center justify-center rounded-full bg-white/90 backdrop-blur-sm border border-slate-200 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-200 shadow-md disabled:opacity-50 disabled:cursor-not-allowed group`}
-                aria-label={isFavorite ? 'Ukloni iz favorita' : 'Dodaj u favorite'}
-            >
-                {isFavorite ? (
-                    <HiHeart className="w-5 h-5 text-red-500 animate-heart-pop" />
-                ) : (
-                    <HiOutlineHeart className="w-5 h-5 text-slate-400 group-hover:text-red-400 transition-colors" />
-                )}
-            </button>
+        <button
+            onClick={handleToggleFavorite}
+            disabled={isPending}
+            className={`
+                group flex items-center justify-center gap-2 rounded-xl transition-all duration-200 border
+                ${sizeClasses[size]}
+                ${isFavorite
+                    ? 'bg-red-50 text-red-500 border-red-200 hover:bg-red-100'
+                    : 'bg-white text-slate-400 border-slate-200 hover:border-red-200 hover:text-red-400'
+                }
+                ${className}
+            `}
+            title={isFavorite ? 'Ukloni iz omiljenih' : 'Dodaj u omiljene'}
+        >
+            {isFavorite ? (
+                <HiHeart className="w-5 h-5 text-red-500 animate-heart-pop" />
+            ) : (
+                <HiOutlineHeart className="w-5 h-5 text-slate-400 group-hover:text-red-400 transition-colors" />
+            )}
 
             {/* Tooltip for unauthenticated users */}
             {showTooltip && !isAuthenticated && (
