@@ -21,23 +21,32 @@ export default async function Home() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Fetch data in parallel
-  const [trendingRecipes, newestRecipes, feedRecipes] = await Promise.all([
-    getTrendingRecipes(6),
-    getNewestRecipes(8),
-    user ? getFeedRecipes(8) : Promise.resolve([])
-  ]);
+  let trendingRecipes = [];
+  let newestRecipes = [];
+  let feedRecipes = [];
+  let favoriteIds = [];
+  let fetchError = null;
 
+  try {
+    // Fetch data in parallel
+    [trendingRecipes, newestRecipes, feedRecipes] = await Promise.all([
+      getTrendingRecipes(6),
+      getNewestRecipes(8),
+      user ? getFeedRecipes(8) : Promise.resolve([])
+    ]);
 
-  // Get favorite IDs for the current user
-  let favoriteIds: string[] = [];
-  if (user) {
-    const { data: favorites } = await supabase
-      .from('favorite_recipes')
-      .select('recipe_id')
-      .eq('user_id', user.id);
+    // Get favorite IDs for the current user
+    if (user) {
+      const { data: favorites } = await supabase
+        .from('favorite_recipes')
+        .select('recipe_id')
+        .eq('user_id', user.id);
 
-    favoriteIds = favorites?.map(f => f.recipe_id) || [];
+      favoriteIds = favorites?.map(f => f.recipe_id) || [];
+    }
+  } catch (e: any) {
+    console.error('Home Page Fetch Error:', e);
+    fetchError = e.message || 'Unknown Error';
   }
 
   return (
@@ -190,6 +199,7 @@ export default async function Home() {
         <p>Newest: {newestRecipes.length}</p>
         <p>Env URL: {process.env.NEXT_PUBLIC_SUPABASE_URL ? `${process.env.NEXT_PUBLIC_SUPABASE_URL.substring(0, 15)}...` : 'Missing'}</p>
         <p>Env Key: {process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? `${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.substring(0, 10)}...` : 'Missing'}</p>
+        {fetchError && <p className="text-red-500 font-bold mt-2">ERROR: {fetchError}</p>}
       </div>
     </main>
   );
