@@ -183,6 +183,14 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      {/* Debug Section - Temporary */}
+      <div className="bg-black text-white p-4 text-xs font-mono opacity-50 hover:opacity-100 transition-opacity">
+        <p>Debug Info:</p>
+        <p>Trending: {trendingRecipes.length}</p>
+        <p>Newest: {newestRecipes.length}</p>
+        <p>Env URL: {process.env.NEXT_PUBLIC_SUPABASE_URL ? 'Set' : 'Missing'}</p>
+        <p>Env Key: {process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? 'Set' : 'Missing'}</p>
+      </div>
     </main>
   );
 }
