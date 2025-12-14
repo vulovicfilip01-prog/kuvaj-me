@@ -34,10 +34,11 @@ export default function Error({
                     <h2 className="text-4xl font-bold text-slate-900 mb-4 heading-font">
                         Nešto je pošlo po zlu!
                     </h2>
-                    <p className="text-slate-600 text-lg mb-8">
-                        Izvinjavamo se, došlo je do greške prilikom učitavanja stranice.
-                        Naš tim je obavešten o ovom problemu.
-                    </p>
+                    <div className="bg-red-100 p-4 rounded-lg mb-8 text-left overflow-auto max-h-40">
+                        <p className="font-bold text-red-800 text-sm">Technical Details (Screenshot this):</p>
+                        <p className="font-mono text-xs text-red-700 mt-2">{error.message}</p>
+                        {error.digest && <p className="font-mono text-xs text-red-700 mt-1">Digest: {error.digest}</p>}
+                    </div>
 
                     <div className="flex gap-4 justify-center flex-col sm:flex-row">
                         <button
