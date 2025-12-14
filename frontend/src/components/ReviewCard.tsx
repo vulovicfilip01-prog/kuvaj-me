@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import StarRating from './StarRating'
+
 import ReviewForm from './ReviewForm'
 import { deleteReview } from '@/app/recipes/review-actions'
 
@@ -97,7 +97,23 @@ export default function ReviewCard({ review, recipeId, isOwnReview, onUpdate }: 
                         {review.profiles?.display_name || 'Kuvaj.me Chef'}
                     </Link>
                     <div className="flex items-center gap-2 mt-1">
-                        <StarRating rating={review.rating} readonly size="sm" />
+                        <div className="flex text-yellow-400">
+                            {[...Array(5)].map((_, i) => (
+                                <svg
+                                    key={i}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill={i < Math.round(review.rating) ? "currentColor" : "none"}
+                                    stroke="currentColor"
+                                    className={`w-4 h-4 ${i < Math.round(review.rating) ? "" : "text-slate-300"}`}
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                            ))}
+                        </div>
                     </div>
                     <p className="text-xs text-slate-500 mt-1">
                         {formatDate(review.created_at)}

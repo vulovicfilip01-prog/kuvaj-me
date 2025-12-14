@@ -1,0 +1,25 @@
+
+> frontend@0.1.0 build
+> next build
+
+   Γû▓ Next.js 16.0.7 (Turbopack)
+   - Environments: .env.local
+   - Experiments (use with caution):
+     Γ£ô optimizeCss
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully in 6.0s
+   Running TypeScript ...
+Failed to compile.
+
+./src/app/profile/planner/page.tsx:89:89
+Type error: Property 'id' does not exist on type '{ id: any; title: any; image_url: any; slug: any; }[]'.
+
+  87 |                                             {meal ? (
+  88 |                                                 <div className="relative">
+> 89 |                                                     <Link href={`/recipes/${meal.recipe.id}`} className="block group-hover:opacity-90 transition-opacity">
+     |                                                                                         ^
+  90 |                                                         <div className="font-medium text-slate-800 text-sm line-clamp-2">
+  91 |                                                             {meal.recipe.title}
+  92 |                                                         </div>
+Next.js build worker exited with code: 1 and signal: null

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import StarRating from './StarRating'
+import StarInput from './StarInput'
 import { addReview, updateReview } from '@/app/recipes/review-actions'
 
 interface ReviewFormProps {
@@ -59,7 +59,7 @@ export default function ReviewForm({ recipeId, existingReview, onSuccess, onCanc
                 <label className="block text-sm font-medium text-slate-700 mb-2">
                     Tvoja ocena
                 </label>
-                <StarRating
+                <StarInput
                     rating={rating}
                     onChange={setRating}
                     size="lg"

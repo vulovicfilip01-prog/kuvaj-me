@@ -1,0 +1,26 @@
+
+> frontend@0.1.0 build
+> next build
+
+   Γû▓ Next.js 16.0.7 (Turbopack)
+   - Environments: .env.local
+   - Experiments (use with caution):
+     Γ£ô optimizeCss
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully in 4.6s
+   Running TypeScript ...
+Failed to compile.
+
+./src/components/ReviewCard.tsx:100:37
+Type error: Type '{ rating: number; readonly: true; size: string; }' is not assignable to type 'IntrinsicAttributes & StarRatingProps'.
+  Property 'rating' does not exist on type 'IntrinsicAttributes & StarRatingProps'.
+
+   98 |                     </Link>
+   99 |                     <div className="flex items-center gap-2 mt-1">
+> 100 |                         <StarRating rating={review.rating} readonly size="sm" />
+      |                                     ^
+  101 |                     </div>
+  102 |                     <p className="text-xs text-slate-500 mt-1">
+  103 |                         {formatDate(review.created_at)}
+Next.js build worker exited with code: 1 and signal: null

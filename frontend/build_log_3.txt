@@ -1,0 +1,26 @@
+
+> frontend@0.1.0 build
+> next build
+
+   Γû▓ Next.js 16.0.7 (Turbopack)
+   - Environments: .env.local
+   - Experiments (use with caution):
+     Γ£ô optimizeCss
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully in 4.7s
+   Running TypeScript ...
+Failed to compile.
+
+./src/components/RecipeCard.tsx:104:41
+Type error: Type '{ rating: number; readonly: true; size: string; }' is not assignable to type 'IntrinsicAttributes & StarRatingProps'.
+  Property 'rating' does not exist on type 'IntrinsicAttributes & StarRatingProps'.
+
+  102 |                     {recipe.average_rating && recipe.average_rating > 0 && (
+  103 |                         <div className="flex items-center gap-2 mb-3">
+> 104 |                             <StarRating rating={Math.round(recipe.average_rating)} readonly size="sm" />
+      |                                         ^
+  105 |                             <span className="text-sm text-slate-600">({recipe.review_count})</span>
+  106 |                         </div>
+  107 |                     )}
+Next.js build worker exited with code: 1 and signal: null

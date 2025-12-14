@@ -4,7 +4,7 @@ import Link from 'next/link';
 import FavoriteButton from './FavoriteButton';
 import RecipePlaceholder from './RecipePlaceholder';
 import RecipeImage from './RecipeImage';
-import StarRating from './StarRating';
+;
 
 interface RecipeCardProps {
     recipe: {
@@ -100,9 +100,25 @@ export default function RecipeCard({ recipe, isFavorite = false, isAuthenticated
 
                     {/* Average Rating */}
                     {recipe.average_rating && recipe.average_rating > 0 && (
-                        <div className="flex items-center gap-2 mb-3">
-                            <StarRating rating={Math.round(recipe.average_rating)} readonly size="sm" />
-                            <span className="text-sm text-slate-600">({recipe.review_count})</span>
+                        <div className="flex items-center gap-1 mb-3">
+                            <span className="text-yellow-400 flex">
+                                {[...Array(5)].map((_, i) => (
+                                    <svg
+                                        key={i}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill={i < Math.round(recipe.average_rating || 0) ? "currentColor" : "none"}
+                                        stroke="currentColor"
+                                        className={`w-4 h-4 ${i < Math.round(recipe.average_rating || 0) ? "" : "text-slate-300"}`}
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                ))}
+                            </span>
+                            <span className="text-xs text-slate-500 font-medium">({recipe.review_count || 0})</span>
                         </div>
                     )}
 

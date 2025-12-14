@@ -77,6 +77,7 @@ export default async function PlannerPage({ searchParams }: { searchParams: { we
                             <div className="flex-1 space-y-3">
                                 {mealCategories.map((type) => {
                                     const meal = dayPlans.find((p: any) => p.meal_type === type);
+                                    const recipe = meal ? (Array.isArray(meal.recipe) ? meal.recipe[0] : meal.recipe) : null;
 
                                     return (
                                         <div key={type} className="min-h-[80px] border border-slate-100 rounded-lg p-2 bg-white relative group">
@@ -84,11 +85,11 @@ export default async function PlannerPage({ searchParams }: { searchParams: { we
                                                 {categoryLabels[type]}
                                             </div>
 
-                                            {meal ? (
+                                            {meal && recipe ? (
                                                 <div className="relative">
-                                                    <Link href={`/recipes/${meal.recipe.id}`} className="block group-hover:opacity-90 transition-opacity">
+                                                    <Link href={`/recipes/${recipe.id}`} className="block group-hover:opacity-90 transition-opacity">
                                                         <div className="font-medium text-slate-800 text-sm line-clamp-2">
-                                                            {meal.recipe.title}
+                                                            {recipe.title}
                                                         </div>
                                                     </Link>
                                                     <form action={async () => {
