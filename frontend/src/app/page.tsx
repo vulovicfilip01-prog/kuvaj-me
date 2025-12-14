@@ -21,19 +21,23 @@ export default async function Home() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  let trendingRecipes = [];
-  let newestRecipes = [];
-  let feedRecipes = [];
-  let favoriteIds = [];
-  let fetchError = null;
+  let trendingRecipes: any[] = [];
+  let newestRecipes: any[] = [];
+  let feedRecipes: any[] = [];
+  let favoriteIds: string[] = [];
+  let fetchError = '';
 
   try {
     // Fetch data in parallel
-    [trendingRecipes, newestRecipes, feedRecipes] = await Promise.all([
-      getTrendingRecipes(6),
-      getNewestRecipes(8),
-      user ? getFeedRecipes(8) : Promise.resolve([])
+    const [trending, newest, feed] = await Promise.all([
+      getTrendingRecipes(6).catch(err => { console.error('Trending Error:', err); return []; }),
+      getNewestRecipes(8).catch(err => { console.error('Newest Error:', err); return []; }),
+      user ? getFeedRecipes(8).catch(err => { console.error('Feed Error:', err); return []; }) : Promise.resolve([])
     ]);
+
+    trendingRecipes = Array.isArray(trending) ? trending : [];
+    newestRecipes = Array.isArray(newest) ? newest : [];
+    feedRecipes = Array.isArray(feed) ? feed : [];
 
     // Get favorite IDs for the current user
     if (user) {
@@ -46,7 +50,7 @@ export default async function Home() {
     }
   } catch (e: any) {
     console.error('Home Page Fetch Error:', e);
-    fetchError = e.message || 'Unknown Error';
+    fetchError = typeof e === 'string' ? e : (e.message || JSON.stringify(e));
   }
 
   return (
