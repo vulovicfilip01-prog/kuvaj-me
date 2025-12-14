@@ -27,17 +27,28 @@ export default async function Home() {
   let favoriteIds: string[] = [];
   let fetchError = '';
 
+  // Diagnostic counts
+  let codeDebug = { total: -1, public: -1, firstId: 'none' };
+
   try {
     // Fetch data in parallel
-    const [trending, newest, feed] = await Promise.all([
+    const [trending, newest, feed, totalCount, publicCount, firstRecipe] = await Promise.all([
       getTrendingRecipes(6).catch(err => { console.error('Trending Error:', err); return []; }),
       getNewestRecipes(8).catch(err => { console.error('Newest Error:', err); return []; }),
-      user ? getFeedRecipes(8).catch(err => { console.error('Feed Error:', err); return []; }) : Promise.resolve([])
+      user ? getFeedRecipes(8).catch(err => { console.error('Feed Error:', err); return []; }) : Promise.resolve([]),
+      // Diagnostics
+      supabase.from('recipes').select('*', { count: 'exact', head: true }).then(res => res.count),
+      supabase.from('recipes').select('*', { count: 'exact', head: true }).eq('is_public', true).then(res => res.count),
+      supabase.from('recipes').select('id').limit(1).single().then(res => res.data)
     ]);
 
     trendingRecipes = Array.isArray(trending) ? trending : [];
     newestRecipes = Array.isArray(newest) ? newest : [];
     feedRecipes = Array.isArray(feed) ? feed : [];
+
+    codeDebug.total = totalCount === null ? -99 : totalCount;
+    codeDebug.public = publicCount === null ? -99 : publicCount;
+    codeDebug.firstId = firstRecipe?.id || 'none';
 
     // Get favorite IDs for the current user
     if (user) {
@@ -203,6 +214,9 @@ export default async function Home() {
         <p>Newest: {newestRecipes.length}</p>
         <p>Env URL: {process.env.NEXT_PUBLIC_SUPABASE_URL ? `${process.env.NEXT_PUBLIC_SUPABASE_URL.substring(0, 15)}...` : 'Missing'}</p>
         <p>Env Key: {process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? `${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.substring(0, 10)}...` : 'Missing'}</p>
+        <p className="text-yellow-300">DB Total: {codeDebug.total}</p>
+        <p className="text-yellow-300">DB Public: {codeDebug.public}</p>
+        <p className="text-yellow-300">First ID: {codeDebug.firstId}</p>
         {fetchError && <p className="text-red-500 font-bold mt-2">ERROR: {fetchError}</p>}
       </div>
     </main>
