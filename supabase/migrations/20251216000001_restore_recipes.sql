@@ -705,7 +705,7 @@ BEGIN
     (recipe_id, 'mleko', '300ml', 2);
     
     INSERT INTO recipe_steps (recipe_id, step_number, instruction) VALUES
-    (recipe_id, 1, 'Napravi testo.'),
+    (recipe_id, 1, 'Zamesite smesu od brašna, jajeta, jogurta i P.P'),
     (recipe_id, 2, 'Ostavi da naraste.'),
     (recipe_id, 3, 'Prži u dubokom ulju.');
 

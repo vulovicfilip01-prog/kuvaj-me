@@ -1,11 +1,15 @@
 import Link from 'next/link'
+import { Suspense } from 'react'
 import Navbar from '@/components/Navbar'
+import NavbarSkeleton from '@/components/NavbarSkeleton'
 import NotFoundSearch from '@/components/NotFoundSearch'
 
 export default function NotFound() {
     return (
         <main className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
-            <Navbar />
+            <Suspense fallback={<NavbarSkeleton />}>
+                <Navbar />
+            </Suspense>
 
             <div className="container mx-auto px-6 py-20 text-center">
                 <div className="max-w-2xl mx-auto glass-panel rounded-3xl p-12">

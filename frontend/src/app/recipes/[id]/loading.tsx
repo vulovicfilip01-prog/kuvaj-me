@@ -1,9 +1,9 @@
-import Navbar from '@/components/Navbar'
+import NavbarSkeleton from '@/components/NavbarSkeleton'
 
 export default function Loading() {
     return (
         <main className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
-            <Navbar />
+            <NavbarSkeleton />
 
             <div className="container mx-auto px-6 py-8 animate-pulse">
                 {/* Back Button Skeleton */}

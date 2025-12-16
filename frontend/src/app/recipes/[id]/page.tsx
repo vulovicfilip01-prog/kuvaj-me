@@ -98,7 +98,8 @@ export default async function RecipePage({ params }: { params: Promise<{ id: str
         } : undefined
     };
 
-    const steps = recipe.steps || recipe.recipe_steps || [];
+    const stepData = recipe.steps || recipe.recipe_steps || [];
+    const steps = [...stepData].sort((a: any, b: any) => (a.step_number || 0) - (b.step_number || 0));
     // Normalize ingredients for the component
     const rawIngredients = recipe.ingredients || recipe.recipe_ingredients || [];
     const normalizedIngredients = rawIngredients.map((ing: any) => ({
@@ -271,7 +272,7 @@ export default async function RecipePage({ params }: { params: Promise<{ id: str
                                 {steps.map((step: any, index: number) => (
                                     <div key={step.id} className="group flex gap-5">
                                         <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#FDFBF7] border border-amber-100 text-[#6B7E4F] font-bold font-serif text-lg flex items-center justify-center shadow-sm group-hover:bg-[#6B7E4F] group-hover:text-white transition-all duration-300">
-                                            {step.step_number || index + 1}
+                                            {index + 1}
                                         </div>
                                         <p className="text-slate-700 leading-relaxed pt-1.5 text-lg">
                                             {step.instruction.replace(/^\(\d+\)\s*/, '').replace(/^\d+\.\s*/, '')}
