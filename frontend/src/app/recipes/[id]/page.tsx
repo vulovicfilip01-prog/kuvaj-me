@@ -257,15 +257,7 @@ export default async function RecipePage({ params }: { params: Promise<{ id: str
                             isAuthenticated={!!user}
                         />
 
-                        {/* Admin/User Actions */}
-                        {(user?.id === recipe.user_id || userIsAdmin) && (
-                            <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-                                <h3 className="font-bold text-slate-900 mb-4">Upravljanje</h3>
-                                <div className="space-y-2">
-                                    <DeleteRecipeButton recipeId={recipe.id} />
-                                </div>
-                            </div>
-                        )}
+
                     </div>
 
                     {/* Instructions Column */}
@@ -288,6 +280,13 @@ export default async function RecipePage({ params }: { params: Promise<{ id: str
                                 ))}
                             </div>
                         </div>
+
+                        {/* Admin/User Actions */}
+                        {(user?.id === recipe.user_id || userIsAdmin) && (
+                            <div className="flex justify-end mt-4">
+                                <DeleteRecipeButton recipeId={recipe.id} />
+                            </div>
+                        )}
 
                         {/* Comments */}
                         <RecipeComments recipeId={recipe.id} initialComments={comments} user={user} />

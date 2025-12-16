@@ -27,8 +27,8 @@ export async function getUserRecipes(userId: string, isOwner: boolean = false) {
     .from('recipes')
     .select(`
       *,
-      profiles (display_name, avatar_url),
-      categories (name, slug, icon)
+      profiles:profiles!recipes_user_id_fkey (display_name, avatar_url),
+      categories (name, icon)
     `)
     .eq('user_id', userId)
     .order('created_at', { ascending: false })
@@ -82,7 +82,7 @@ export async function getUserCollections(userId: string, isOwner: boolean = fals
         .from('collections')
         .select(`
             *,
-            profiles (display_name, avatar_url),
+            profiles:profiles!collections_user_id_fkey (display_name, avatar_url),
             collection_recipes (count)
         `)
         .eq('user_id', userId)

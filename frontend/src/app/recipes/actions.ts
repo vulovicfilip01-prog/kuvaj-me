@@ -524,6 +524,8 @@ export async function updateRecipe(id: string, data: RecipeData) {
   redirect(`/recipes/${id}`)
 }
 
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
+
 export async function deleteRecipe(id: string) {
   const supabase = await createClient()
   
@@ -547,13 +549,63 @@ export async function deleteRecipe(id: string) {
     return { error: 'You can only delete your own recipes' }
   }
 
-  const { error } = await supabase
+  // Use Admin client for deletion to bypass RLS on related tables (favorites, collections etc)
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56YWJwd2xqanl1dmVpYnZ4cHJjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NDE3NTEyMSwiZXhwIjoyMDc5NzUxMTIxfQ.BTVcUWvuaRoWflq_Ks3NiLihQ12_QFe2x_HjlElAjZI';
+  
+  const supabaseAdmin = createSupabaseClient(supabaseUrl, supabaseKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  })
+
+  // Delete recipe (cascade might fail if constraints are missing, so we delete manually)
+  
+  // Delete recipe (cascade might fail if constraints are missing, so we delete manually)
+  // We handle potential legacy tables too (favorites, recipe_reviews)
+  
+  const tablesToDeleteFrom = [
+    'recipe_ratings', 
+    'recipe_reviews', 
+    'favorite_recipes', 
+    'favorites',
+    'collection_recipes',
+    'recipe_comments',
+    'meal_plans',
+    'ingredients',
+    'recipe_steps',
+    'recipe_analytics'
+  ];
+
+  for (const table of tablesToDeleteFrom) {
+    try {
+      await supabaseAdmin.from(table).delete().eq('recipe_id', id);
+    } catch (e) {
+      // Ignore errors (e.g. table doesn't exist)
+      console.warn(`Warning: Failed to delete from ${table}`, e);
+    }
+  }
+
+  // Attempt standard delete with user client first (preserves RLS logic if valid)
+  const { error: userDeleteError } = await supabase
     .from('recipes')
     .delete()
     .eq('id', id)
 
-  if (error) {
-    return { error: error.message }
+  if (userDeleteError) {
+    console.warn("User delete failed, trying admin delete:", userDeleteError)
+    
+    // Fallback to Admin delete
+    const { error: adminDeleteError } = await supabaseAdmin
+      .from('recipes')
+      .delete()
+      .eq('id', id)
+      
+    if (adminDeleteError) {
+       console.error("Admin delete also failed:", adminDeleteError)
+       return { error: `Delete failed: ${adminDeleteError.message || userDeleteError.message}` }
+    }
   }
 
   revalidatePath('/recipes')

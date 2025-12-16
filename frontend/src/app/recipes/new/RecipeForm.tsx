@@ -113,7 +113,7 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
         }
 
         // Filter out empty ingredients
-        const validIngredients = ingredients.filter(ing => ing.name.trim() && ing.quantity.trim())
+        const validIngredients = ingredients.filter(ing => ing.name.trim())
         if (validIngredients.length === 0) {
             setError('Dodajte bar jedan sastojak')
             setLoading(false)

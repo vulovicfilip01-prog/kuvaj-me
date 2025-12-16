@@ -3,8 +3,9 @@ import { getFavoriteRecipes } from '../recipes/actions';
 import RecipeGrid from '@/components/RecipeGrid';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { HiHeart } from 'react-icons/hi';
+import { FaHeartBroken } from 'react-icons/fa';
 import Navbar from '@/components/Navbar';
+import HeartIcon from '@/components/HeartIcon';
 
 export default async function FavoritesPage() {
     const supabase = await createClient();
@@ -23,9 +24,12 @@ export default async function FavoritesPage() {
             <div className="container mx-auto px-6">
                 {/* Page Title */}
                 <div className="mb-12 animate-slideUp">
-                    <h1 className="text-5xl font-bold text-slate-900 mb-4 heading-font flex items-center gap-3">
-                        <HiHeart className="w-12 h-12 text-red-500" /> Moji omiljeni recepti
-                    </h1>
+                    <div className="flex items-center gap-3 mb-4">
+                        <HeartIcon className="w-12 h-12" />
+                        <h1 className="text-5xl font-bold text-slate-900 heading-font">
+                            Moji omiljeni recepti
+                        </h1>
+                    </div>
                     <p className="text-slate-600 text-lg">
                         Tvoja kolekcija najdražih recepata na jednom mestu
                     </p>
@@ -45,7 +49,9 @@ export default async function FavoritesPage() {
                     </div>
                 ) : (
                     <div className="text-center py-20 glass-panel rounded-3xl animate-fadeIn">
-                        <span className="text-6xl mb-4 block">💔</span>
+                        <div className="flex justify-center mb-6">
+                            <FaHeartBroken className="w-20 h-20 text-[#6B7E4F]" />
+                        </div>
                         <p className="text-slate-600 text-xl font-medium mb-2">Još nemaš omiljene recepte</p>
                         <p className="text-slate-500 mb-6">Počni da istražuješ i dodaj svoje favorite!</p>
                         <Link

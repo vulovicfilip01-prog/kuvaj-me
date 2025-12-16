@@ -5,6 +5,7 @@ import { getUserCollections, getPublicCollections } from '@/app/collections/acti
 import CollectionCard from '@/components/CollectionCard'
 import CreateCollectionDialog from '@/components/CreateCollectionDialog'
 import { FiPlus } from 'react-icons/fi'
+import CollectionIcon from './CollectionIcon'
 
 export default function CollectionsView() {
     const [activeTab, setActiveTab] = useState<'my' | 'public'>('my')
@@ -37,9 +38,12 @@ export default function CollectionsView() {
         <div className="container mx-auto px-4 py-12">
             {/* Header */}
             <div className="mb-8">
-                <h1 className="text-4xl font-bold heading-font text-slate-900 mb-2">
-                    📚 Kolekcije
-                </h1>
+                <div className="flex items-center gap-3 mb-2">
+                    <CollectionIcon className="w-10 h-10" />
+                    <h1 className="text-4xl font-bold heading-font text-slate-900">
+                        Kolekcije
+                    </h1>
+                </div>
                 <p className="text-slate-600">
                     Organizuj recepte u kolekcije koje možeš podeliti sa drugima
                 </p>
@@ -87,7 +91,9 @@ export default function CollectionsView() {
                 </div>
             ) : currentCollections.length === 0 ? (
                 <div className="text-center py-20">
-                    <div className="text-6xl mb-4">📚</div>
+                    <div className="flex justify-center mb-4">
+                        <CollectionIcon className="w-16 h-16" />
+                    </div>
                     <h3 className="text-xl font-bold text-slate-900 mb-2">
                         {activeTab === 'my' ? 'Nemaš još kolekcija' : 'Nema javnih kolekcija'}
                     </h3>

@@ -79,6 +79,17 @@ export async function deleteCollection(id: string) {
         return { error: 'Morate biti prijavljeni' }
     }
 
+    // Manually delete recipes first to avoid potential RLS/Cascade issues
+    const { error: recipesError } = await supabase
+        .from('collection_recipes')
+        .delete()
+        .eq('collection_id', id)
+
+    if (recipesError) {
+        console.error('Error deleting collection recipes:', recipesError)
+        return { error: 'Greška pri brisanju recepata iz kolekcije' }
+    }
+
     const { error } = await supabase
         .from('collections')
         .delete()

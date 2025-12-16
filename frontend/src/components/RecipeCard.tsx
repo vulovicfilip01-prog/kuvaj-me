@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import FavoriteButton from './FavoriteButton';
+import DeleteRecipeButton from './DeleteRecipeButton';
 import RecipePlaceholder from './RecipePlaceholder';
 import RecipeImage from './RecipeImage';
 ;
@@ -33,9 +34,10 @@ interface RecipeCardProps {
     };
     isFavorite?: boolean;
     isAuthenticated?: boolean;
+    isOwner?: boolean;
 }
 
-export default function RecipeCard({ recipe, isFavorite = false, isAuthenticated = false }: RecipeCardProps) {
+export default function RecipeCard({ recipe, isFavorite = false, isAuthenticated = false, isOwner = false }: RecipeCardProps) {
     return (
         <div className="group block h-full">
             <div className="glass-panel rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 relative h-full flex flex-col">
@@ -43,16 +45,23 @@ export default function RecipeCard({ recipe, isFavorite = false, isAuthenticated
                 {/* Main Link Overlay */}
                 <Link href={`/recipes/${recipe.id}`} className="absolute inset-0 z-0" aria-label={`Pogledaj recept ${recipe.title}`} />
 
-                {/* Match Badge (if available) */}
-                {recipe.matchInfo && (
-                    <div className={`absolute top-3 right-3 z-10 px-3 py-1 rounded-full text-xs font-bold shadow-lg backdrop-blur-md border border-white/10 ${recipe.matchInfo.missingCount === 0
-                        ? 'bg-green-500/90 text-white'
-                        : 'bg-yellow-500/90 text-black'
-                        }`}>
-                        {recipe.matchInfo.missingCount === 0
-                            ? '✨ Imaš sve!'
-                            : `Fali ${recipe.matchInfo.missingCount}`}
+                {/* Owner Actions (Delete) OR Match Badge */}
+                {isOwner ? (
+                    <div className="absolute top-3 right-3 z-20 pointer-events-auto">
+                        {/* Compact Delete Button */}
+                        <DeleteRecipeButton recipeId={recipe.id} compact={true} />
                     </div>
+                ) : (
+                    recipe.matchInfo && (
+                        <div className={`absolute top-3 right-3 z-10 px-3 py-1 rounded-full text-xs font-bold shadow-lg backdrop-blur-md border border-white/10 ${recipe.matchInfo.missingCount === 0
+                            ? 'bg-green-500/90 text-white'
+                            : 'bg-yellow-500/90 text-black'
+                            }`}>
+                            {recipe.matchInfo.missingCount === 0
+                                ? '✨ Imaš sve!'
+                                : `Fali ${recipe.matchInfo.missingCount}`}
+                        </div>
+                    )
                 )}
 
                 {/* Favorite Button */}

@@ -17,6 +17,8 @@ export default function DeleteCollectionButton({ collectionId }: { collectionId:
 
         if (!result.error) {
             router.push('/collections')
+        } else {
+            alert(result.error)
         }
     }
 

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FiMapPin, FiLink, FiEdit2, FiGrid, FiLayers, FiHeart, FiGlobe, FiInstagram, FiTwitter } from 'react-icons/fi'
+import { FiMapPin, FiLink, FiEdit2, FiGrid, FiLayers, FiHeart, FiGlobe, FiInstagram, FiTwitter, FiPlus } from 'react-icons/fi'
 import RecipeCard from '@/components/RecipeCard'
 import CollectionCard from '@/components/CollectionCard'
 import FollowButton from './FollowButton'
@@ -68,12 +68,21 @@ export default function ProfileView({ profile, recipes, collections, stats, isOw
                                 {profile.display_name}
                             </h1>
                             {isOwner ? (
-                                <Link
-                                    href="/profile/edit"
-                                    className="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl text-sm font-bold hover:bg-slate-200 transition-colors"
-                                >
-                                    Uredi profil
-                                </Link>
+                                <div className="flex gap-3">
+                                    <Link
+                                        href="/recipes/new"
+                                        className="px-4 py-2 bg-primary text-white rounded-xl text-sm font-bold hover:bg-primary-dark transition-colors flex items-center gap-2 shadow-sm"
+                                    >
+                                        <FiPlus className="w-4 h-4" />
+                                        Dodaj recept
+                                    </Link>
+                                    <Link
+                                        href="/profile/edit"
+                                        className="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl text-sm font-bold hover:bg-slate-200 transition-colors"
+                                    >
+                                        Uredi profil
+                                    </Link>
+                                </div>
                             ) : (
                                 <FollowButton
                                     targetUserId={profile.id}
@@ -191,7 +200,7 @@ export default function ProfileView({ profile, recipes, collections, stats, isOw
                     recipes.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {recipes.map((recipe) => (
-                                <RecipeCard key={recipe.id} recipe={recipe} />
+                                <RecipeCard key={recipe.id} recipe={recipe} isOwner={isOwner} />
                             ))}
                         </div>
                     ) : (
