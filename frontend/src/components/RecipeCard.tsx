@@ -37,8 +37,11 @@ interface RecipeCardProps {
 
 export default function RecipeCard({ recipe, isFavorite = false, isAuthenticated = false }: RecipeCardProps) {
     return (
-        <Link href={`/recipes/${recipe.id}`} className="group block h-full">
+        <div className="group block h-full">
             <div className="glass-panel rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 relative h-full flex flex-col">
+
+                {/* Main Link Overlay */}
+                <Link href={`/recipes/${recipe.id}`} className="absolute inset-0 z-0" aria-label={`Pogledaj recept ${recipe.title}`} />
 
                 {/* Match Badge (if available) */}
                 {recipe.matchInfo && (
@@ -63,7 +66,7 @@ export default function RecipeCard({ recipe, isFavorite = false, isAuthenticated
                 </div>
 
                 {/* Recipe Image */}
-                <div className="h-48 relative overflow-hidden bg-gradient-to-br from-slate-800 to-slate-700">
+                <div className="h-48 relative overflow-hidden bg-gradient-to-br from-slate-800 to-slate-700 pointer-events-none">
                     {recipe.image_url ? (
                         <RecipeImage
                             src={recipe.image_url}
@@ -79,7 +82,7 @@ export default function RecipeCard({ recipe, isFavorite = false, isAuthenticated
                     )}
                 </div>
 
-                <div className="p-5 flex flex-col flex-grow">
+                <div className="p-5 flex flex-col flex-grow pointer-events-none">
                     <div className="flex justify-between items-start mb-3">
                         <span className="text-xs font-bold text-primary uppercase tracking-wider bg-primary/10 px-2 py-1 rounded-md border border-primary/20">
                             {recipe.categories?.name || 'Opšte'}
@@ -138,14 +141,13 @@ export default function RecipeCard({ recipe, isFavorite = false, isAuthenticated
                         </div>
                         <Link
                             href={`/profile/${recipe.user_id}`}
-                            className="text-slate-500 text-xs hover:text-primary transition-colors"
-                            onClick={(e) => e.stopPropagation()}
+                            className="text-slate-500 text-xs hover:text-primary transition-colors z-20 relative pointer-events-auto"
                         >
                             by <span className="text-slate-700 font-medium hover:text-primary transition-colors">{recipe.profiles?.display_name || 'Chef'}</span>
                         </Link>
                     </div>
                 </div>
             </div>
-        </Link>
+        </div>
     );
 }

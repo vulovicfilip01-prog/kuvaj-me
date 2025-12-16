@@ -51,10 +51,10 @@ export default function AddToCollectionButton({ recipeId }: AddToCollectionButto
             <div className="relative">
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-[#6B7E4F] text-white rounded-xl hover:bg-[#5a6b42] transition-colors shadow-sm"
                 >
                     <FiPlus className="w-4 h-4" />
-                    <span className="font-medium text-slate-700">Dodaj u kolekciju</span>
+                    <span className="font-medium">Dodaj u kolekciju</span>
                 </button>
 
                 {isOpen && (

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { createComment, deleteComment } from '@/app/recipes/comment-actions'
 import { FiTrash2, FiUser } from 'react-icons/fi'
+import { FaComment } from 'react-icons/fa'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -63,7 +64,9 @@ export default function RecipeComments({ recipeId, initialComments, user }: Reci
     return (
         <div className="mt-12 bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100">
             <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
-                <span className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl">💬</span>
+                <span className="w-10 h-10 rounded-xl bg-[#6B7E4F] text-white flex items-center justify-center text-xl shadow-md">
+                    <FaComment className="w-5 h-5" />
+                </span>
                 Komentari ({comments.length})
             </h3>
 

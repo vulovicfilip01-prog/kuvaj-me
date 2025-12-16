@@ -40,6 +40,16 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
             };
         }
 
+        // Instagram
+        const instagramRegex = /(?:instagram\.com\/(?:p|reel)\/)([^/?#&]+)/;
+        const instagramMatch = url.match(instagramRegex);
+        if (instagramMatch && instagramMatch[1]) {
+            return {
+                type: 'instagram',
+                src: `https://www.instagram.com/p/${instagramMatch[1]}/embed`,
+            };
+        }
+
         return null;
     };
 

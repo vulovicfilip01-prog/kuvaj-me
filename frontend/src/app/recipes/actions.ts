@@ -170,7 +170,7 @@ export async function getRecipes(searchParams?: { posno?: string }) {
     .from("recipes")
     .select(`
       *,
-      profiles (
+      profiles:profiles!recipes_user_id_fkey (
         display_name
       ),
       categories (
@@ -195,13 +195,15 @@ export async function getRecipes(searchParams?: { posno?: string }) {
 }
 
 export async function getRecipe(id: string) {
+  console.log(`[getRecipe] Fetching recipe ${id}`);
   const supabase = await createClient();
+  console.log(`[getRecipe] Client created`);
 
   const { data: recipe, error } = await supabase
     .from("recipes")
     .select(`
       *,
-      profiles (
+      profiles:profiles!recipes_user_id_fkey (
         display_name
       ),
       categories (
@@ -214,9 +216,10 @@ export async function getRecipe(id: string) {
     .single();
 
   if (error) {
-    console.error("Error fetching recipe:", error);
+    console.error(`[getRecipe] Error fetching recipe ${id}:`, error);
     return null;
   }
+  console.log(`[getRecipe] Success:`, recipe ? recipe.title : 'No recipe found');
 
   // Sort steps by order_index just in case
   if (recipe.steps) {
@@ -267,7 +270,7 @@ export async function searchRecipesByIngredients(searchIngredients: string[]) {
     .from('recipes')
     .select(`
       *,
-      profiles (display_name),
+      profiles:profiles!recipes_user_id_fkey (display_name),
       categories (name),
       ingredients (*)
     `)
@@ -376,7 +379,7 @@ export async function getFavoriteRecipes() {
       recipe_id,
       recipes (
         *,
-        profiles (display_name),
+        profiles:profiles!recipes_user_id_fkey (display_name),
         categories (name)
       )
     `)
@@ -624,7 +627,7 @@ export async function searchRecipes(query: string, filters?: { posnoOnly?: boole
     .from('recipes')
     .select(`
       *,
-      profiles (display_name),
+      profiles:profiles!recipes_user_id_fkey (display_name),
       categories (name),
       ingredients (*)
     `)
@@ -656,7 +659,7 @@ export async function searchRecipes(query: string, filters?: { posnoOnly?: boole
       .from('recipes')
       .select(`
         *,
-        profiles (display_name),
+        profiles:profiles!recipes_user_id_fkey (display_name),
         categories (name),
         ingredients (*)
       `)
@@ -706,7 +709,7 @@ export async function getFeedRecipes(limit: number = 10) {
     .from('recipes')
     .select(`
       *,
-      profiles (display_name),
+      profiles:profiles!recipes_user_id_fkey (display_name),
       categories (name)
     `)
     .in('user_id', followingIds)

@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import PrintControl from "./PrintControl";
 
-export default async function PrintRecipePage({ params }: { params: { id: string } }) {
+export default async function PrintRecipePage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     const supabase = await createClient();
 
     const { data: recipe } = await supabase
@@ -23,7 +24,7 @@ export default async function PrintRecipePage({ params }: { params: { id: string
     ),
     profiles(display_name)
         `)
-        .eq('id', params.id)
+        .eq('id', id)
         .single();
 
     if (!recipe) {

@@ -249,10 +249,10 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                                     value={videoUrl}
                                     onChange={(e) => setVideoUrl(e.target.value)}
                                     className="w-full px-5 py-4 bg-white/50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all text-lg"
-                                    placeholder="https://www.youtube.com/watch?v=..."
+                                    placeholder="https://www.youtube.com/watch?v=... ili Instagram/TikTok link"
                                 />
                                 <p className="text-xs text-slate-500 mt-2">
-                                    Nalepite link do videa. Podržani: YouTube, TikTok, Vimeo.
+                                    Nalepite link do videa. Podržani: YouTube, TikTok, Instagram, Vimeo.
                                 </p>
                             </div>
                         </div>

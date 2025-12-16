@@ -38,7 +38,7 @@ export default function AddToPlanButton({ recipeId }: AddToPlanButtonProps) {
         return (
             <button
                 onClick={() => setIsOpen(true)}
-                className="flex items-center gap-2 bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-xl hover:bg-slate-50 transition-colors font-medium shadow-sm"
+                className="flex items-center gap-2 bg-[#6B7E4F] text-white px-4 py-2 rounded-xl hover:bg-[#5a6b42] transition-colors font-medium shadow-sm"
             >
                 <FiCalendar className="w-5 h-5" />
                 <span>Dodaj u Planer</span>

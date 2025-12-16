@@ -1,4 +1,3 @@
-
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
@@ -20,16 +19,18 @@ import RecipeComments from '@/components/RecipeComments';
 import Navbar from '@/components/Navbar';
 import PrintButton from '@/components/PrintButton';
 import RecipeAnalyticsLogger from '@/components/RecipeAnalyticsLogger';
+import ChefHatIcon from '@/components/ChefHatIcon';
+import ForkKnifeIcon from '@/components/ForkKnifeIcon';
 
-// Icons
-import { LuClock, LuFlame, LuUsers, LuChefHat, LuPlay, LuNotepadText } from "react-icons/lu";
-import { ImSpoonKnife } from "react-icons/im";
+// Icons for stats (styled inline to match custom icons)
+import { LuClock, LuFlame, LuUsers, LuStar } from "react-icons/lu";
 
 // Force dynamic rendering for authenticated features
 export const dynamic = 'force-dynamic';
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-    const recipe = await getRecipe(params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+    const { id } = await params;
+    const recipe = await getRecipe(id);
     if (!recipe) return { title: 'Recept nije pronađen' };
 
     return {
@@ -43,11 +44,12 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     };
 }
 
-export default async function RecipePage({ params }: { params: { id: string } }) {
+export default async function RecipePage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
-    const recipe = await getRecipe(params.id);
+    const recipe = await getRecipe(id);
     if (!recipe) {
         notFound();
     }
@@ -68,7 +70,7 @@ export default async function RecipePage({ params }: { params: { id: string } })
         },
         datePublished: recipe.created_at,
         description: recipe.description,
-        prepTime: `PT${recipe.preperation_time || recipe.prep_time}M`, // Handle legacy/new column names if any
+        prepTime: `PT${recipe.preperation_time || recipe.prep_time}M`,
         cookTime: `PT${recipe.cooking_time || recipe.cook_time}M`,
         recipeYield: `${recipe.servings} porcija`,
         recipeIngredient: recipe.recipe_ingredients?.map((i: any) => `${i.amount} ${i.unit} ${i.ingredient.name}`) || recipe.ingredients?.map((i: any) => `${i.quantity} ${i.name}`),
@@ -96,191 +98,157 @@ export default async function RecipePage({ params }: { params: { id: string } })
         } : undefined
     };
 
-    // Check if we are using the new 'recipe_steps' or old 'steps' structure from getRecipe
-    // The previous getRecipe version seemed to join 'steps:recipe_steps(*)'
     const steps = recipe.steps || recipe.recipe_steps || [];
-    const ingredients = recipe.ingredients || recipe.recipe_ingredients || [];
-
-    // Helper to get ingredient display
-    const getIngredientText = (ing: any) => {
-        if (ing.ingredient?.name) {
-            return `${ing.amount} ${ing.unit} ${ing.ingredient.name}`;
-        }
-        return `${ing.quantity} ${ing.name}`;
-    };
+    // Normalize ingredients for the component
+    const rawIngredients = recipe.ingredients || recipe.recipe_ingredients || [];
+    const normalizedIngredients = rawIngredients.map((ing: any) => ({
+        id: ing.id || Math.random().toString(), // Fallback ID if missing
+        name: ing.ingredient?.name || ing.name,
+        quantity: `${ing.amount || ing.quantity || ''} ${ing.unit || ''}`.trim()
+    }));
 
     const recipeUrl = typeof window !== 'undefined' ? window.location.href : `https://kuvaj.me/recipes/${recipe.id}`;
-
     const userIsAdmin = user?.user_metadata?.is_admin === true;
+
+    // Helper for styled stats icons
+    const StatsIcon = ({ children }: { children: React.ReactNode }) => (
+        <div className="w-10 h-10 rounded-full bg-[#6B7E4F] flex items-center justify-center text-white shadow-md mx-auto mb-2">
+            {children}
+        </div>
+    );
 
     return (
         <div className="min-h-screen bg-slate-50 pb-20">
             <Navbar />
 
-            {/* Recipe Schema JSON-LD */}
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(recipeSchema) }}
             />
             <RecipeAnalyticsLogger recipeId={recipe.id} title={recipe.title} />
 
-            <main className="container mx-auto px-4 py-8">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Main Content */}
-                    <div className="lg:col-span-2 space-y-8">
-                        {/* Hero Section */}
-                        <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-                            <div className="relative aspect-video rounded-2xl overflow-hidden mb-6 bg-slate-100">
-                                {recipe.image_url ? (
-                                    <RecipeImage
-                                        src={recipe.image_url}
-                                        alt={recipe.title}
-                                        fill
-                                        className="object-cover"
-                                        priority
-                                    />
-                                ) : (
-                                    <RecipePlaceholder className="w-full h-full" />
-                                )}
+            <main className="container mx-auto px-4 py-8 max-w-5xl">
+                {/* Hero Section */}
+                <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 mb-8">
+                    <div className="relative aspect-video rounded-2xl overflow-hidden mb-6 bg-slate-100">
+                        {recipe.image_url ? (
+                            <RecipeImage
+                                src={recipe.image_url}
+                                alt={recipe.title}
+                                fill
+                                className="object-cover"
+                                priority
+                            />
+                        ) : (
+                            <RecipePlaceholder className="w-full h-full" />
+                        )}
 
-                                {recipe.is_posno && (
-                                    <div className="absolute top-4 right-4 px-3 py-1 bg-green-500 text-white text-xs font-bold rounded-full shadow-lg">
-                                        Posno
-                                    </div>
-                                )}
+                        {recipe.is_posno && (
+                            <div className="absolute top-4 right-4 px-3 py-1 bg-green-500 text-white text-xs font-bold rounded-full shadow-lg">
+                                Posno
                             </div>
-
-                            {/* Title & Author */}
-                            <div className="mb-6">
-                                <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                                    {recipe.title}
-                                </h1>
-                                <div className="flex items-center justify-between flex-wrap gap-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold overflow-hidden relative">
-                                            {recipe.profiles?.avatar_url ? (
-                                                <RecipeImage src={recipe.profiles.avatar_url} alt="Avatar" fill className="object-cover" />
-                                            ) : (
-                                                <span>{recipe.profiles?.display_name?.[0]?.toUpperCase() || 'K'}</span>
-                                            )}
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-medium text-slate-900">
-                                                {recipe.profiles?.display_name || 'Kuvaj.me Korisnik'}
-                                            </p>
-                                            <p className="text-xs text-slate-500">
-                                                {new Date(recipe.created_at).toLocaleDateString('sr-RS')}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex gap-2">
-                                        <PrintButton recipeId={recipe.id} />
-                                        <ShareButton
-                                            recipeTitle={recipe.title}
-                                            recipeDescription={recipe.description || ''}
-                                            recipeUrl={recipeUrl}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Stats */}
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-slate-50 rounded-2xl mb-6">
-                                <div className="text-center p-2">
-                                    <span className="block text-2xl mb-1">⏱️</span>
-                                    <span className="text-xs text-slate-500 uppercase tracking-wider font-medium">Priprema</span>
-                                    <p className="font-semibold text-slate-900">{recipe.prep_time || recipe.preparation_time} min</p>
-                                </div>
-                                <div className="text-center p-2 border-l border-slate-200">
-                                    <span className="block text-2xl mb-1">🔥</span>
-                                    <span className="text-xs text-slate-500 uppercase tracking-wider font-medium">Kuvanje</span>
-                                    <p className="font-semibold text-slate-900">{recipe.cook_time || recipe.cooking_time} min</p>
-                                </div>
-                                <div className="text-center p-2 border-l border-slate-200">
-                                    <span className="block text-2xl mb-1">👥</span>
-                                    <span className="text-xs text-slate-500 uppercase tracking-wider font-medium">Porcija</span>
-                                    <p className="font-semibold text-slate-900">{recipe.servings}</p>
-                                </div>
-                                <div className="text-center p-2 border-l border-slate-200">
-                                    <span className="block text-2xl mb-1">⭐</span>
-                                    <span className="text-xs text-slate-500 uppercase tracking-wider font-medium">Ocena</span>
-                                    <p className="font-semibold text-slate-900">{average} / 5</p>
-                                </div>
-                            </div>
-
-                            {/* Description */}
-                            {recipe.description && (
-                                <p className="text-slate-600 leading-relaxed mb-6">
-                                    {recipe.description}
-                                </p>
-                            )}
-
-                            {/* Video */}
-                            {recipe.video_url && (
-                                <div className="mb-6">
-                                    <VideoPlayer url={recipe.video_url} />
-                                </div>
-                            )}
-
-                            {/* Interaction Bar */}
-                            <div className="flex flex-wrap gap-3">
-                                <FavoriteButton
-                                    recipeId={recipe.id}
-                                    initialIsFavorite={recipeIsFavorite}
-                                    isAuthenticated={!!user}
-                                    className="flex-1"
-                                />
-                                <AddToPlanButton recipeId={recipe.id} />
-                                <AddToCollectionButton recipeId={recipe.id} />
-                            </div>
-                        </div>
-
-                        {/* Instructions */}
-                        <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-                            <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                                <span className="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center text-lg">👩‍🍳</span>
-                                Priprema
-                            </h2>
-                            <div className="space-y-6">
-                                {steps.map((step: any, index: number) => (
-                                    <div key={step.id} className="group flex gap-4">
-                                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 text-slate-600 font-bold flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
-                                            {step.step_number || index + 1}
-                                        </div>
-                                        <p className="text-slate-600 leading-relaxed pt-1">
-                                            {step.instruction}
-                                        </p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Comments System */}
-                        <RecipeComments recipeId={recipe.id} initialComments={comments} user={user} />
+                        )}
                     </div>
 
-                    {/* Sidebar */}
+                    {/* Title & Author */}
+                    <div className="mb-6">
+                        <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 font-serif">
+                            {recipe.title}
+                        </h1>
+                        <div className="flex items-center justify-between flex-wrap gap-4">
+                            <Link href={`/profile/${recipe.user_id}`} className="flex items-center gap-3 group">
+                                <div className="relative">
+                                    {recipe.profiles?.avatar_url ? (
+                                        <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#6B7E4F]">
+                                            <RecipeImage src={recipe.profiles.avatar_url} alt="Avatar" fill className="object-cover" />
+                                        </div>
+                                    ) : (
+                                        <ChefHatIcon className="w-12 h-12" />
+                                    )}
+                                </div>
+                                <div>
+                                    <p className="text-base font-bold text-slate-900 group-hover:text-[#6B7E4F] transition-colors">
+                                        {recipe.profiles?.display_name || 'Kuvaj.me Korisnik'}
+                                    </p>
+                                    <p className="text-xs text-slate-500">
+                                        {new Date(recipe.created_at).toLocaleDateString('sr-RS')}
+                                    </p>
+                                </div>
+                            </Link>
+
+                            <div className="flex gap-2">
+                                <PrintButton recipeId={recipe.id} />
+                                <ShareButton
+                                    recipeTitle={recipe.title}
+                                    recipeDescription={recipe.description || ''}
+                                    recipeUrl={recipeUrl}
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Stats */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 bg-[#FDFBF7] rounded-2xl mb-8 border border-amber-100/50">
+                        <div className="text-center">
+                            <StatsIcon><LuClock size={20} /></StatsIcon>
+                            <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Priprema</span>
+                            <p className="font-serif text-lg text-slate-900">{recipe.prep_time || recipe.preparation_time} min</p>
+                        </div>
+                        <div className="text-center relative after:hidden md:after:block after:absolute after:right-0 after:top-1/4 after:h-1/2 after:w-[1px] after:bg-slate-200">
+                            <StatsIcon><LuFlame size={20} /></StatsIcon>
+                            <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Kuvanje</span>
+                            <p className="font-serif text-lg text-slate-900">{recipe.cook_time || recipe.cooking_time} min</p>
+                        </div>
+                        <div className="text-center">
+                            <StatsIcon><LuUsers size={20} /></StatsIcon>
+                            <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Porcija</span>
+                            <p className="font-serif text-lg text-slate-900">{recipe.servings}</p>
+                        </div>
+                        <div className="text-center relative before:hidden md:before:block before:absolute before:left-0 before:top-1/4 before:h-1/2 before:w-[1px] before:bg-slate-200">
+                            <StatsIcon><LuStar size={20} /></StatsIcon>
+                            <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Ocena</span>
+                            <p className="font-serif text-lg text-slate-900">{average} / 5</p>
+                        </div>
+                    </div>
+
+                    {/* Description */}
+                    {recipe.description && (
+                        <p className="text-slate-600 leading-relaxed text-lg mb-8 italic border-l-4 border-[#6B7E4F] pl-4">
+                            {recipe.description}
+                        </p>
+                    )}
+
+                    {/* Actions */}
+                    <div className="flex flex-wrap gap-3 mb-8">
+                        <FavoriteButton
+                            recipeId={recipe.id}
+                            initialIsFavorite={recipeIsFavorite}
+                            isAuthenticated={!!user}
+                            className="flex-1 md:flex-none"
+                        />
+                        <AddToPlanButton recipeId={recipe.id} />
+                        <AddToCollectionButton recipeId={recipe.id} />
+                    </div>
+
+                    {/* Video */}
+                    {recipe.video_url && (
+                        <div className="mb-8">
+                            <VideoPlayer url={recipe.video_url} />
+                        </div>
+                    )}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-[1fr,1.5fr] gap-8">
+                    {/* Ingredients Column */}
                     <div className="space-y-6">
-                        {/* Ingredients Card */}
-                        <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 sticky top-24">
-                            <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                                <span className="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center text-lg">🥦</span>
-                                Sastojci
-                            </h2>
-                            <ul className="space-y-3">
-                                {ingredients.map((ing: any) => (
-                                    <li key={ing.id} className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0 hover:bg-slate-50 px-2 rounded-lg transition-colors">
-                                        <span className="text-slate-700">{ing.ingredient?.name || ing.name}</span>
-                                        <span className="font-semibold text-slate-900 bg-slate-100 px-2 py-1 rounded-md text-sm">
-                                            {ing.amount || ing.quantity} {ing.unit || ''}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
+                        <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+                            <RecipeIngredients
+                                ingredients={normalizedIngredients}
+                                isAuthenticated={!!user}
+                            />
                         </div>
 
-                        {/* Rating Card */}
+                        {/* Rating Component */}
                         <StarRating
                             recipeId={recipe.id}
                             initialAverage={average}
@@ -289,8 +257,8 @@ export default async function RecipePage({ params }: { params: { id: string } })
                             isAuthenticated={!!user}
                         />
 
-                        {/* Admin Action */}
-                        {user && user.id === recipe.user_id && (
+                        {/* Admin/User Actions */}
+                        {(user?.id === recipe.user_id || userIsAdmin) && (
                             <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
                                 <h3 className="font-bold text-slate-900 mb-4">Upravljanje</h3>
                                 <div className="space-y-2">
@@ -298,14 +266,31 @@ export default async function RecipePage({ params }: { params: { id: string } })
                                 </div>
                             </div>
                         )}
-                        {user && userIsAdmin && (
-                            <div className="bg-red-50 rounded-3xl p-6 shadow-sm border border-red-100">
-                                <h3 className="font-bold text-red-900 mb-4">Admin Zona</h3>
-                                <div className="space-y-2">
-                                    <DeleteRecipeButton recipeId={recipe.id} />
-                                </div>
+                    </div>
+
+                    {/* Instructions Column */}
+                    <div className="space-y-8">
+                        <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+                            <h2 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3 font-serif">
+                                <ForkKnifeIcon className="w-10 h-10" />
+                                Priprema
+                            </h2>
+                            <div className="space-y-8">
+                                {steps.map((step: any, index: number) => (
+                                    <div key={step.id} className="group flex gap-5">
+                                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#FDFBF7] border border-amber-100 text-[#6B7E4F] font-bold font-serif text-lg flex items-center justify-center shadow-sm group-hover:bg-[#6B7E4F] group-hover:text-white transition-all duration-300">
+                                            {step.step_number || index + 1}
+                                        </div>
+                                        <p className="text-slate-700 leading-relaxed pt-1.5 text-lg">
+                                            {step.instruction.replace(/^\(\d+\)\s*/, '').replace(/^\d+\.\s*/, '')}
+                                        </p>
+                                    </div>
+                                ))}
                             </div>
-                        )}
+                        </div>
+
+                        {/* Comments */}
+                        <RecipeComments recipeId={recipe.id} initialComments={comments} user={user} />
                     </div>
                 </div>
             </main>

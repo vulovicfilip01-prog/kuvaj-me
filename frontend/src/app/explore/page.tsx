@@ -76,7 +76,7 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
         .from('recipes')
         .select(`
             *,
-            profiles (display_name),
+            profiles:profiles!recipes_user_id_fkey (display_name),
             categories (name),
             favorite_recipes (count)
         `)

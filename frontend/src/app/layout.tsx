@@ -83,10 +83,10 @@ export default function RootLayout({
         className={`${outfit.variable} ${inter.variable} antialiased font-sans`}
       >
         {children}
+        <WelcomeModal />
+        <Footer />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
       </body>
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
-      <WelcomeModal />
-      <Footer />
     </html>
   );
 }

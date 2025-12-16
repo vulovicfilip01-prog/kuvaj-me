@@ -33,13 +33,22 @@ export default function RecipeFilter({ categories }: RecipeFilterProps) {
     }, [searchParams])
 
     const updateFilters = (key: string, value: string) => {
+        // Optimistic update
+        switch (key) {
+            case 'category': setSelectedCategory(value); break;
+            case 'difficulty': setSelectedDifficulty(value); break;
+            case 'time': setSelectedTime(value); break;
+            case 'posno': setIsPosno(value === 'true'); break;
+            case 'sort': setSortBy(value); break;
+        }
+
         const params = new URLSearchParams(searchParams.toString())
         if (value) {
             params.set(key, value)
         } else {
             params.delete(key)
         }
-        router.push(`/explore?${params.toString()}`)
+        router.push(`/explore?${params.toString()}`, { scroll: false })
     }
 
     return (
@@ -153,7 +162,7 @@ export default function RecipeFilter({ categories }: RecipeFilterProps) {
                                     value={time.value}
                                     checked={selectedTime === time.value}
                                     onChange={() => updateFilters('time', time.value)}
-                                    className="w-4 h-4 text-primary border-slate-300 focus:ring-primary"
+                                    className="w-4 h-4 text-[#6B7E4F] accent-[#6B7E4F] border-slate-300 focus:ring-[#6B7E4F] focus:ring-2"
                                 />
                                 <span className={`text-sm group-hover:text-primary transition-colors ${selectedTime === time.value ? 'font-bold text-slate-900' : 'text-slate-600'}`}>
                                     {time.label}
