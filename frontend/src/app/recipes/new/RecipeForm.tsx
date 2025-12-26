@@ -5,6 +5,8 @@ import { createRecipe, updateRecipe, getCategories } from '../actions'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import ImageUpload from '@/components/ImageUpload'
+import UserRoundPenIcon from '@/components/UserRoundPenIcon'
+import DifficultyBadge from '@/components/DifficultyBadge'
 
 interface Category {
     id: string
@@ -106,8 +108,39 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
             return
         }
 
+        if (title.length > 100) {
+            setError('Naslov ne može biti duži od 100 karaktera')
+            setLoading(false)
+            return
+        }
+
+        if (description.length > 1000) {
+            setError('Opis ne može biti duži od 1000 karaktera')
+            setLoading(false)
+            return
+        }
+
         if (!categoryId) {
             setError('Izaberite kategoriju')
+            setLoading(false)
+            return
+        }
+
+        // Time and servings validation
+        if (prepTime && parseInt(prepTime) < 0) {
+            setError('Vreme pripreme ne može biti negativno')
+            setLoading(false)
+            return
+        }
+
+        if (cookTime && parseInt(cookTime) < 0) {
+            setError('Vreme kuvanja ne može biti negativno')
+            setLoading(false)
+            return
+        }
+
+        if (servings && parseInt(servings) < 1) {
+            setError('Broj porcija mora biti bar 1')
             setLoading(false)
             return
         }
@@ -174,9 +207,9 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                         href={initialData ? `/recipes/${initialData.id}` : "/"}
                         className="px-6 py-2.5 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full font-medium hover:shadow-lg hover:shadow-primary/25 transition-all inline-flex items-center gap-2 mb-6"
                     >
-                        ← Nazad
+                        Nazad
                     </Link>
-                    <h1 className="text-5xl font-bold text-slate-900 mb-3 heading-font">
+                    <h1 className="text-5xl font-bold text-yellow-600 mb-3 heading-font">
                         {initialData ? 'Izmeni' : 'Dodaj novi'} <span className="text-gradient">recept</span>
                     </h1>
                     <p className="text-slate-600 text-lg">
@@ -188,7 +221,10 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                     {/* Basic Info Section */}
                     <div className="glass-panel rounded-3xl p-8">
                         <h2 className="text-2xl font-bold text-slate-900 mb-6 heading-font flex items-center gap-2">
-                            <span className="text-primary">📝</span> Osnovne informacije
+                            <div className="bg-[#6B7E4F] p-2 rounded-full inline-flex items-center justify-center shadow-sm">
+                                <UserRoundPenIcon className="w-5 h-5 text-white" strokeWidth="1.5" />
+                            </div>
+                            Osnovne informacije
                         </h2>
 
                         <div className="space-y-6">
@@ -201,6 +237,7 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                                     required
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
+                                    maxLength={100}
                                     className="w-full px-5 py-4 bg-white/50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all text-lg"
                                     placeholder="npr. Pečena piletina sa povrćem"
                                 />
@@ -213,6 +250,7 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                                 <textarea
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
+                                    maxLength={1000}
                                     rows={3}
                                     className="w-full px-5 py-4 bg-white/50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
                                     placeholder="Kratak opis recepta..."
@@ -312,15 +350,24 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                                 <label className="block text-sm font-medium text-slate-700 mb-2">
                                     Težina
                                 </label>
-                                <select
-                                    value={difficulty}
-                                    onChange={(e) => setDifficulty(e.target.value as any)}
-                                    className="w-full px-5 py-4 bg-white/50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all appearance-none cursor-pointer"
-                                >
-                                    <option value="lako" className="bg-white text-slate-900">🟢 Lako</option>
-                                    <option value="srednje" className="bg-white text-slate-900">🟡 Srednje</option>
-                                    <option value="teško" className="bg-white text-slate-900">🔴 Teško</option>
-                                </select>
+                                <div className="grid grid-cols-3 gap-3">
+                                    {(['lako', 'srednje', 'teško'] as const).map((diff) => (
+                                        <button
+                                            key={diff}
+                                            type="button"
+                                            onClick={() => setDifficulty(diff)}
+                                            className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${difficulty === diff
+                                                ? 'border-primary bg-primary/5 shadow-md'
+                                                : 'border-slate-100 bg-white/50 hover:border-primary/30'
+                                                }`}
+                                        >
+                                            <DifficultyBadge difficulty={diff} showText={false} className="bg-transparent border-none p-0 scale-125 mb-1" />
+                                            <span className={`text-sm font-bold uppercase tracking-wider ${difficulty === diff ? 'text-primary' : 'text-slate-500'}`}>
+                                                {diff}
+                                            </span>
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
                         </div>
 

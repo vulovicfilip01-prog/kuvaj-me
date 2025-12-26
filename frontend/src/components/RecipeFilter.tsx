@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { FiFilter, FiClock, FiBarChart2, FiGrid } from 'react-icons/fi'
+import { PiChefHat } from 'react-icons/pi'
 
 interface Category {
     id: string
@@ -132,12 +133,17 @@ export default function RecipeFilter({ categories }: RecipeFilterProps) {
                             <button
                                 key={diff}
                                 onClick={() => updateFilters('difficulty', selectedDifficulty === diff ? '' : diff)}
-                                className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-all ${selectedDifficulty === diff
-                                    ? 'bg-primary text-white border-primary'
+                                className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-all flex items-center gap-2 ${selectedDifficulty === diff
+                                    ? 'bg-primary text-white border-primary shadow-md'
                                     : 'bg-white text-slate-600 border-slate-200 hover:border-primary/50'
                                     }`}
                             >
-                                {diff.charAt(0).toUpperCase() + diff.slice(1)}
+                                <div className={`flex -space-x-1 ${selectedDifficulty === diff ? 'text-white' : ''}`}>
+                                    {[...Array(diff === 'lako' ? 1 : diff === 'srednje' ? 2 : 3)].map((_, i) => (
+                                        <PiChefHat key={i} size={14} className={selectedDifficulty === diff ? 'text-white' : ''} />
+                                    ))}
+                                </div>
+                                <span>{diff.charAt(0).toUpperCase() + diff.slice(1)}</span>
                             </button>
                         ))}
                     </div>

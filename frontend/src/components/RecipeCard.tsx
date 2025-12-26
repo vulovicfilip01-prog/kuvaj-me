@@ -5,6 +5,7 @@ import FavoriteButton from './FavoriteButton';
 import DeleteRecipeButton from './DeleteRecipeButton';
 import RecipePlaceholder from './RecipePlaceholder';
 import RecipeImage from './RecipeImage';
+import DifficultyBadge from './DifficultyBadge';
 ;
 
 interface RecipeCardProps {
@@ -96,12 +97,7 @@ export default function RecipeCard({ recipe, isFavorite = false, isAuthenticated
                         <span className="text-xs font-bold text-primary uppercase tracking-wider bg-primary/10 px-2 py-1 rounded-md border border-primary/20">
                             {recipe.categories?.name || 'Opšte'}
                         </span>
-                        <span className={`text-xs px-2 py-1 rounded-full border font-medium ${recipe.difficulty === 'lako' ? 'border-green-500/30 text-green-400 bg-green-500/10' :
-                            recipe.difficulty === 'srednje' ? 'border-yellow-500/30 text-yellow-400 bg-yellow-500/10' :
-                                'border-red-500/30 text-red-400 bg-red-500/10'
-                            }`}>
-                            {recipe.difficulty}
-                        </span>
+                        <DifficultyBadge difficulty={recipe.difficulty} />
                         {recipe.is_posno && (
                             <span className="text-xs font-bold text-green-600 bg-green-100 px-2 py-1 rounded-md border border-green-200 flex items-center gap-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-leaf-icon lucide-leaf"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /></svg>

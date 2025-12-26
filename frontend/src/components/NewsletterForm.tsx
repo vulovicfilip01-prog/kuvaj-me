@@ -51,12 +51,12 @@ export default function NewsletterForm() {
                     <button
                         type="submit"
                         disabled={status === 'loading'}
-                        className="absolute inset-y-1 right-1 bg-primary text-white p-2 rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50"
+                        className="absolute inset-y-1 right-1 bg-gradient-to-r from-[#d4a373] to-[#bc8a5f] text-white p-2 rounded-lg hover:from-[#bc8a5f] hover:to-[#a4714b] transition-all shadow-sm hover:shadow-md disabled:opacity-50 flex items-center justify-center min-w-[36px]"
                     >
                         {status === 'loading' ? (
                             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         ) : (
-                            <FiSend />
+                            <FiSend className="w-4 h-4" />
                         )}
                     </button>
                 </div>

@@ -80,6 +80,15 @@ export async function createRecipe(data: RecipeData) {
     return { error: 'You must be logged in to create a recipe' }
   }
 
+  // Server-side validation
+  if (!data.title || data.title.trim().length === 0) return { error: 'Naslov je obavezan' }
+  if (data.title.length > 100) return { error: 'Naslov je predugačak' }
+  if (data.description && data.description.length > 1000) return { error: 'Opis je predugačak' }
+  if (data.prep_time < 0 || data.cook_time < 0) return { error: 'Vreme ne može biti negativno' }
+  if (data.servings < 1) return { error: 'Broj porcija mora biti bar 1' }
+  if (!data.ingredients || data.ingredients.length === 0) return { error: 'Sastojci su obavezni' }
+  if (!data.steps || data.steps.length === 0) return { error: 'Koraci su obavezni' }
+
   // Insert recipe
   const { data: recipe, error: recipeError } = await supabase
     .from('recipes')
@@ -229,6 +238,8 @@ export async function getRecipe(id: string) {
   return recipe;
 }
 
+import { normalizeSerbianText } from '@/utils/text';
+
 export async function searchRecipesByIngredients(searchIngredients: string[]) {
   const supabase = await createClient();
 
@@ -239,13 +250,16 @@ export async function searchRecipesByIngredients(searchIngredients: string[]) {
   // Normalize search ingredients: split by spaces, lowercase, remove empty
   const searchKeywords = searchIngredients
     .flatMap(ing => ing.toLowerCase().split(/\s+/))
-    .filter(k => k.length > 2); // Only match words longer than 2 chars to avoid noise
+    .filter(k => k.length > 1);
+
+  const normalizedKeywords = searchKeywords.map(k => normalizeSerbianText(k));
 
   if (searchKeywords.length === 0) {
     return [];
   }
 
   // 1. Find recipe IDs that contain at least one of the keywords
+  // We still use ilike for the initial broad fetch, but ranking will be more precise
   const orQuery = searchKeywords.map(k => `name.ilike.%${k}%`).join(',');
   
   const { data: matchingIngredients, error: matchError } = await supabase
@@ -282,14 +296,14 @@ export async function searchRecipesByIngredients(searchIngredients: string[]) {
     return [];
   }
 
-  // 3. Rank recipes in memory
+  // 3. Rank recipes in memory using normalized comparison
   const rankedRecipes = recipes.map(recipe => {
     const recipeIngredients = recipe.ingredients || [];
     
-    // Count matches: A recipe ingredient matches if ANY of its words match ANY search keyword
+    // Count matches: A recipe ingredient matches if ANY of its words match ANY search keyword (normalized)
     const matches = recipeIngredients.filter((ri: any) => {
-      const riWords = ri.name.toLowerCase().split(/\s+/);
-      return riWords.some((w: string) => searchKeywords.some(sk => w.includes(sk) || sk.includes(w)));
+      const normalizedRiName = normalizeSerbianText(ri.name);
+      return normalizedKeywords.some(sk => normalizedRiName.includes(sk));
     });
 
     const matchCount = matches.length;
@@ -317,7 +331,42 @@ export async function searchRecipesByIngredients(searchIngredients: string[]) {
   return rankedRecipes;
 }
 
+export async function getPopularIngredients(limit = 20) {
+  const supabase = await createClient();
+  
+  // This is a bit tricky with basic Supabase, but we can sample ingredients
+  // or just get unique ones for now. For a real app, we'd have a separate table or aggregate.
+  const { data, error } = await supabase
+    .from('ingredients')
+    .select('name')
+    .limit(1000); // Get a good sample
+
+  if (error || !data) return [];
+
+  // Count frequencies
+  const counts: Record<string, number> = {};
+  data.forEach(item => {
+    // Normalize: remove noise even if it's in the DB
+    const name = item.name.toLowerCase()
+      .replace(/\(.*\)/g, '')
+      .replace(/\d+/g, '')
+      .trim();
+
+    if (name.length > 2 && name.length < 30) {
+      counts[name] = (counts[name] || 0) + 1;
+    }
+  });
+
+  // Sort and return top N
+  return Object.entries(counts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, limit)
+    .map(entry => entry[0]);
+}
+
 // Favorite Recipes Actions
+
+import { createNotification } from '@/app/notifications/actions'
 
 export async function addToFavorites(recipeId: string) {
   const supabase = await createClient();
@@ -327,12 +376,24 @@ export async function addToFavorites(recipeId: string) {
     return { error: 'You must be logged in to add favorites' };
   }
 
+  // Get recipe owner to notify them
+  const { data: recipe } = await supabase
+    .from('recipes')
+    .select('user_id')
+    .eq('id', recipeId)
+    .single()
+
   const { error } = await supabase
     .from('favorite_recipes')
     .insert({ user_id: user.id, recipe_id: recipeId });
 
   if (error) {
     return { error: error.message };
+  }
+
+  // Trigger notification
+  if (recipe && recipe.user_id !== user.id) {
+    await createNotification(recipe.user_id, 'like', recipeId);
   }
 
   revalidatePath('/');
@@ -440,6 +501,15 @@ export async function updateRecipe(id: string, data: RecipeData) {
   if (existingRecipe.user_id !== user.id) {
     return { error: 'You can only update your own recipes' }
   }
+
+  // Server-side validation
+  if (!data.title || data.title.trim().length === 0) return { error: 'Naslov je obavezan' }
+  if (data.title.length > 100) return { error: 'Naslov je predugačak' }
+  if (data.description && data.description.length > 1000) return { error: 'Opis je predugačak' }
+  if (data.prep_time < 0 || data.cook_time < 0) return { error: 'Vreme ne može biti negativno' }
+  if (data.servings < 1) return { error: 'Broj porcija mora biti bar 1' }
+  if (!data.ingredients || data.ingredients.length === 0) return { error: 'Sastojci su obavezni' }
+  if (!data.steps || data.steps.length === 0) return { error: 'Koraci su obavezni' }
 
   // Update recipe
   const { error: recipeError } = await supabase

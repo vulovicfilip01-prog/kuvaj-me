@@ -2,6 +2,7 @@
 
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
+import { createNotification } from '@/app/notifications/actions'
 
 export async function getRecipeComments(recipeId: string) {
     const supabase = await createClient()
@@ -40,6 +41,13 @@ export async function createComment(recipeId: string, content: string) {
         return { error: 'Komentar ne može biti duži od 1000 karaktera' }
     }
 
+    // Get recipe owner to notify them
+    const { data: recipe } = await supabase
+        .from('recipes')
+        .select('user_id')
+        .eq('id', recipeId)
+        .single()
+
     const { data: comment, error } = await supabase
         .from('recipe_comments')
         .insert({
@@ -56,6 +64,11 @@ export async function createComment(recipeId: string, content: string) {
     if (error) {
         console.error('Error creating comment:', error)
         return { error: 'Greška pri kreiranju komentara' }
+    }
+
+    // Trigger notification
+    if (recipe && recipe.user_id !== user.id) {
+        await createNotification(recipe.user_id, 'comment', recipeId);
     }
 
     revalidatePath(`/recipes/${recipeId}`)

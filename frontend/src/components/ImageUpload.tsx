@@ -33,6 +33,14 @@ export default function ImageUpload({ onImageUploaded, currentImageUrl }: ImageU
         setUploading(true);
 
         try {
+            // Get current user
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) {
+                alert('Morate biti ulogovani da biste otpremili sliku.');
+                setUploading(false);
+                return;
+            }
+
             // Create preview
             const objectUrl = URL.createObjectURL(file);
             setPreview(objectUrl);
@@ -40,7 +48,7 @@ export default function ImageUpload({ onImageUploaded, currentImageUrl }: ImageU
             // Generate unique filename
             const fileExt = file.name.split('.').pop();
             const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-            const filePath = `${fileName}`;
+            const filePath = `${user.id}/${fileName}`;
 
             // Upload to Supabase Storage
             const { data, error } = await supabase.storage

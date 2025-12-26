@@ -2,6 +2,12 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /auth/
+Disallow: /admin/
+Disallow: /planner/
+Disallow: /profile/
+Disallow: /shopping-list/
+Disallow: /favorites/
+Disallow: /collections/
 Disallow: /search/results
 
 Sitemap: https://kuvaj.me/sitemap.xml

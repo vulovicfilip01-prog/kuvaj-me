@@ -6,8 +6,9 @@ import EditCollectionButton from '@/components/EditCollectionButton'
 import DeleteCollectionButton from '@/components/DeleteCollectionButton'
 import { createClient } from '@/utils/supabase/server'
 
-export default async function CollectionDetailPage({ params }: { params: { id: string } }) {
-    const { collection, recipes, error } = await getCollectionWithRecipes(params.id)
+export default async function CollectionDetailPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const { collection, recipes, error } = await getCollectionWithRecipes(id)
 
     if (error || !collection) {
         notFound()
@@ -29,8 +30,8 @@ export default async function CollectionDetailPage({ params }: { params: { id: s
                                     {collection.name}
                                 </h1>
                                 <div className={`flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ${collection.is_public
-                                        ? 'bg-green-100 text-green-700'
-                                        : 'bg-slate-100 text-slate-600'
+                                    ? 'bg-green-100 text-green-700'
+                                    : 'bg-slate-100 text-slate-600'
                                     }`}>
                                     {collection.is_public ? (
                                         <>

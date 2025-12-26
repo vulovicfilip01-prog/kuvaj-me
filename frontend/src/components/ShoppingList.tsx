@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { addItem, toggleItem, removeItem, clearChecked } from '@/app/shopping-list/actions'
-import ListIcon from './ListIcon'
+import WheatOffIcon from './WheatOffIcon'
 
 interface ShoppingItem {
     id: string
@@ -110,7 +110,7 @@ export default function ShoppingList({ initialItems }: { initialItems: ShoppingI
                 {items.length === 0 ? (
                     <div className="text-center py-12 text-slate-500">
                         <div className="flex justify-center mb-4">
-                            <ListIcon className="w-16 h-16" />
+                            <WheatOffIcon className="w-16 h-16" />
                         </div>
                         <p>Vaša lista za kupovinu je prazna.</p>
                     </div>

@@ -3,10 +3,11 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FiMapPin, FiLink, FiEdit2, FiGrid, FiLayers, FiHeart, FiGlobe, FiInstagram, FiTwitter, FiPlus } from 'react-icons/fi'
+import { FiMapPin, FiLink, FiEdit2, FiGrid, FiLayers, FiHeart, FiGlobe, FiInstagram, FiTwitter, FiPlus, FiSettings, FiCalendar } from 'react-icons/fi'
 import RecipeCard from '@/components/RecipeCard'
 import CollectionCard from '@/components/CollectionCard'
 import FollowButton from './FollowButton'
+import WheatOffIcon from './WheatOffIcon'
 
 
 interface ProfileViewProps {
@@ -81,6 +82,13 @@ export default function ProfileView({ profile, recipes, collections, stats, isOw
                                         className="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl text-sm font-bold hover:bg-slate-200 transition-colors"
                                     >
                                         Uredi profil
+                                    </Link>
+                                    <Link
+                                        href="/profile/settings"
+                                        className="p-2 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition-colors"
+                                        title="Podešavanja"
+                                    >
+                                        <FiSettings className="w-5 h-5" />
                                     </Link>
                                 </div>
                             ) : (
@@ -191,6 +199,16 @@ export default function ProfileView({ profile, recipes, collections, stats, isOw
                             <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-full" />
                         )}
                     </button>
+
+                    {isOwner && (
+                        <Link
+                            href="/profile/planner"
+                            className="pb-4 text-lg font-bold flex items-center gap-2 transition-all relative text-slate-500 hover:text-primary"
+                        >
+                            <FiCalendar className="w-5 h-5" />
+                            Planer
+                        </Link>
+                    )}
                 </div>
             </div>
 
@@ -205,7 +223,9 @@ export default function ProfileView({ profile, recipes, collections, stats, isOw
                         </div>
                     ) : (
                         <div className="text-center py-20 bg-slate-50 rounded-3xl">
-                            <div className="text-6xl mb-4">🍳</div>
+                            <div className="flex justify-center mb-4">
+                                <WheatOffIcon className="w-16 h-16" />
+                            </div>
                             <h3 className="text-xl font-bold text-slate-900 mb-2">Nema recepata</h3>
                             <p className="text-slate-600">
                                 {isOwner

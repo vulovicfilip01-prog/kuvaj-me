@@ -59,8 +59,7 @@ export async function getMyMealPlan(startDate: string, endDate: string) {
             recipe:recipes (
                 id,
                 title,
-                image_url,
-                slug
+                image_url
             )
         `)
         .eq('user_id', user.id)

@@ -1,6 +1,7 @@
 'use client';
 
 import { FiFilter } from 'react-icons/fi';
+import { PiChefHat } from 'react-icons/pi';
 
 interface SearchFiltersProps {
     categories: string[];
@@ -85,12 +86,19 @@ export default function SearchFilters({
                         <button
                             key={diff}
                             onClick={() => onDifficultyChange(diff)}
-                            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${difficulty === diff
+                            className={`px-3 py-2 rounded-xl text-sm font-medium transition-all flex flex-col items-center gap-1 ${difficulty === diff
                                 ? 'bg-primary text-white shadow-lg shadow-primary/30'
                                 : 'bg-white/50 text-slate-600 hover:bg-white border border-slate-200'
                                 }`}
                         >
-                            {diff === 'sve' ? 'Sve' : diff.charAt(0).toUpperCase() + diff.slice(1)}
+                            {diff !== 'sve' && (
+                                <div className="flex -space-x-1">
+                                    {[...Array(diff === 'lako' ? 1 : diff === 'srednje' ? 2 : 3)].map((_, i) => (
+                                        <PiChefHat key={i} size={14} className={difficulty === diff ? 'text-white' : 'text-slate-400'} />
+                                    ))}
+                                </div>
+                            )}
+                            <span>{diff === 'sve' ? 'Sve' : diff.charAt(0).toUpperCase() + diff.slice(1)}</span>
                         </button>
                     ))}
                 </div>

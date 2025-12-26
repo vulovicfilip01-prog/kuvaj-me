@@ -1,21 +1,23 @@
 import Link from 'next/link'
 import NewsletterForm from './NewsletterForm'
 
+import { FiSearch } from 'react-icons/fi'
+
 export default function Footer() {
     const currentYear = new Date().getFullYear()
 
     return (
-        <footer className="bg-white border-t border-slate-200 mt-auto">
+        <footer className="bg-white border-t border-slate-100 mt-auto">
             <div className="container mx-auto px-6 py-12">
                 <div className="flex flex-col md:flex-row justify-between items-start gap-12">
 
                     {/* Brand & Links */}
                     <div className="space-y-4">
                         <div className="text-slate-900 font-bold text-xl">Kuvaj.me</div>
-                        <p className="text-slate-500 max-w-xs">
+                        <p className="text-slate-600 max-w-xs transition-colors">
                             Najveća baza domaćih recepata. Kuvajmo zajedno svakog dana.
                         </p>
-                        <div className="flex items-center gap-6 text-sm font-medium text-slate-600">
+                        <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
                             <Link href="/privacy" className="hover:text-primary transition-colors">
                                 Politika privatnosti
                             </Link>
@@ -27,8 +29,10 @@ export default function Footer() {
 
                     {/* Newsletter */}
                     <div>
-                        <h3 className="font-bold text-slate-900 mb-2">Budi u toku 📧</h3>
-                        <p className="text-slate-500 text-sm mb-4">
+                        <h3 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                            Budi u toku <FiSearch className="text-slate-400" />
+                        </h3>
+                        <p className="text-slate-600 text-sm mb-4">
                             Prijavi se za nedeljni meni i nove recepte.
                         </p>
                         <NewsletterForm />

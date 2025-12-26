@@ -2,6 +2,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
+import { createNotification } from "@/app/notifications/actions";
 
 export async function rateRecipe(recipeId: string, rating: number) {
     const supabase = await createClient();
@@ -9,6 +10,13 @@ export async function rateRecipe(recipeId: string, rating: number) {
 
     if (!user) return { success: false, error: 'Morate biti prijavljeni.' };
     if (rating < 1 || rating > 5) return { success: false, error: 'Ocena mora biti između 1 i 5.' };
+
+    // Get recipe owner
+    const { data: recipe } = await supabase
+        .from('recipes')
+        .select('user_id')
+        .eq('id', recipeId)
+        .single();
 
     const { error } = await supabase
         .from('recipe_ratings')
@@ -19,6 +27,11 @@ export async function rateRecipe(recipeId: string, rating: number) {
         });
 
     if (error) return { success: false, error: error.message };
+
+    // Trigger notification
+    if (recipe && recipe.user_id !== user.id) {
+        await createNotification(recipe.user_id, 'review', recipeId);
+    }
     
     revalidatePath(`/recipes/${recipeId}`);
     return { success: true };

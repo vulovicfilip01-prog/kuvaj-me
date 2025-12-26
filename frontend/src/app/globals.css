@@ -44,8 +44,12 @@ body {
 }
 
 @media print {
+
   /* Hide UI elements */
-  nav, footer, button, .no-print {
+  nav,
+  footer,
+  button,
+  .no-print {
     display: none !important;
   }
 
@@ -62,17 +66,33 @@ body {
   }
 
   /* Typography adjustments */
-  h1 { font-size: 24pt !important; }
-  p, li { font-size: 12pt !important; }
-  
+  h1 {
+    font-size: 24pt !important;
+  }
+
+  p,
+  li {
+    font-size: 12pt !important;
+  }
+
   /* Ensure images don't break across pages */
   img {
     break-inside: avoid;
-    max-width: 300px !important; /* Limit image size to save ink/space */
+    max-width: 300px !important;
+    /* Limit image size to save ink/space */
   }
 }
+
 .text-gradient {
   color: #6B7E4F;
+}
+
+.text-amber-gold {
+  background: linear-gradient(to left, #d4a373, #bc8a5f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
 }
 
 /* Animations */
@@ -120,4 +140,15 @@ body {
 
 .animate-heart-pop {
   animation: heart-pop 0.3s ease-in-out;
+}
+
+/* Planner Utility Classes */
+.dashed-border {
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%23CBD5E1' stroke-width='2' stroke-dasharray='6%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+  border-radius: 16px;
+  border-color: transparent !important;
+}
+
+.dashed-border:hover {
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%236B7E4F' stroke-width='2' stroke-dasharray='6%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
 }

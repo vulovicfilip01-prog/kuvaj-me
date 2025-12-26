@@ -137,6 +137,14 @@ export default function NotificationBell({ initialUnreadCount }: NotificationBel
                             ))
                         )}
                     </div>
+
+                    <Link
+                        href="/notifications"
+                        onClick={() => setIsOpen(false)}
+                        className="block p-3 text-center text-xs font-bold text-primary hover:bg-slate-50 border-t border-slate-100 transition-colors"
+                    >
+                        Vidi sva obaveštenja
+                    </Link>
                 </div>
             )}
         </div>

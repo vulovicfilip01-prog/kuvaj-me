@@ -5,9 +5,11 @@ import ChefHatIcon from '@/components/ChefHatIcon'
 import HeartIcon from '@/components/HeartIcon'
 import CollectionIcon from '@/components/CollectionIcon'
 import ListIcon from '@/components/ListIcon'
+import PlannerIcon from '@/components/PlannerIcon'
 import SearchBar from '@/components/SearchBar'
 import MobileSearchButton from '@/components/MobileSearchButton'
 import { FiUser, FiSettings, FiLogOut, FiGrid } from 'react-icons/fi'
+import { LuRefrigerator } from 'react-icons/lu'
 import NotificationBell from '@/components/NotificationBell'
 import { getUnreadCount } from '@/app/notifications/actions'
 
@@ -48,7 +50,15 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
 
             <div className="flex items-center gap-4">
                 {/* Mobile Search Button */}
-                <MobileSearchButton />
+                <Link
+                    href="/explore/fridge"
+                    className="hidden lg:flex px-5 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary-dark text-white rounded-full transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40 items-center gap-2 font-medium group"
+                    title="Pretraga po sastojcima"
+                >
+                    <LuRefrigerator className="w-5 h-5 transition-transform group-hover:scale-110" />
+                    <span>Frižider</span>
+                </Link>
+
                 <Link
                     href="/recipes/new"
                     className="hidden md:flex px-5 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary-dark text-white rounded-full transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40 items-center gap-2 font-medium"
@@ -71,6 +81,13 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
                         >
                             <CollectionIcon className="w-8 h-8" />
                             <span className="hidden lg:inline">Kolekcije</span>
+                        </Link>
+                        <Link
+                            href="/profile/planner"
+                            className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2"
+                        >
+                            <PlannerIcon className="w-8 h-8" />
+                            <span className="hidden lg:inline">Planer</span>
                         </Link>
                         <Link
                             href="/shopping-list"

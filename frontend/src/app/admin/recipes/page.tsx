@@ -1,7 +1,8 @@
-import { getRecipesForAdmin, deleteRecipeAsAdmin } from "../actions";
+import { getRecipesForAdmin } from "../actions";
 import { FiTrash2, FiExternalLink, FiSearch } from "react-icons/fi";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
+import AdminDeleteRecipeButton from "@/components/AdminDeleteRecipeButton";
 
 export default async function AdminRecipesPage() {
     const { success, recipes } = await getRecipesForAdmin();
@@ -51,17 +52,7 @@ export default async function AdminRecipesPage() {
                                                 <FiExternalLink />
                                             </Link>
 
-                                            <form action={async () => {
-                                                'use server';
-                                                await deleteRecipeAsAdmin(recipe.id);
-                                            }}>
-                                                <button
-                                                    className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                                    title="Obriši"
-                                                >
-                                                    <FiTrash2 />
-                                                </button>
-                                            </form>
+                                            <AdminDeleteRecipeButton recipeId={recipe.id} />
                                         </div>
                                     </td>
                                 </tr>

@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { FiHome, FiGrid, FiUsers, FiLogOut, FiPieChart, FiMail } from "react-icons/fi";
 
+export const dynamic = 'force-dynamic';
+
 async function AdminSidebar() {
     return (
         <aside className="w-64 bg-slate-900 text-white min-h-screen p-6 fixed left-0 top-0 hidden md:block">
