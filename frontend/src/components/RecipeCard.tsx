@@ -6,7 +6,7 @@ import DeleteRecipeButton from './DeleteRecipeButton';
 import RecipePlaceholder from './RecipePlaceholder';
 import RecipeImage from './RecipeImage';
 import DifficultyBadge from './DifficultyBadge';
-;
+import ClockIcon from './ClockIcon';
 
 interface RecipeCardProps {
     recipe: {
@@ -141,7 +141,7 @@ export default function RecipeCard({ recipe, isFavorite = false, isAuthenticated
                     <div className="flex items-center justify-between text-sm text-slate-500 border-t border-white/5 pt-4 mt-auto">
                         <div className="flex items-center gap-4">
                             <span className="flex items-center gap-1.5 text-slate-600">
-                                <span className="text-primary">⏱️</span> {recipe.prep_time + recipe.cook_time} min
+                                <ClockIcon className="w-4 h-4 text-primary" /> {recipe.prep_time + recipe.cook_time} min
                             </span>
                         </div>
                         <Link

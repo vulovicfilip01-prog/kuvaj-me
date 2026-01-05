@@ -1,8 +1,10 @@
 'use client'
 
-import { useState } from 'react'
-import { addItem, toggleItem, removeItem, clearChecked } from '@/app/shopping-list/actions'
+import { useState, useEffect } from 'react'
+import { addItem as serverAddItem, toggleItem as serverToggleItem, removeItem as serverRemoveItem, clearChecked as serverClearChecked } from '@/app/shopping-list/actions'
+import * as offlineStorage from '@/lib/offline-storage'
 import WheatOffIcon from './WheatOffIcon'
+import { FiWifiOff, FiWifi, FiRefreshCw } from 'react-icons/fi'
 
 interface ShoppingItem {
     id: string
@@ -16,62 +18,230 @@ export default function ShoppingList({ initialItems }: { initialItems: ShoppingI
     const [newItemName, setNewItemName] = useState('')
     const [newItemQuantity, setNewItemQuantity] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+    const [isOnline, setIsOnline] = useState(true)
+    const [isSyncing, setIsSyncing] = useState(false)
+    const [pendingSyncCount, setPendingSyncCount] = useState(0)
+
+    // Initialize online status and listeners
+    useEffect(() => {
+        setIsOnline(navigator.onLine)
+
+        const handleOnline = async () => {
+            console.log('[ShoppingList] Back online...')
+            setIsOnline(true)
+            await performSync()
+        }
+
+        const handleOffline = () => {
+            console.log('[ShoppingList] Gone offline...')
+            setIsOnline(false)
+        }
+
+        window.addEventListener('online', handleOnline)
+        window.addEventListener('offline', handleOffline)
+
+        // Initialize IndexedDB and load pending sync count
+        offlineStorage.initDB().then(async () => {
+            const pending = await offlineStorage.getPendingSync()
+            setPendingSyncCount(pending.length)
+        })
+
+        return () => {
+            window.removeEventListener('online', handleOnline)
+            window.removeEventListener('offline', handleOffline)
+        }
+    }, [])
+
+    // Sync with server
+    const performSync = async () => {
+        setIsSyncing(true)
+        try {
+            const result = await offlineStorage.syncWithServer({
+                add: serverAddItem,
+                toggle: serverToggleItem,
+                remove: serverRemoveItem,
+                clearChecked: serverClearChecked
+            })
+
+            if (result.success) {
+                console.log('[ShoppingList] Sync successful')
+                setPendingSyncCount(0)
+                // Refresh items from server
+                const serverResult = await serverAddItem('', '') // This will return current items
+                if (serverResult?.items) {
+                    setItems(serverResult.items)
+                }
+            } else {
+                console.error('[ShoppingList] Sync errors:', result.errors)
+            }
+        } catch (error) {
+            console.error('[ShoppingList] Sync failed:', error)
+        } finally {
+            setIsSyncing(false)
+        }
+    }
 
     const handleAdd = async (e: React.FormEvent) => {
         e.preventDefault()
         if (!newItemName.trim() || isLoading) return
 
         setIsLoading(true)
-        const result = await addItem(newItemName, newItemQuantity)
 
-        if (result?.error) {
-            alert('Greška prilikom dodavanja: ' + result.error)
-        } else if (result?.items) {
-            setItems(result.items)
-            setNewItemName('')
-            setNewItemQuantity('')
+        try {
+            if (isOnline) {
+                // Online: use server action
+                const result = await serverAddItem(newItemName, newItemQuantity)
+
+                if (result?.error) {
+                    alert('Greška prilikom dodavanja: ' + result.error)
+                } else if (result?.items) {
+                    setItems(result.items)
+                    setNewItemName('')
+                    setNewItemQuantity('')
+                }
+            } else {
+                // Offline: add to IndexedDB and sync queue
+                const newItem: offlineStorage.ShoppingItem = {
+                    id: `offline-${Date.now()}`,
+                    name: newItemName,
+                    quantity: newItemQuantity,
+                    is_checked: false,
+                    synced: false,
+                    created_at: new Date().toISOString()
+                }
+
+                await offlineStorage.addItem(newItem)
+                await offlineStorage.addToSyncQueue('add', { name: newItemName, quantity: newItemQuantity })
+
+                const updatedItems = await offlineStorage.getItems()
+                setItems(updatedItems)
+                setPendingSyncCount(prev => prev + 1)
+
+                setNewItemName('')
+                setNewItemQuantity('')
+            }
+        } catch (error) {
+            console.error('[ShoppingList] handleAdd error:', error)
+            alert('Greška prilikom dodavanja stavke')
+        } finally {
+            setIsLoading(false)
         }
-        setIsLoading(false)
     }
+
 
     const handleToggle = async (id: string, checked: boolean) => {
         setIsLoading(true)
-        const result = await toggleItem(id, checked)
 
-        if (result?.error) {
-            alert('Greška: ' + result.error)
-        } else if (result?.items) {
-            setItems(result.items)
+        try {
+            if (isOnline) {
+                const result = await serverToggleItem(id, checked)
+
+                if (result?.error) {
+                    alert('Greška: ' + result.error)
+                } else if (result?.items) {
+                    setItems(result.items)
+                }
+            } else {
+                await offlineStorage.updateItem(id, { is_checked: checked })
+                await offlineStorage.addToSyncQueue('toggle', { id, checked })
+
+                const updatedItems = await offlineStorage.getItems()
+                setItems(updatedItems)
+                setPendingSyncCount(prev => prev + 1)
+            }
+        } catch (error) {
+            console.error('[ShoppingList] handleToggle error:', error)
+        } finally {
+            setIsLoading(false)
         }
-        setIsLoading(false)
     }
 
     const handleRemove = async (id: string) => {
         setIsLoading(true)
-        const result = await removeItem(id)
 
-        if (result?.error) {
-            alert('Greška: ' + result.error)
-        } else if (result?.items) {
-            setItems(result.items)
+        try {
+            if (isOnline) {
+                const result = await serverRemoveItem(id)
+
+                if (result?.error) {
+                    alert('Greška: ' + result.error)
+                } else if (result?.items) {
+                    setItems(result.items)
+                }
+            } else {
+                await offlineStorage.deleteItem(id)
+                await offlineStorage.addToSyncQueue('delete', { id })
+
+                const updatedItems = await offlineStorage.getItems()
+                setItems(updatedItems)
+                setPendingSyncCount(prev => prev + 1)
+            }
+        } catch (error) {
+            console.error('[ShoppingList] handleRemove error:', error)
+        } finally {
+            setIsLoading(false)
         }
-        setIsLoading(false)
     }
 
     const handleClearChecked = async () => {
         setIsLoading(true)
-        const result = await clearChecked()
 
-        if (result?.error) {
-            alert('Greška: ' + result.error)
-        } else if (result?.items) {
-            setItems(result.items)
+        try {
+            if (isOnline) {
+                const result = await serverClearChecked()
+
+                if (result?.error) {
+                    alert('Greška: ' + result.error)
+                } else if (result?.items) {
+                    setItems(result.items)
+                }
+            } else {
+                await offlineStorage.deleteCheckedItems()
+                await offlineStorage.addToSyncQueue('clear-checked', {})
+
+                const updatedItems = await offlineStorage.getItems()
+                setItems(updatedItems)
+                setPendingSyncCount(prev => prev + 1)
+            }
+        } catch (error) {
+            console.error('[ShoppingList] handleClearChecked error:', error)
+        } finally {
+            setIsLoading(false)
         }
-        setIsLoading(false)
     }
 
     return (
         <div className="max-w-2xl mx-auto">
+            {/* Online/Offline Status Banner */}
+            {!isOnline && (
+                <div className="mb-4 p-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-center gap-3">
+                    <FiWifiOff className="w-5 h-5 text-amber-600 flex-shrink-0" />
+                    <div className="flex-1">
+                        <p className="text-sm font-bold text-amber-900">Offline režim</p>
+                        <p className="text-xs text-amber-700">Promene će biti sačuvane i sinhronizovane kada se vratite online.</p>
+                    </div>
+                    {pendingSyncCount > 0 && (
+                        <span className="px-3 py-1 bg-amber-200 rounded-full text-xs font-bold text-amber-900">
+                            {pendingSyncCount} nesinhronizovano
+                        </span>
+                    )}
+                </div>
+            )}
+
+            {isOnline && isSyncing && (
+                <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-2xl flex items-center gap-3">
+                    <FiRefreshCw className="w-5 h-5 text-blue-600 animate-spin flex-shrink-0" />
+                    <p className="text-sm font-bold text-blue-900">Sinhronizacija sa serverom...</p>
+                </div>
+            )}
+
+            {isOnline && !isSyncing && pendingSyncCount === 0 && initialItems.length !== items.length && (
+                <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-2xl flex items-center gap-3">
+                    <FiWifi className="w-5 h-5 text-green-600 flex-shrink-0" />
+                    <p className="text-sm font-bold text-green-900">Sve promene su sinhronizovane</p>
+                </div>
+            )}
+
             {/* Add Item Form */}
             <form onSubmit={handleAdd} className="glass-panel rounded-2xl p-6 mb-8 animate-fadeIn">
                 <div className="flex gap-4">

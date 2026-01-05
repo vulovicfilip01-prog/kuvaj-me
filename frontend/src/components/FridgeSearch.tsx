@@ -75,19 +75,12 @@ export default function FridgeSearch() {
 
     return (
         <div className="w-full max-w-4xl mx-auto">
-            <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 relative overflow-hidden">
+            <div className="bg-white/50 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-white/50 relative overflow-hidden">
                 {/* Background Accent */}
                 <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl"></div>
                 <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-amber-500/5 rounded-full blur-3xl"></div>
 
                 <div className="relative z-10">
-                    <h2 className="text-2xl font-bold text-slate-900 heading-font mb-6 flex items-center gap-3">
-                        <span className="p-2 bg-primary/10 rounded-xl text-primary">
-                            <FiSearch className="w-6 h-6" />
-                        </span>
-                        Šta imaš u frižideru?
-                    </h2>
-
                     <div className="space-y-6">
                         {/* Input & Tags Area */}
                         <div className="relative">

@@ -7,6 +7,12 @@ import Link from 'next/link'
 import ImageUpload from '@/components/ImageUpload'
 import UserRoundPenIcon from '@/components/UserRoundPenIcon'
 import DifficultyBadge from '@/components/DifficultyBadge'
+import AIRecipeModal from '@/components/AIRecipeModal'
+import { FiZap } from 'react-icons/fi'
+import VegetableIcon from '@/components/VegetableIcon'
+import ForkKnifeIcon from '@/components/ForkKnifeIcon'
+import SettingsIcon from '@/components/SettingsIcon'
+import NutritionIcon from '@/components/NutritionIcon'
 
 interface Category {
     id: string
@@ -28,6 +34,7 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [isAIModalOpen, setIsAIModalOpen] = useState(false)
 
     // Basic info
     const [title, setTitle] = useState(initialData?.title || '')
@@ -198,6 +205,53 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
         // If successful, createRecipe will redirect
     }
 
+    const handleAIApply = (aiRecipe: any) => {
+        setTitle(aiRecipe.title || '')
+        setDescription(aiRecipe.description || '')
+        setPrepTime(aiRecipe.prep_time?.toString() || '')
+        setCookTime(aiRecipe.cook_time?.toString() || '')
+        setServings(aiRecipe.servings?.toString() || '')
+        setDifficulty(aiRecipe.difficulty || 'srednje')
+        setIsPosno(aiRecipe.is_posno || false)
+
+        if (aiRecipe.ingredients) {
+            setIngredients(aiRecipe.ingredients.map((i: any) => ({ name: i.name, quantity: i.quantity })))
+        }
+
+        if (aiRecipe.steps) {
+            setSteps(aiRecipe.steps.map((s: any) => ({ instruction: s.instruction })))
+        }
+
+        if (aiRecipe.nutrition) {
+            setCalories(aiRecipe.nutrition.calories?.toString() || '')
+            setProtein(aiRecipe.nutrition.protein?.toString() || '')
+            setCarbohydrates(aiRecipe.nutrition.carbohydrates?.toString() || '')
+            setFat(aiRecipe.nutrition.fat?.toString() || '')
+            setFiber(aiRecipe.nutrition.fiber?.toString() || '')
+        }
+
+        // Try to match category
+        if (aiRecipe.category_suggestion) {
+            const suggestion = aiRecipe.category_suggestion.toLowerCase()
+            const mapping: { [key: string]: string } = {
+                'glavno-jelo': 'Glavna jela',
+                'desert': 'Deserti',
+                'predjelo': 'Predjela',
+                'salata': 'Salate',
+                'supa': 'Supe i čorbe',
+                'pice': 'Pića',
+                'pecivo': 'Peciva',
+                'ostalo': 'Ostalo'
+            }
+
+            const targetName = mapping[suggestion]
+            const matchedCat = categories.find(c => c.name.includes(targetName) || targetName?.includes(c.name))
+            if (matchedCat) {
+                setCategoryId(matchedCat.id)
+            }
+        }
+    }
+
     return (
         <div className="min-h-screen bg-transparent py-12">
             <div className="max-w-4xl mx-auto px-6">
@@ -209,13 +263,36 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                     >
                         Nazad
                     </Link>
-                    <h1 className="text-5xl font-bold text-yellow-600 mb-3 heading-font">
-                        {initialData ? 'Izmeni' : 'Dodaj novi'} <span className="text-gradient">recept</span>
+                    <h1 className="text-5xl font-bold mb-3 heading-font pb-2">
+                        <span className="text-amber-gold pb-1">{initialData ? 'Izmeni' : 'Dodaj novi'}</span> <span className="text-primary">recept</span>
                     </h1>
                     <p className="text-slate-600 text-lg">
                         {initialData ? 'Ažuriraj svoj recept' : 'Podeli svoju kulinarsku magiju sa svetom ✨'}
                     </p>
+
+                    {!initialData && (
+                        <div className="mt-8">
+                            <button
+                                type="button"
+                                onClick={() => setIsAIModalOpen(true)}
+                                className="group relative flex items-center gap-3 px-8 py-4 bg-white border-2 border-primary/20 hover:border-primary text-primary rounded-2xl font-bold transition-all shadow-sm hover:shadow-xl hover:shadow-primary/10 overflow-hidden"
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                                <FiZap className="w-6 h-6 animate-pulse" />
+                                <div className="flex flex-col items-start translate-y-[1px]">
+                                    <span className="text-sm leading-none opacity-60 font-medium mb-1">Nemaš vremena?</span>
+                                    <span className="text-lg leading-none">✨ AI Generiši Recept</span>
+                                </div>
+                            </button>
+                        </div>
+                    )}
                 </div>
+
+                <AIRecipeModal
+                    isOpen={isAIModalOpen}
+                    onClose={() => setIsAIModalOpen(false)}
+                    onApply={handleAIApply}
+                />
 
                 <form onSubmit={handleSubmit} className="space-y-8 animate-slideUp">
                     {/* Basic Info Section */}
@@ -300,7 +377,7 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                     {/* Details Section */}
                     <div className="glass-panel rounded-3xl p-8">
                         <h2 className="text-2xl font-bold text-slate-900 mb-6 heading-font flex items-center gap-2">
-                            <span className="text-primary">⚙️</span> Detalji
+                            <SettingsIcon className="w-6 h-6" /> Detalji
                         </h2>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -408,7 +485,7 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                     <div className="glass-panel rounded-3xl p-8">
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-2xl font-bold text-slate-900 heading-font flex items-center gap-2">
-                                <span className="text-primary">🥕</span> Sastojci <span className="text-red-500">*</span>
+                                <VegetableIcon className="w-6 h-6" /> Sastojci <span className="text-red-500">*</span>
                             </h2>
                             <button
                                 type="button"
@@ -454,7 +531,7 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                     <div className="glass-panel rounded-3xl p-8">
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-2xl font-bold text-slate-900 heading-font flex items-center gap-2">
-                                <span className="text-primary">👩‍🍳</span> Koraci pripreme <span className="text-red-500">*</span>
+                                <ForkKnifeIcon className="w-6 h-6" /> Koraci pripreme <span className="text-red-500">*</span>
                             </h2>
                             <button
                                 type="button"
@@ -495,7 +572,7 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
                     {/* Nutrition Section (Optional) */}
                     <div className="glass-panel rounded-3xl p-8">
                         <h2 className="text-2xl font-bold text-slate-900 mb-2 heading-font flex items-center gap-2">
-                            <span className="text-primary">🥗</span> Nutritivne vrednosti
+                            <NutritionIcon className="w-6 h-6" /> Nutritivne vrednosti
                         </h2>
                         <p className="text-sm text-slate-600 mb-6">Opciono - dodaj nutritivne vrednosti po porciji</p>
 

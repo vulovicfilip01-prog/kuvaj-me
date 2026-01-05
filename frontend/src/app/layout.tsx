@@ -21,6 +21,9 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
+  icons: {
+    apple: '/icon-192x192.png',
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -70,6 +73,7 @@ export const metadata: Metadata = {
 import { GoogleAnalytics } from '@next/third-parties/google'
 import WelcomeModal from '@/components/WelcomeModalClient'
 import Footer from '@/components/Footer'
+import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
 
 
 export default function RootLayout({
@@ -82,6 +86,7 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} ${inter.variable} antialiased font-sans`}
       >
+        <ServiceWorkerRegistration />
         {children}
         <WelcomeModal />
         <Footer />

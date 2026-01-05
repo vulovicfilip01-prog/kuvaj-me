@@ -19,16 +19,14 @@ export default async function FridgeSearchPage({ searchParams }: PageProps) {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50">
-            <Navbar />
+        <div className="min-h-screen bg-gradient-to-b from-[#F2E6D9] to-[#E8DCC4]">
+            <Navbar transparent />
 
             <main className="container mx-auto px-4 py-12">
                 <div className="max-w-4xl mx-auto mb-16 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-bold mb-6">
-                        Premium Pretraga
-                    </div>
-                    <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 heading-font leading-tight">
-                        Pronađi recept pomoću <span className="text-primary italic">onoga što imaš</span>
+
+                    <h1 className="text-4xl md:text-5xl font-black text-amber-gold mb-6 heading-font leading-tight">
+                        Šta imaš u frižideru?
                     </h1>
                     <p className="text-slate-500 text-lg max-w-2xl mx-auto">
                         Unesi sastojke iz svog frižidera i mi ćemo ti predložiti najbolje kombinacije,
