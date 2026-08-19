@@ -63,7 +63,6 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
 
     // Fetch recipes using server action (which now supports posno filter)
     const { data: categories } = await getCategories()
-    const recipesData = await getRecipes({ posno })
 
     // We use the result from getRecipes which already handles basic filtering including Posno
     // But we need to apply other filters (category, difficulty, time, sort) manually or update getRecipes to handle all.
@@ -78,7 +77,8 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
             *,
             profiles:profiles!recipes_user_id_fkey (display_name),
             categories (name),
-            favorite_recipes (count)
+            favorite_recipes (count),
+            ingredients (*)
         `)
         .eq('is_public', true)
 

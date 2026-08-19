@@ -1,0 +1,5 @@
+[2026-01-13T18:41:45.064Z] AdminLayout: Entering try block
+[2026-01-13T18:41:45.260Z] AdminLayout: Supabase client created
+[2026-01-13T18:41:45.818Z] AdminLayout: User retrieved: ae736c0b-bfbb-4d1c-a11d-cd21f7b82536
+[2026-01-13T18:41:46.243Z] AdminLayout: Profile check: is_admin=true, error=none
+[2026-01-13T18:41:46.243Z] AdminLayout: Rendering admin content

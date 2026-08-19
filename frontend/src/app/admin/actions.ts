@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { resend } from "@/lib/resend";
+import { baseEmailTemplate, weeklyDigestTemplate } from "@/lib/email-templates";
 
 async function verifyAdmin() {
     const supabase = await createClient();
@@ -289,7 +290,7 @@ export async function sendNewsletterBlast(subject: string, content: string) {
                     from: 'Kuvaj.me <newsletter@kuvaj.me>',
                     to: subscribers.map(s => s.email),
                     subject: subject,
-                    html: content.replace(/\n/g, '<br>'), // Basic HTML conversion
+                    html: baseEmailTemplate(content.replace(/\n/g, '<br>'), subject),
                 });
             } catch (emailError) {
                 console.error('Failed to send email blast:', emailError);
@@ -361,7 +362,7 @@ export async function sendWeeklyDigest() {
                     from: 'Kuvaj.me <newsletter@kuvaj.me>',
                     to: subscribers.map(s => s.email),
                     subject: subject,
-                    html: content.replace(/\n/g, '<br>'),
+                    html: weeklyDigestTemplate(topRecipes),
                 });
             } catch (emailError) {
                 console.error('Failed to send weekly digest:', emailError);
@@ -382,6 +383,27 @@ export async function sendWeeklyDigest() {
 
         revalidatePath('/admin/newsletter');
         return { success: true };
+    } catch (error) {
+        return { success: false, error: (error as Error).message };
+    }
+}
+
+export async function revalidateHome() {
+    try {
+        await verifyAdmin();
+        revalidatePath('/');
+        return { success: true };
+    } catch (error) {
+        return { success: false, error: (error as Error).message };
+    }
+}
+
+export async function checkDatabaseStatus() {
+    try {
+        const { supabase } = await verifyAdmin();
+        const { data, error } = await supabase.from('recipes').select('count').limit(1);
+        if (error) throw error;
+        return { success: true, timestamp: new Date().toISOString() };
     } catch (error) {
         return { success: false, error: (error as Error).message };
     }

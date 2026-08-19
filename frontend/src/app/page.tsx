@@ -141,18 +141,6 @@ export default async function Home() {
         isAuthenticated={!!user}
         favoriteIds={favoriteIds}
       />
-      {/* Debug Section - Temporary */}
-      <div className="bg-black text-white p-4 text-xs font-mono opacity-50 hover:opacity-100 transition-opacity">
-        <p>Debug Info:</p>
-        <p>Trending: {trendingRecipes.length}</p>
-        <p>Newest: {newestRecipes.length}</p>
-        <p>Env URL: {process.env.NEXT_PUBLIC_SUPABASE_URL ? `${process.env.NEXT_PUBLIC_SUPABASE_URL.substring(0, 15)}...` : 'Missing'}</p>
-        <p>Env Key: {process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? `${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.substring(0, 10)}...` : 'Missing'}</p>
-        <p className="text-yellow-300">DB Total: {codeDebug.total}</p>
-        <p className="text-yellow-300">DB Public: {codeDebug.public}</p>
-        <p className="text-yellow-300">First ID: {codeDebug.firstId}</p>
-        {fetchError && <p className="text-red-500 font-bold mt-2">ERROR: {fetchError}</p>}
-      </div>
     </main>
   );
 }

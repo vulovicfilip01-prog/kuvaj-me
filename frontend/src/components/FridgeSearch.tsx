@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FiPlus, FiX, FiSearch, FiTruck, FiCloudLightning, FiCpu } from 'react-icons/fi';
 import { getPopularIngredients } from '@/app/recipes/actions';
 import { normalizeSerbianText } from '@/utils/text';
@@ -13,6 +13,7 @@ export default function FridgeSearch() {
     const [popular, setPopular] = useState<string[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const router = useRouter();
+    const searchParams = useSearchParams();
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -22,6 +23,16 @@ export default function FridgeSearch() {
         }
         loadPopular();
     }, []);
+
+    // Scroll to results when ingredients search param changes
+    useEffect(() => {
+        if (searchParams.get('ingredients')) {
+            const resultsSection = document.getElementById('results');
+            if (resultsSection) {
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    }, [searchParams]);
 
     useEffect(() => {
         if (inputValue.length > 1) {
@@ -156,7 +167,7 @@ export default function FridgeSearch() {
                                 onClick={handleSearch}
                                 disabled={ingredients.length === 0}
                                 className={`flex items-center gap-3 px-10 py-4 rounded-full font-bold transition-all transform hover:-translate-y-1 shadow-lg ${ingredients.length > 0
-                                    ? 'bg-primary text-white shadow-primary/20 hover:shadow-primary/40'
+                                    ? 'bg-primary text-white shadow-primary/20 hover:shadow-primary/40 cursor-pointer'
                                     : 'bg-slate-100 text-slate-400 cursor-not-allowed'
                                     }`}
                             >

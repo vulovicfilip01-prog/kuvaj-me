@@ -32,11 +32,15 @@ interface RecipeCardProps {
             totalCount: number;
             missingCount: number;
         };
+        ingredients?: Array<{ name: string; quantity: string }>;
     };
     isFavorite?: boolean;
     isAuthenticated?: boolean;
     isOwner?: boolean;
 }
+
+import { calculateRecipeCost } from '@/utils/pricing';
+import { LuWallet } from 'react-icons/lu';
 
 export default function RecipeCard({ recipe, isFavorite = false, isAuthenticated = false, isOwner = false }: RecipeCardProps) {
     return (
@@ -55,8 +59,8 @@ export default function RecipeCard({ recipe, isFavorite = false, isAuthenticated
                 ) : (
                     recipe.matchInfo && (
                         <div className={`absolute top-3 right-3 z-10 px-3 py-1 rounded-full text-xs font-bold shadow-lg backdrop-blur-md border border-white/10 ${recipe.matchInfo.missingCount === 0
-                            ? 'bg-green-500/90 text-white'
-                            : 'bg-yellow-500/90 text-black'
+                            ? 'bg-green-600/90 text-white'
+                            : 'bg-primary text-white'
                             }`}>
                             {recipe.matchInfo.missingCount === 0
                                 ? '✨ Imaš sve!'
@@ -143,6 +147,11 @@ export default function RecipeCard({ recipe, isFavorite = false, isAuthenticated
                             <span className="flex items-center gap-1.5 text-slate-600">
                                 <ClockIcon className="w-4 h-4 text-primary" /> {recipe.prep_time + recipe.cook_time} min
                             </span>
+                            {recipe.ingredients && recipe.ingredients.length > 0 && (
+                                <span className="flex items-center gap-1.5 text-slate-600 border-l border-slate-200 pl-4 font-medium" title="Procenjena cena sastojaka">
+                                    <LuWallet className="w-4 h-4 text-green-500" /> ~{calculateRecipeCost(recipe.ingredients)} RSD
+                                </span>
+                            )}
                         </div>
                         <Link
                             href={`/profile/${recipe.user_id}`}

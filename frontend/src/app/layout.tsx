@@ -74,6 +74,7 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 import WelcomeModal from '@/components/WelcomeModalClient'
 import Footer from '@/components/Footer'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
+import CookieBanner from '@/components/CookieBanner'
 
 
 export default function RootLayout({
@@ -89,6 +90,7 @@ export default function RootLayout({
         <ServiceWorkerRegistration />
         {children}
         <WelcomeModal />
+        <CookieBanner />
         <Footer />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
       </body>

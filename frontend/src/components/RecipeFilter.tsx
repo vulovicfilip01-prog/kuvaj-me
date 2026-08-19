@@ -1,8 +1,8 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useState, useEffect } from 'react'
-import { FiFilter, FiClock, FiBarChart2, FiGrid } from 'react-icons/fi'
+import { useState, useEffect, useTransition } from 'react'
+import { FiFilter, FiClock, FiBarChart2, FiGrid, FiChevronDown } from 'react-icons/fi'
 import { PiChefHat } from 'react-icons/pi'
 
 interface Category {
@@ -23,6 +23,7 @@ export default function RecipeFilter({ categories }: RecipeFilterProps) {
     const [selectedTime, setSelectedTime] = useState(searchParams.get('time') || '')
     const [isPosno, setIsPosno] = useState(searchParams.get('posno') === 'true')
     const [sortBy, setSortBy] = useState(searchParams.get('sort') || 'newest')
+    const [isPending, startTransition] = useTransition()
 
     // Update state when URL params change
     useEffect(() => {
@@ -49,29 +50,35 @@ export default function RecipeFilter({ categories }: RecipeFilterProps) {
         } else {
             params.delete(key)
         }
-        router.push(`/explore?${params.toString()}`, { scroll: false })
+
+        startTransition(() => {
+            router.push(`/explore?${params.toString()}`, { scroll: false })
+        })
     }
 
     return (
         <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto custom-scrollbar">
-            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-slate-100">
-                <FiFilter className="text-primary w-5 h-5" />
-                <h3 className="font-bold text-lg text-slate-900">Filteri</h3>
+            <div className={`flex items-center gap-2 mb-6 pb-4 border-b border-slate-100 ${isPending ? 'opacity-50' : ''}`}>
+                <FiFilter className={`text-primary w-5 h-5 ${isPending ? 'animate-spin' : ''}`} />
+                <h3 className="font-bold text-lg text-slate-900">Filteri {isPending && '...'}</h3>
             </div>
 
             <div className="space-y-8">
                 {/* Sort By */}
                 <div>
                     <label className="block text-sm font-bold text-slate-700 mb-3">Sortiraj po</label>
-                    <select
-                        value={sortBy}
-                        onChange={(e) => updateFilters('sort', e.target.value)}
-                        className="w-full px-4 py-2 rounded-xl bg-slate-50 border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none cursor-pointer"
-                    >
-                        <option value="newest">Najnovije</option>
-                        <option value="popular">Popularno</option>
-                        <option value="fastest">Najbrže</option>
-                    </select>
+                    <div className="relative">
+                        <select
+                            value={sortBy}
+                            onChange={(e) => updateFilters('sort', e.target.value)}
+                            className="w-full px-4 py-2 rounded-xl bg-slate-50 border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none cursor-pointer text-sm font-medium text-slate-700"
+                        >
+                            <option value="newest">Najnovije</option>
+                            <option value="popular">Popularno</option>
+                            <option value="fastest">Najbrže</option>
+                        </select>
+                        <FiChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                    </div>
                 </div>
 
                 {/* Posno Toggle */}
@@ -99,7 +106,7 @@ export default function RecipeFilter({ categories }: RecipeFilterProps) {
                     <div className="space-y-2">
                         <button
                             onClick={() => updateFilters('category', '')}
-                            className={`w-full text-left px-4 py-2 rounded-xl text-sm transition-all flex items-center justify-between group ${selectedCategory === ''
+                            className={`w-full text-left px-4 py-2 rounded-xl text-sm transition-all flex items-center justify-between group cursor-pointer ${selectedCategory === ''
                                 ? 'bg-primary text-white shadow-md shadow-primary/20 font-medium'
                                 : 'hover:bg-slate-50 text-slate-600'
                                 }`}
@@ -111,7 +118,7 @@ export default function RecipeFilter({ categories }: RecipeFilterProps) {
                             <button
                                 key={cat.id}
                                 onClick={() => updateFilters('category', cat.id)}
-                                className={`w-full text-left px-4 py-2 rounded-xl text-sm transition-all flex items-center justify-between group ${selectedCategory === cat.id
+                                className={`w-full text-left px-4 py-2 rounded-xl text-sm transition-all flex items-center justify-between group cursor-pointer ${selectedCategory === cat.id
                                     ? 'bg-primary text-white shadow-md shadow-primary/20 font-medium'
                                     : 'hover:bg-slate-50 text-slate-600'
                                     }`}
@@ -133,7 +140,7 @@ export default function RecipeFilter({ categories }: RecipeFilterProps) {
                             <button
                                 key={diff}
                                 onClick={() => updateFilters('difficulty', selectedDifficulty === diff ? '' : diff)}
-                                className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-all flex items-center gap-2 ${selectedDifficulty === diff
+                                className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-all flex items-center gap-2 cursor-pointer ${selectedDifficulty === diff
                                     ? 'bg-primary text-white border-primary shadow-md'
                                     : 'bg-white text-slate-600 border-slate-200 hover:border-primary/50'
                                     }`}

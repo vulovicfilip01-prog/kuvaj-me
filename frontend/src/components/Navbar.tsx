@@ -52,7 +52,7 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
                 {/* Mobile Search Button */}
                 <Link
                     href="/explore/fridge"
-                    className="hidden lg:flex px-5 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary-dark text-white rounded-full transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40 items-center gap-2 font-medium group"
+                    className="hidden lg:flex px-5 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary-dark text-white rounded-full transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40 items-center gap-2 font-medium group cursor-pointer"
                     title="Pretraga po sastojcima"
                 >
                     <LuRefrigerator className="w-5 h-5 transition-transform group-hover:scale-110" />
@@ -61,7 +61,7 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
 
                 <Link
                     href="/recipes/new"
-                    className="hidden md:flex px-5 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary-dark text-white rounded-full transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40 items-center gap-2 font-medium"
+                    className="hidden md:flex px-5 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary-dark text-white rounded-full transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40 items-center gap-2 font-medium cursor-pointer"
                 >
                     <span className="text-xl leading-none">+</span> Dodaj recept
                 </Link>
@@ -70,28 +70,28 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
                     <>
                         <Link
                             href="/favorites"
-                            className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2"
+                            className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2 cursor-pointer"
                         >
                             <HeartIcon className="w-8 h-8" />
                             <span className="hidden lg:inline">Favoriti</span>
                         </Link>
                         <Link
                             href="/collections"
-                            className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2"
+                            className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2 cursor-pointer"
                         >
                             <CollectionIcon className="w-8 h-8" />
                             <span className="hidden lg:inline">Kolekcije</span>
                         </Link>
                         <Link
                             href="/profile/planner"
-                            className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2"
+                            className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2 cursor-pointer"
                         >
                             <PlannerIcon className="w-8 h-8" />
                             <span className="hidden lg:inline">Planer</span>
                         </Link>
                         <Link
                             href="/shopping-list"
-                            className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2"
+                            className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2 cursor-pointer"
                         >
                             <ListIcon className="w-8 h-8" />
                             <span className="hidden lg:inline">Lista</span>
@@ -104,7 +104,7 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
 
                             <Link
                                 href={`/profile/${user.id}`}
-                                className="flex items-center gap-2 hover:bg-slate-100 rounded-full pr-4 pl-1 py-1 transition-all"
+                                className="flex items-center gap-2 hover:bg-slate-100 rounded-full pr-4 pl-1 py-1 transition-all cursor-pointer"
                             >
                                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white font-bold text-sm overflow-hidden relative">
                                     {profile?.avatar_url ? (
@@ -126,7 +126,7 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
 
                             <Link
                                 href="/profile/edit"
-                                className="p-2 text-slate-500 hover:text-primary transition-colors"
+                                className="p-2 text-slate-500 hover:text-primary transition-colors cursor-pointer"
                                 title="Podešavanja"
                             >
                                 <FiSettings className="w-5 h-5" />
@@ -134,7 +134,7 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
 
                             <form action="/auth/signout" method="post">
                                 <button
-                                    className="p-2 text-slate-500 hover:text-red-500 transition-colors"
+                                    className="p-2 text-slate-500 hover:text-red-500 transition-colors cursor-pointer"
                                     title="Odjavi se"
                                 >
                                     <FiLogOut className="w-5 h-5" />

@@ -9,6 +9,7 @@ import UserRoundPenIcon from '@/components/UserRoundPenIcon'
 import DifficultyBadge from '@/components/DifficultyBadge'
 import AIRecipeModal from '@/components/AIRecipeModal'
 import { FiZap } from 'react-icons/fi'
+import ChefHatIcon from '@/components/ChefHatIcon'
 import VegetableIcon from '@/components/VegetableIcon'
 import ForkKnifeIcon from '@/components/ForkKnifeIcon'
 import SettingsIcon from '@/components/SettingsIcon'
@@ -257,12 +258,22 @@ export default function RecipeForm({ categories, initialData }: { categories: Ca
             <div className="max-w-4xl mx-auto px-6">
                 {/* Header */}
                 <div className="mb-10 animate-fadeIn">
-                    <Link
-                        href={initialData ? `/recipes/${initialData.id}` : "/"}
-                        className="px-6 py-2.5 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full font-medium hover:shadow-lg hover:shadow-primary/25 transition-all inline-flex items-center gap-2 mb-6"
-                    >
-                        Nazad
-                    </Link>
+                    {/* Top Navigation */}
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
+                        <Link href="/" className="flex items-center gap-3 group">
+                            <ChefHatIcon className="w-10 h-10 transform group-hover:rotate-12 transition-transform duration-300" />
+                            <span className="text-2xl font-bold text-gradient heading-font tracking-tight">
+                                Kuvaj.me
+                            </span>
+                        </Link>
+
+                        <Link
+                            href={initialData ? `/recipes/${initialData.id}` : "/"}
+                            className="px-6 py-2.5 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full font-medium hover:shadow-lg hover:shadow-primary/25 transition-all inline-flex items-center gap-2 cursor-pointer shadow-md"
+                        >
+                            Nazad
+                        </Link>
+                    </div>
                     <h1 className="text-5xl font-bold mb-3 heading-font pb-2">
                         <span className="text-amber-gold pb-1">{initialData ? 'Izmeni' : 'Dodaj novi'}</span> <span className="text-primary">recept</span>
                     </h1>

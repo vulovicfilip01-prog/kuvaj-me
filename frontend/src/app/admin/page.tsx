@@ -1,5 +1,6 @@
 import { getAdminStats } from "./actions";
 import { FiGrid, FiUsers, FiMessageSquare, FiTrendingUp } from "react-icons/fi";
+import QuickActions from "@/components/admin/QuickActions";
 
 function StatCard({ title, value, icon: Icon, color }: any) {
     return (
@@ -50,13 +51,8 @@ export default async function AdminPage() {
                 />
             </div>
 
-            {/* Quick Actions (Future placeholder) */}
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                <h2 className="text-xl font-bold text-slate-800 mb-4">Brze Akcije</h2>
-                <div className="flex gap-4">
-                    <p className="text-slate-500">Još nismo dodali brze akcije, ali možeš ići na karticu "Recepti".</p>
-                </div>
-            </div>
+            {/* Quick Actions */}
+            <QuickActions />
         </div>
     );
 }

@@ -75,7 +75,7 @@ export default function NotificationBell({ initialUnreadCount }: NotificationBel
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative p-2 text-slate-600 hover:text-slate-900 transition-colors rounded-full hover:bg-slate-100"
+                className="relative p-2 text-slate-600 hover:text-slate-900 transition-colors rounded-full hover:bg-slate-100 cursor-pointer"
             >
                 <LuBell className="w-6 h-6" />
                 {unreadCount > 0 && (
@@ -105,7 +105,7 @@ export default function NotificationBell({ initialUnreadCount }: NotificationBel
                                     key={notification.id}
                                     href={getLink(notification)}
                                     onClick={() => handleNotificationClick(notification)}
-                                    className={`flex items-start gap-3 p-3 hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0 ${!notification.is_read ? 'bg-primary/5' : ''}`}
+                                    className={`flex items-start gap-3 p-3 hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0 cursor-pointer ${!notification.is_read ? 'bg-primary/5' : ''}`}
                                 >
                                     <div className="flex-shrink-0 w-8 h-8 relative rounded-full overflow-hidden bg-slate-200">
                                         {notification.profiles?.avatar_url ? (
@@ -141,7 +141,7 @@ export default function NotificationBell({ initialUnreadCount }: NotificationBel
                     <Link
                         href="/notifications"
                         onClick={() => setIsOpen(false)}
-                        className="block p-3 text-center text-xs font-bold text-primary hover:bg-slate-50 border-t border-slate-100 transition-colors"
+                        className="block p-3 text-center text-xs font-bold text-primary hover:bg-slate-50 border-t border-slate-100 transition-colors cursor-pointer"
                     >
                         Vidi sva obaveštenja
                     </Link>

@@ -25,6 +25,8 @@ import ForkKnifeIcon from '@/components/ForkKnifeIcon';
 // Icons for stats (styled inline to match custom icons)
 import { LuClock, LuFlame, LuUsers, LuStar } from "react-icons/lu";
 import { PiChefHat } from 'react-icons/pi';
+import { LuWallet } from 'react-icons/lu';
+import { calculateRecipeCost } from '@/utils/pricing';
 import DifficultyBadge from '@/components/DifficultyBadge';
 
 // Force dynamic rendering for authenticated features
@@ -59,6 +61,9 @@ export default async function RecipePage({ params }: { params: Promise<{ id: str
     const { average, count, myRating } = await getRecipeRating(recipe.id);
     const recipeIsFavorite = await isFavorite(recipe.id);
     const { comments } = await getRecipeComments(recipe.id);
+
+    const estimatedCost = calculateRecipeCost(recipe.ingredients || []);
+    const costPerServing = Math.round(estimatedCost / recipe.servings);
 
     // Schema.org Structured Data
     const recipeSchema = {
@@ -191,33 +196,38 @@ export default async function RecipePage({ params }: { params: Promise<{ id: str
                     </div>
 
                     {/* Stats */}
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4 p-6 bg-[#FDFBF7] rounded-2xl mb-8 border border-amber-100/50">
-                        <div className="text-center">
+                    <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 p-6 bg-[#FDFBF7] rounded-2xl mb-8 border border-amber-100/50">
+                        <div className="text-center relative after:hidden lg:after:block after:absolute after:right-0 after:top-1/4 after:h-1/2 after:w-[1px] after:bg-slate-200">
                             <StatsIcon><LuClock size={20} /></StatsIcon>
                             <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Priprema</span>
                             <p className="font-serif text-lg text-slate-900">{recipe.prep_time || recipe.preparation_time} min</p>
                         </div>
-                        <div className="text-center relative after:hidden md:after:block after:absolute after:right-0 after:top-1/4 after:h-1/2 after:w-[1px] after:bg-slate-200">
+                        <div className="text-center relative after:hidden lg:after:block after:absolute after:right-0 after:top-1/4 after:h-1/2 after:w-[1px] after:bg-slate-200">
                             <StatsIcon><LuFlame size={20} /></StatsIcon>
                             <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Kuvanje</span>
                             <p className="font-serif text-lg text-slate-900">{recipe.cook_time || recipe.cooking_time} min</p>
                         </div>
-                        <div className="text-center relative after:hidden md:after:block after:absolute after:right-0 after:top-1/4 after:h-1/2 after:w-[1px] after:bg-slate-200">
+                        <div className="text-center relative after:hidden lg:after:block after:absolute after:right-0 after:top-1/4 after:h-1/2 after:w-[1px] after:bg-slate-200">
                             <StatsIcon><PiChefHat size={22} /></StatsIcon>
                             <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Težina</span>
                             <div className="mt-1 flex justify-center">
                                 <DifficultyBadge difficulty={recipe.difficulty} showText={true} className="bg-transparent border-none p-0 scale-110" />
                             </div>
                         </div>
-                        <div className="text-center">
+                        <div className="text-center relative after:hidden lg:after:block after:absolute after:right-0 after:top-1/4 after:h-1/2 after:w-[1px] after:bg-slate-200">
                             <StatsIcon><LuUsers size={20} /></StatsIcon>
-                            <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Porcija</span>
+                            <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Porcja</span>
                             <p className="font-serif text-lg text-slate-900">{recipe.servings}</p>
                         </div>
-                        <div className="text-center relative before:hidden md:before:block before:absolute before:left-0 before:top-1/4 before:h-1/2 before:w-[1px] before:bg-slate-200">
+                        <div className="text-center relative after:hidden lg:after:block after:absolute after:right-0 after:top-1/4 after:h-1/2 after:w-[1px] after:bg-slate-200">
                             <StatsIcon><LuStar size={20} /></StatsIcon>
                             <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Ocena</span>
                             <p className="font-serif text-lg text-slate-900">{average} / 5</p>
+                        </div>
+                        <div className="text-center">
+                            <StatsIcon><LuWallet size={20} /></StatsIcon>
+                            <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Budžet</span>
+                            <p className="font-serif text-lg text-slate-900" title={`~${costPerServing} RSD po porciji`}>~{estimatedCost} RSD</p>
                         </div>
                     </div>
 

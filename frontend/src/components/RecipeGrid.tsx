@@ -1,3 +1,4 @@
+import WheatOffIcon from './WheatOffIcon';
 import RecipeCard from './RecipeCard';
 
 interface RecipeGridProps {
@@ -10,8 +11,8 @@ export default function RecipeGrid({ recipes, favoriteIds = [], isAuthenticated 
     if (!recipes || recipes.length === 0) {
         return (
             <div className="text-center py-16 px-6 glass-panel rounded-3xl border border-dashed border-slate-300">
-                <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl shadow-sm">
-                    👨‍🍳
+                <div className="w-20 h-20 bg-primary/5 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm border border-primary/10">
+                    <WheatOffIcon className="w-12 h-12 text-primary opacity-60" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Još uvek nema recepata</h3>
                 <p className="text-slate-600 max-w-md mx-auto">

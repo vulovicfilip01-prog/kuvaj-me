@@ -32,14 +32,14 @@ export default function RecipeCarousel({ recipes }: RecipeCarouselProps) {
             {/* Scroll Buttons */}
             <button
                 onClick={() => scroll('left')}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 p-3 bg-white rounded-full shadow-lg text-slate-600 hover:text-primary hover:scale-110 transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0"
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 p-3 bg-white rounded-full shadow-lg text-slate-600 hover:text-primary hover:scale-110 transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0 cursor-pointer"
                 aria-label="Scroll left"
             >
                 <FiChevronLeft className="w-6 h-6" />
             </button>
             <button
                 onClick={() => scroll('right')}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 p-3 bg-white rounded-full shadow-lg text-slate-600 hover:text-primary hover:scale-110 transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0"
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 p-3 bg-white rounded-full shadow-lg text-slate-600 hover:text-primary hover:scale-110 transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0 cursor-pointer"
                 aria-label="Scroll right"
             >
                 <FiChevronRight className="w-6 h-6" />

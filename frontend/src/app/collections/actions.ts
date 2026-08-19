@@ -260,7 +260,8 @@ export async function getCollectionWithRecipes(collectionId: string) {
                 cook_time,
                 servings,
                 created_at,
-                profiles (display_name)
+                profiles (display_name),
+                ingredients (*)
             )
         `)
         .eq('collection_id', collectionId)

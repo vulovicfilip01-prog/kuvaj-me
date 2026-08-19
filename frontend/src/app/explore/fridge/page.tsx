@@ -4,6 +4,7 @@ import FridgeSearch from '@/components/FridgeSearch';
 import Navbar from '@/components/Navbar';
 import { FiAlertCircle, FiChevronRight } from 'react-icons/fi';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 interface PageProps {
     searchParams: Promise<{ ingredients?: string }>;
@@ -34,10 +35,12 @@ export default async function FridgeSearchPage({ searchParams }: PageProps) {
                     </p>
                 </div>
 
-                <FridgeSearch />
+                <Suspense fallback={<div className="h-64 animate-pulse bg-white/20 rounded-3xl" />}>
+                    <FridgeSearch />
+                </Suspense>
 
                 {ingredientList.length > 0 && (
-                    <div className="mt-20 space-y-10 animate-fadeIn">
+                    <div id="results" className="mt-20 space-y-10 animate-fadeIn">
                         <div className="flex flex-col md:flex-row justify-between items-end gap-4 border-b border-slate-200 pb-6">
                             <div>
                                 <h2 className="text-3xl font-bold text-slate-900 heading-font mb-2">Rezultati pretrage</h2>

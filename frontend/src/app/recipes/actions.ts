@@ -184,7 +184,8 @@ export async function getRecipes(searchParams?: { posno?: string }) {
       ),
       categories (
         name
-      )
+      ),
+      ingredients (*)
     `)
     .eq("is_public", true)
     
@@ -441,7 +442,8 @@ export async function getFavoriteRecipes() {
       recipes (
         *,
         profiles:profiles!recipes_user_id_fkey (display_name),
-        categories (name)
+        categories (name),
+        ingredients (*)
       )
     `)
     .eq('user_id', user.id)
@@ -692,7 +694,8 @@ export async function getTrendingRecipes(limit: number = 6) {
   const { data: recipes, error } = await supabase
     .from('recipes')
     .select(`
-      *
+      *,
+      ingredients (*)
     `)
     .eq('is_public', true)
     .order('created_at', { ascending: false })
@@ -721,7 +724,8 @@ export async function getNewestRecipes(limit: number = 8) {
   const { data: recipes, error } = await supabase
     .from('recipes')
     .select(`
-      *
+      *,
+      ingredients (*)
     `)
     .eq('is_public', true)
     .order('created_at', { ascending: false })
@@ -832,7 +836,8 @@ export async function getFeedRecipes(limit: number = 10) {
     .select(`
       *,
       profiles:profiles!recipes_user_id_fkey (display_name),
-      categories (name)
+      categories (name),
+      ingredients (*)
     `)
     .in('user_id', followingIds)
     .eq('is_public', true)
