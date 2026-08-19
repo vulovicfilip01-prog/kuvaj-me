@@ -75,7 +75,7 @@ import WelcomeModal from '@/components/WelcomeModalClient'
 import Footer from '@/components/Footer'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
 import CookieBanner from '@/components/CookieBanner'
-
+import { Analytics } from '@vercel/analytics/react'
 
 export default function RootLayout({
   children,
@@ -93,6 +93,7 @@ export default function RootLayout({
         <CookieBanner />
         <Footer />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
+        <Analytics />
       </body>
     </html>
   );
