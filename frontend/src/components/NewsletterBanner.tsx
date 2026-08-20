@@ -12,8 +12,8 @@ export default function NewsletterBanner() {
                 <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-16">
                     {/* Left: Text */}
                     <div className="flex-1 text-center md:text-left">
-                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 mb-6 shadow-sm">
-                            <FiMail className="w-6 h-6" />
+                        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-r from-[#d4a373] to-[#bc8a5f] text-white mb-6 shadow-md">
+                            <FiMail className="w-7 h-7" />
                         </div>
                         <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 font-serif leading-tight">
                             Nikad više pitanje: <br /> <span className="text-[#6B7E4F]">"Šta za ručak?"</span>
