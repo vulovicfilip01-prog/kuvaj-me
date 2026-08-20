@@ -26,7 +26,7 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
     if (user) {
         const { data } = await supabase
             .from('profiles')
-            .select('display_name, avatar_url')
+            .select('display_name, avatar_url, is_admin')
             .eq('id', user.id)
             .single()
         profile = data
@@ -130,6 +130,16 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
                             >
                                 <FiSettings className="w-5 h-5" />
                             </Link>
+
+                            {profile?.is_admin && (
+                                <Link
+                                    href="/admin"
+                                    className="p-2 text-slate-500 hover:text-primary transition-colors cursor-pointer bg-slate-100 rounded-lg ml-1"
+                                    title="Admin Panel"
+                                >
+                                    <FiGrid className="w-5 h-5" />
+                                </Link>
+                            )}
 
                             <form action="/auth/signout" method="post">
                                 <button
