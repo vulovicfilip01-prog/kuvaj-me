@@ -13,7 +13,10 @@ export default function Footer() {
 
                     {/* Brand & Links */}
                     <div className="space-y-4">
-                        <div className="text-slate-900 font-bold text-xl">Krckaj.me</div>
+                        <div className="flex items-center gap-3">
+                            <img src="/logo.png" alt="Krckaj.me logo" className="w-8 h-8 object-contain drop-shadow-sm" />
+                            <div className="text-slate-900 font-bold text-xl">Krckaj.me</div>
+                        </div>
                         <p className="text-slate-600 max-w-xs transition-colors">
                             Najveća baza domaćih recepata. Kuvajmo zajedno svakog dana.
                         </p>
