@@ -37,12 +37,9 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
     return (
         <nav className={`relative z-50 container mx-auto px-6 py-6 flex justify-between items-center gap-4 ${!transparent ? 'bg-white/80 backdrop-blur-md shadow-sm rounded-b-3xl mb-8' : ''}`}>
             <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-                <div className="relative w-[88px] h-[88px] transform group-hover:rotate-12 transition-transform duration-300">
-                    <Image src="/logo.png" alt="Krckaj.me logo" fill className="object-contain drop-shadow-md" sizes="88px" />
+                <div className="relative w-[200px] h-[200px] transform group-hover:rotate-12 transition-transform duration-300">
+                    <Image src="/logo.png" alt="Krckaj.me logo" fill className="object-contain drop-shadow-md" sizes="200px" />
                 </div>
-                <span className="text-3xl font-bold text-gradient heading-font tracking-tight">
-                    Krckaj.me
-                </span>
             </Link>
 
             {/* Desktop Search Bar */}

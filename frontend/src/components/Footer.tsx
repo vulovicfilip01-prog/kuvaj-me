@@ -14,8 +14,7 @@ export default function Footer() {
                     {/* Brand & Links */}
                     <div className="space-y-4">
                         <div className="flex items-center gap-3">
-                            <img src="/logo.png" alt="Krckaj.me logo" className="w-[88px] h-[88px] object-contain drop-shadow-sm" />
-                            <div className="text-slate-900 font-bold text-2xl">Krckaj.me</div>
+                            <img src="/logo.png" alt="Krckaj.me logo" className="w-[200px] h-[200px] object-contain drop-shadow-sm" />
                         </div>
                         <p className="text-slate-600 max-w-xs transition-colors">
                             Najveća baza domaćih recepata. Kuvajmo zajedno svakog dana.
