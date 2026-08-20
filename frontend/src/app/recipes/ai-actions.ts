@@ -25,7 +25,7 @@ export async function generateRecipeAction(prompt: string) {
         const model = genAI.getGenerativeModel({ model: modelName }, { apiVersion: 'v1' });
 
         const systemPrompt = `
-            Vi ste stručni kulinarski asistent za aplikaciju "Kuvaj.me". 
+            Vi ste stručni kulinarski asistent za aplikaciju "Krckaj.me". 
             Vaš zadatak je da generišete recept na osnovu korisničkog upita na srpskom jeziku.
             
             Korisnički upit: "${prompt}"

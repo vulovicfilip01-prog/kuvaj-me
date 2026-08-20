@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     if (!recipe) return { title: 'Recept nije pronađen' };
 
     return {
-        title: `${recipe.title} - Kuvaj.me`,
+        title: `${recipe.title} - Krckaj.me`,
         description: recipe.description?.substring(0, 160) || `Recept za ${recipe.title}`,
         openGraph: {
             title: recipe.title,
@@ -73,7 +73,7 @@ export default async function RecipePage({ params }: { params: Promise<{ id: str
         image: recipe.image_url ? [recipe.image_url] : [],
         author: {
             '@type': 'Person',
-            name: recipe.profiles?.display_name || 'Kuvaj.me Korisnik'
+            name: recipe.profiles?.display_name || 'Krckaj.me Korisnik'
         },
         datePublished: recipe.created_at,
         description: recipe.description,
@@ -115,7 +115,7 @@ export default async function RecipePage({ params }: { params: Promise<{ id: str
         quantity: `${ing.amount || ing.quantity || ''} ${ing.unit || ''}`.trim()
     }));
 
-    const recipeUrl = typeof window !== 'undefined' ? window.location.href : `https://kuvaj.me/recipes/${recipe.id}`;
+    const recipeUrl = typeof window !== 'undefined' ? window.location.href : `https://krckaj.me/recipes/${recipe.id}`;
     const userIsAdmin = user?.user_metadata?.is_admin === true;
 
     // Helper for styled stats icons
@@ -176,7 +176,7 @@ export default async function RecipePage({ params }: { params: Promise<{ id: str
                                 </div>
                                 <div>
                                     <p className="text-base font-bold text-slate-900 group-hover:text-[#6B7E4F] transition-colors">
-                                        {recipe.profiles?.display_name || 'Kuvaj.me Korisnik'}
+                                        {recipe.profiles?.display_name || 'Krckaj.me Korisnik'}
                                     </p>
                                     <p className="text-xs text-slate-500">
                                         {new Date(recipe.created_at).toLocaleDateString('sr-RS')}

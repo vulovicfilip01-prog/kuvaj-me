@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { createClient } from '@/utils/supabase/server';
 import { getRecipes, getTrendingRecipes, getNewestRecipes, getFeedRecipes } from './recipes/actions';
 import RecipeGrid from '@/components/RecipeGrid';
+import NewsletterBanner from '@/components/NewsletterBanner';
 
 import RecipeCarousel from '@/components/RecipeCarousel';
 import HomeFeedTabs from '@/components/HomeFeedTabs';
@@ -14,7 +15,7 @@ import HeroImages from '@/components/HeroImages';
 import Navbar from '@/components/Navbar';
 
 export const metadata: Metadata = {
-  title: 'Kuvaj.me - Otkrijte najbolje recepte',
+  title: 'Krckaj.me - Otkrijte najbolje recepte',
   description: 'Pretražite hiljade recepata, sačuvajte svoje favorite i podelite kulinarske kreacije. Recepti za svako jelo i svaku priliku.',
 };
 
@@ -141,6 +142,9 @@ export default async function Home() {
         isAuthenticated={!!user}
         favoriteIds={favoriteIds}
       />
+
+      {/* Newsletter Banner */}
+      <NewsletterBanner />
     </main>
   );
 }

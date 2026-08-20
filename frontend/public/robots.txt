@@ -10,4 +10,4 @@ Disallow: /favorites/
 Disallow: /collections/
 Disallow: /search/results
 
-Sitemap: https://kuvaj.me/sitemap.xml
+Sitemap: https://Krckaj.me/sitemap.xml

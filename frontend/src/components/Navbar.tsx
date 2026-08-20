@@ -39,7 +39,7 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
             <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
                 <ChefHatIcon className="w-10 h-10 transform group-hover:rotate-12 transition-transform duration-300" />
                 <span className="text-2xl font-bold text-gradient heading-font tracking-tight">
-                    Kuvaj.me
+                    Krckaj.me
                 </span>
             </Link>
 

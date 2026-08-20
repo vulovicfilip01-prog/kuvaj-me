@@ -123,7 +123,7 @@ export default function RecipeComments({ recipeId, initialComments, user }: Reci
                             <div className="bg-slate-50 rounded-2xl rounded-tl-none p-4 relative group-hover:bg-slate-100 transition-colors">
                                 <div className="flex justify-between items-start mb-2">
                                     <span className="font-bold text-slate-900">
-                                        {comment.profiles?.display_name || 'Kuvaj.me Korisnik'}
+                                        {comment.profiles?.display_name || 'Krckaj.me Korisnik'}
                                     </span>
                                     <span className="text-xs text-slate-400">
                                         {new Date(comment.created_at).toLocaleDateString('sr-RS')}

@@ -6,7 +6,7 @@ import { FiX, FiChevronRight, FiCheck } from 'react-icons/fi'
 
 const STEPS = [
     {
-        title: "Dobrodošli na Kuvaj.me! 🍳",
+        title: "Dobrodošli na Krckaj.me! 🍳",
         description: "Vaša nova digitalna knjiga recepata. Otkrijte, sačuvajte i podelite omiljene recepte sa svetom.",
         icon: "👋"
     },

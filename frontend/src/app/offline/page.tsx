@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { FiWifiOff } from 'react-icons/fi'
 
 export const metadata = {
-    title: 'Offline - Kuvaj.me',
+    title: 'Offline - Krckaj.me',
     description: 'Niste povezani na internet'
 }
 

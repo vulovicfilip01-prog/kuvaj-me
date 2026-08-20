@@ -94,7 +94,7 @@ export default function ReviewCard({ review, recipeId, isOwnReview, onUpdate }: 
                         href={`/profile/${review.profiles?.id}`}
                         className="font-bold text-slate-900 hover:text-primary transition-colors"
                     >
-                        {review.profiles?.display_name || 'Kuvaj.me Chef'}
+                        {review.profiles?.display_name || 'Krckaj.me Chef'}
                     </Link>
                     <div className="flex items-center gap-2 mt-1">
                         <div className="flex text-yellow-400">

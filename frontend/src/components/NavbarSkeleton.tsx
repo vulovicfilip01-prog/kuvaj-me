@@ -7,7 +7,7 @@ export default function NavbarSkeleton() {
             <div className="flex items-center gap-3 flex-shrink-0 opacity-50">
                 <ChefHatIcon className="w-10 h-10 text-slate-300" />
                 <span className="text-2xl font-bold text-slate-300 heading-font tracking-tight">
-                    Kuvaj.me
+                    Krckaj.me
                 </span>
             </div>
 

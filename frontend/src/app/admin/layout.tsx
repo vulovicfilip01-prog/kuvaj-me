@@ -11,7 +11,7 @@ async function AdminSidebar() {
             <div className="mb-8">
                 <Link href="/" className="text-2xl font-bold text-primary flex items-center gap-2">
                     <FiGrid className="w-8 h-8" />
-                    Kuvaj.me <span className="text-xs bg-primary/20 px-2 py-1 rounded text-primary">ADMIN</span>
+                    Krckaj.me <span className="text-xs bg-primary/20 px-2 py-1 rounded text-primary">ADMIN</span>
                 </Link>
             </div>
 

@@ -27,33 +27,33 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'Kuvaj.me',
+    title: 'Krckaj.me',
   },
   title: {
-    default: "Kuvaj.me - Tvoja digitalna knjiga recepata",
-    template: "%s | Kuvaj.me"
+    default: "Krckaj.me - Tvoja digitalna knjiga recepata",
+    template: "%s | Krckaj.me"
   },
-  description: "Otkrijte, sačuvajte i podelite svoje omiljene recepte. Kuvaj.me je vaša digitalna knjiga recepata sa sastojcima, nutritivnim vrednostima i korisničkim ocenama.",
+  description: "Otkrijte, sačuvajte i podelite svoje omiljene recepte. Krckaj.me je vaša digitalna knjiga recepata sa sastojcima, nutritivnim vrednostima i korisničkim ocenama.",
   keywords: ["recepti", "kuvanje", "knjiga recepata", "kuhinja", "srpski recepti", "balkanska kuhinja", "domaća jela"],
-  authors: [{ name: "Kuvaj.me" }],
-  creator: "Kuvaj.me",
+  authors: [{ name: "Krckaj.me" }],
+  creator: "Krckaj.me",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   openGraph: {
     type: "website",
     locale: "sr_RS",
-    siteName: "Kuvaj.me",
-    title: "Kuvaj.me - Tvoja digitalna knjiga recepata",
+    siteName: "Krckaj.me",
+    title: "Krckaj.me - Tvoja digitalna knjiga recepata",
     description: "Otkrijte, sačuvajte i podelite svoje omiljene recepte.",
     images: [{
       url: "/og-image.png",
       width: 1200,
       height: 630,
-      alt: "Kuvaj.me - Tvoja digitalna knjiga recepata"
+      alt: "Krckaj.me - Tvoja digitalna knjiga recepata"
     }]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kuvaj.me - Tvoja digitalna knjiga recepata",
+    title: "Krckaj.me - Tvoja digitalna knjiga recepata",
     description: "Otkrijte, sačuvajte i podelite svoje omiljene recepte.",
     images: ["/og-image.png"]
   },

@@ -123,7 +123,7 @@ export default function SearchPage() {
             <nav className="container mx-auto px-6 py-6 flex justify-between items-center mb-8 animate-fadeIn">
                 <Link href="/" className="flex items-center gap-3 group">
                     <ChefHatIcon className="w-10 h-10 transform group-hover:rotate-12 transition-transform duration-300" />
-                    <span className="text-2xl font-bold text-gradient heading-font">Kuvaj.me</span>
+                    <span className="text-2xl font-bold text-gradient heading-font">Krckaj.me</span>
                 </Link>
                 <Link href="/" className="px-6 py-2.5 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full font-medium hover:shadow-lg hover:shadow-primary/25 transition-all flex items-center gap-2">
                     ← Nazad na početnu

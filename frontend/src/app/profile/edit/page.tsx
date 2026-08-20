@@ -5,8 +5,8 @@ import ProfileEditForm from '@/components/ProfileEditForm'
 import Navbar from '@/components/Navbar'
 
 export const metadata = {
-    title: 'Uredi Profil - Kuvaj.me',
-    description: 'Izmenite informacije svog profila na Kuvaj.me',
+    title: 'Uredi Profil - Krckaj.me',
+    description: 'Izmenite informacije svog profila na Krckaj.me',
 }
 
 export default async function EditProfilePage() {

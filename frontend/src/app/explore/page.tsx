@@ -25,7 +25,7 @@ export async function generateMetadata({ searchParams }: ExplorePageProps): Prom
         // Since we don't have easy access to category name without fetching, 
         // we'll keep it generic or try to format the ID if it's readable.
         title = `Recepti u kategoriji ${category}`
-        description = `Najbolji recepti u kategoriji ${category} na Kuvaj.me.`
+        description = `Najbolji recepti u kategoriji ${category} na Krckaj.me.`
     }
 
     if (difficulty) {
@@ -40,10 +40,10 @@ export async function generateMetadata({ searchParams }: ExplorePageProps): Prom
     }
 
     return {
-        title: `${title} | Kuvaj.me`,
+        title: `${title} | Krckaj.me`,
         description,
         openGraph: {
-            title: `${title} | Kuvaj.me`,
+            title: `${title} | Krckaj.me`,
             description,
             type: 'website',
         }

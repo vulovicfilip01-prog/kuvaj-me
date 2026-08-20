@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: 'Politika privatnosti | Kuvaj.me',
-    description: 'Politika privatnosti za Kuvaj.me aplikaciju. Saznajte kako prikupljamo i koristimo vaše podatke.',
+    title: 'Politika privatnosti | Krckaj.me',
+    description: 'Politika privatnosti za Krckaj.me aplikaciju. Saznajte kako prikupljamo i koristimo vaše podatke.',
 }
 
 export default function PrivacyPage() {
@@ -14,7 +14,7 @@ export default function PrivacyPage() {
                 <section>
                     <h2 className="text-2xl font-bold mb-4 text-slate-900">1. Uvod</h2>
                     <p>
-                        Dobrodošli na Kuvaj.me. Vaša privatnost nam je važna. Ova Politika privatnosti objašnjava kako prikupljamo,
+                        Dobrodošli na Krckaj.me. Vaša privatnost nam je važna. Ova Politika privatnosti objašnjava kako prikupljamo,
                         koristimo i štitimo vaše podatke kada koristite našu web aplikaciju.
                     </p>
                 </section>
@@ -79,7 +79,7 @@ export default function PrivacyPage() {
                     <h2 className="text-2xl font-bold mb-4 text-slate-900">6. Kontakt</h2>
                     <p>
                         Za sva pitanja u vezi sa privatnošću, možete nas kontaktirati na:
-                        <a href="mailto:podrska@kuvaj.me" className="text-primary hover:underline ml-1">podrska@kuvaj.me</a>
+                        <a href="mailto:podrska@Krckaj.me" className="text-primary hover:underline ml-1">podrska@Krckaj.me</a>
                     </p>
                 </section>
 

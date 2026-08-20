@@ -32,7 +32,7 @@ export default function CookieBanner() {
                 <div className="flex-1">
                     <h3 className="text-lg font-bold text-slate-900 mb-1">🍪 Kolačići i privatnost</h3>
                     <p className="text-slate-600 text-sm leading-relaxed">
-                        Koristimo kolačiće kako bismo poboljšali tvoje iskustvo na Kuvaj.me i analizirali posete.
+                        Koristimo kolačiće kako bismo poboljšali tvoje iskustvo na Krckaj.me i analizirali posete.
                         Nastavkom korišćenja sajta pristaješ na našu
                         <Link href="/privacy" className="text-primary hover:underline ml-1 font-medium">Politiku privatnosti</Link>.
                     </p>

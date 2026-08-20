@@ -15,7 +15,7 @@ export default function RecipePlaceholder({ className = "h-full w-full", iconSiz
 
             {/* Optional Text */}
             <span className="mt-4 text-[#6B7E4F]/60 font-bold text-[10px] uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-all duration-300 z-10">
-                Kuvaj.me
+                Krckaj.me
             </span>
         </div>
     );

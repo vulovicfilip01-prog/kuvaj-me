@@ -22,15 +22,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
 
     return {
-        title: `${profile.display_name} - Profil | Kuvaj.me`,
-        description: profile.bio || `Pogledajte recepte i kolekcije korisnika ${profile.display_name} na Kuvaj.me`,
+        title: `${profile.display_name} - Profil | Krckaj.me`,
+        description: profile.bio || `Pogledajte recepte i kolekcije korisnika ${profile.display_name} na Krckaj.me`,
         openGraph: {
             title: `${profile.display_name} - Profil`,
             description: profile.bio || `Pogledajte recepte i kolekcije korisnika ${profile.display_name}`,
             images: profile.avatar_url ? [profile.avatar_url] : [],
             type: 'profile',
             locale: 'sr_RS',
-            siteName: 'Kuvaj.me',
+            siteName: 'Krckaj.me',
         }
     }
 }

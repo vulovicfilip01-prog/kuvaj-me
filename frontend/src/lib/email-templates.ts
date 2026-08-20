@@ -1,7 +1,7 @@
 /**
- * Base email template for Kuvaj.me
+ * Base email template for Krckaj.me
  */
-export const baseEmailTemplate = (content: string, title: string = "Kuvaj.me") => `
+export const baseEmailTemplate = (content: string, title: string = "Krckaj.me") => `
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,14 +27,14 @@ export const baseEmailTemplate = (content: string, title: string = "Kuvaj.me") =
 <body>
     <div class="container">
         <div class="header">
-            <a href="https://kuvaj.me" class="logo">Kuvaj.me</a>
+            <a href="https://Krckaj.me" class="logo">Krckaj.me</a>
             <div style="color: #ffffff; font-size: 14px; margin-top: 8px; opacity: 0.8;">Tvoja digitalna knjiga recepata</div>
         </div>
         <div class="content">
             ${content}
         </div>
         <div class="footer">
-            <p>&copy; ${new Date().getFullYear()} Kuvaj.me. Sva prava zadržana.</p>
+            <p>&copy; ${new Date().getFullYear()} Krckaj.me. Sva prava zadržana.</p>
             <p>Primiš ovaj e-mail jer si prijavljen na naš newsletter. Ukoliko više ne želiš da primaš vesti, možeš se <a href="#" style="color: #556B2F;">odjaviti ovde</a>.</p>
         </div>
     </div>
@@ -62,6 +62,6 @@ export const weeklyDigestTemplate = (recipes: any[]) => {
         <div class="divider"></div>
         ${recipesHtml}
         <div class="divider"></div>
-        <p>Srećno kuvanje,<br>Tim Kuvaj.me</p>
+        <p>Srećno kuvanje,<br>Tim Krckaj.me</p>
     `, "Nedeljni kuvar 🥗");
 };

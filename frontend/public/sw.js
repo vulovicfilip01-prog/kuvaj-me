@@ -1,4 +1,4 @@
-// Service Worker for Kuvaj.me PWA
+// Service Worker for Krckaj.me PWA
 // Version 1.0.0
 
 const CACHE_NAME = 'kuvaj-me-v1';

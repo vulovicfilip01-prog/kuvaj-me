@@ -3,14 +3,14 @@ import Navbar from '@/components/Navbar'
 import CollectionsView from '@/components/CollectionsView'
 
 export const metadata: Metadata = {
-    title: 'Moje Kolekcije - Kuvaj.me',
+    title: 'Moje Kolekcije - Krckaj.me',
     description: 'Organizujte i delite svoje omiljene recepte u kolekcije.',
     openGraph: {
-        title: 'Moje Kolekcije - Kuvaj.me',
+        title: 'Moje Kolekcije - Krckaj.me',
         description: 'Organizujte i delite svoje omiljene recepte u kolekcije.',
         type: 'website',
         locale: 'sr_RS',
-        siteName: 'Kuvaj.me',
+        siteName: 'Krckaj.me',
     }
 }
 

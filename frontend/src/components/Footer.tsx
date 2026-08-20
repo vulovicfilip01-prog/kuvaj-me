@@ -13,7 +13,7 @@ export default function Footer() {
 
                     {/* Brand & Links */}
                     <div className="space-y-4">
-                        <div className="text-slate-900 font-bold text-xl">Kuvaj.me</div>
+                        <div className="text-slate-900 font-bold text-xl">Krckaj.me</div>
                         <p className="text-slate-600 max-w-xs transition-colors">
                             Najveća baza domaćih recepata. Kuvajmo zajedno svakog dana.
                         </p>
@@ -40,7 +40,7 @@ export default function Footer() {
                 </div>
 
                 <div className="border-t border-slate-100 mt-12 pt-8 text-center text-slate-400 text-sm">
-                    © {currentYear} Kuvaj.me. Sva prava zadržana.
+                    © {currentYear} Krckaj.me. Sva prava zadržana.
                 </div>
             </div>
         </footer>

@@ -48,7 +48,7 @@ export default async function PrintRecipePage({ params }: { params: Promise<{ id
             <div className="mb-8 text-center">
                 <h1 className="text-4xl font-serif font-bold mb-2">{recipe.title}</h1>
                 <p className="text-slate-600">
-                    Autor: {recipe.profiles?.display_name || 'Kuvaj.me'}
+                    Autor: {recipe.profiles?.display_name || 'Krckaj.me'}
                 </p>
                 <div className="flex justify-center gap-6 mt-4 text-sm text-slate-500 border-t border-b border-slate-100 py-3">
                     <span>⏳ {recipe.preparation_time} min priprema</span>
@@ -100,7 +100,7 @@ export default async function PrintRecipePage({ params }: { params: Promise<{ id
 
             {/* Footer */}
             <div className="mt-12 pt-6 border-t border-slate-200 text-center text-xs text-slate-400">
-                <p>Recept preuzet sa Kuvaj.me - Tvoja digitalna knjiga recepata</p>
+                <p>Recept preuzet sa Krckaj.me - Tvoja digitalna knjiga recepata</p>
                 <p>{new Date().toLocaleDateString('sr-RS')}</p>
             </div>
         </div>

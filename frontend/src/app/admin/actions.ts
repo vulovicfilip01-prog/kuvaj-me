@@ -287,7 +287,7 @@ export async function sendNewsletterBlast(subject: string, content: string) {
         if (resend) {
             try {
                 await resend.emails.send({
-                    from: 'Kuvaj.me <newsletter@krckaj.me>',
+                    from: 'Krckaj.me <newsletter@krckaj.me>',
                     to: subscribers.map(s => s.email),
                     subject: subject,
                     html: baseEmailTemplate(content.replace(/\n/g, '<br>'), subject),
@@ -359,7 +359,7 @@ export async function sendWeeklyDigest() {
         if (resend && subscribers && subscribers.length > 0) {
             try {
                 await resend.emails.send({
-                    from: 'Kuvaj.me <newsletter@krckaj.me>',
+                    from: 'Krckaj.me <newsletter@krckaj.me>',
                     to: subscribers.map(s => s.email),
                     subject: subject,
                     html: weeklyDigestTemplate(topRecipes),

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: 'Uslovi korišćenja | Kuvaj.me',
-    description: 'Uslovi korišćenja Kuvaj.me aplikacije. Pravila za objavljivanje recepata i korišćenje servisa.',
+    title: 'Uslovi korišćenja | Krckaj.me',
+    description: 'Uslovi korišćenja Krckaj.me aplikacije. Pravila za objavljivanje recepata i korišćenje servisa.',
 }
 
 export default function TermsPage() {
@@ -14,7 +14,7 @@ export default function TermsPage() {
                 <section>
                     <h2 className="text-2xl font-bold mb-4 text-slate-900">1. Prihvatanje uslova</h2>
                     <p>
-                        Pristupanjem i korišćenjem Kuvaj.me aplikacije, prihvatate ove Uslove korišćenja u celosti.
+                        Pristupanjem i korišćenjem Krckaj.me aplikacije, prihvatate ove Uslove korišćenja u celosti.
                         Ako se ne slažete sa bilo kojim delom ovih uslova, molimo vas da ne koristite aplikaciju.
                     </p>
                 </section>
@@ -34,7 +34,7 @@ export default function TermsPage() {
                             Zadržavate autorska prava na recepte i fotografije koje postavite.
                         </li>
                         <li>
-                            Objavljivanjem sadržaja na Kuvaj.me, dajete nam neekskluzivnu, besplatnu licencu da taj sadržaj
+                            Objavljivanjem sadržaja na Krckaj.me, dajete nam neekskluzivnu, besplatnu licencu da taj sadržaj
                             prikazujemo, distribuiramo i promovišemo u okviru aplikacije i povezanih kanala.
                         </li>
                         <li>
@@ -49,7 +49,7 @@ export default function TermsPage() {
                 <section>
                     <h2 className="text-2xl font-bold mb-4 text-slate-900">4. Odricanje od odgovornosti</h2>
                     <p>
-                        Kuvaj.me je platforma za deljenje recepata. Ne garantujemo tačnost, potpunost ili uspeh recepata
+                        Krckaj.me je platforma za deljenje recepata. Ne garantujemo tačnost, potpunost ili uspeh recepata
                         koje postavljaju korisnici. Recepti se koriste na sopstvenu odgovornost. Molimo vas da obratite pažnju
                         na alergene i bezbednost pri pripremi hrane.
                     </p>
