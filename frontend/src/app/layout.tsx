@@ -86,7 +86,7 @@ export default function RootLayout({
   return (
     <html lang="sr">
       <body
-        className={`${outfit.variable} ${inter.variable} antialiased font-sans pb-16 md:pb-0`}
+        className={`${outfit.variable} ${inter.variable} antialiased font-sans pb-16 md:pb-0 overflow-x-hidden`}
       >
         <ServiceWorkerRegistration />
         {children}
