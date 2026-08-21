@@ -12,6 +12,7 @@ import MobileSearchButton from '@/components/MobileSearchButton'
 import { FiUser, FiSettings, FiLogOut, FiGrid } from 'react-icons/fi'
 import { LuRefrigerator } from 'react-icons/lu'
 import NotificationBell from '@/components/NotificationBell'
+import MobileHamburgerMenu from '@/components/MobileHamburgerMenu'
 import { getUnreadCount } from '@/app/notifications/actions'
 
 interface NavbarProps {
@@ -99,8 +100,12 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
 
 
                         {/* User Dropdown / Menu */}
-                        <div className="flex items-center gap-2 pl-2 border-l border-slate-200 ml-2">
+                        <div className="flex items-center gap-2 md:pl-2 md:border-l md:border-slate-200 md:ml-2">
                             <NotificationBell initialUnreadCount={unreadCount} />
+                            
+                            <MobileHamburgerMenu userId={user.id} isAdmin={profile?.is_admin} />
+
+                            <div className="hidden md:flex items-center gap-2">
 
                             <Link
                                 href={`/profile/${user.id}`}
@@ -150,16 +155,19 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
                                     <FiLogOut className="w-5 h-5" />
                                 </button>
                             </form>
+                            </div>
                         </div>
                     </>
                 ) : (
                     <>
-                        <Link href="/login" className="px-5 py-2.5 text-slate-600 hover:text-slate-900 transition-colors font-medium">
+                        <Link href="/login" className="hidden md:flex px-5 py-2.5 text-slate-600 hover:text-slate-900 transition-colors font-medium">
                             Prijavi se
                         </Link>
-                        <Link href="/signup" className="px-6 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary-dark text-white rounded-full font-medium shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all transform hover:-translate-y-0.5">
+                        <Link href="/signup" className="hidden md:flex px-6 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary-dark text-white rounded-full font-medium shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all transform hover:-translate-y-0.5">
                             Registruj se
                         </Link>
+                        
+                        <MobileHamburgerMenu />
                     </>
                 )}
             </div>

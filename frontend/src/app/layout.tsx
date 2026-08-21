@@ -76,6 +76,7 @@ import Footer from '@/components/Footer'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
 import CookieBanner from '@/components/CookieBanner'
 import { Analytics } from '@vercel/analytics/react'
+import MobileBottomNav from '@/components/MobileBottomNav'
 
 export default function RootLayout({
   children,
@@ -85,13 +86,14 @@ export default function RootLayout({
   return (
     <html lang="sr">
       <body
-        className={`${outfit.variable} ${inter.variable} antialiased font-sans`}
+        className={`${outfit.variable} ${inter.variable} antialiased font-sans pb-16 md:pb-0`}
       >
         <ServiceWorkerRegistration />
         {children}
         <WelcomeModal />
         <CookieBanner />
         <Footer />
+        <MobileBottomNav />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
         <Analytics />
       </body>
