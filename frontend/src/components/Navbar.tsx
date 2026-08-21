@@ -37,11 +37,11 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
     const unreadCount = user ? await getUnreadCount() : 0
 
     return (
-        <nav className={`sticky top-0 w-full z-50 mx-auto px-4 py-2 md:px-6 md:py-4 flex justify-between items-center gap-4 ${!transparent ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100' : ''}`}>
+        <nav className={`sticky top-0 w-full z-50 mx-auto px-4 py-2 md:px-6 md:py-4 flex justify-between items-center gap-4 ${!transparent ? 'bg-white/50 backdrop-blur-md shadow-sm border-b border-slate-100' : ''}`}>
             <div className="container mx-auto flex justify-between items-center w-full">
             <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-                <div className="relative w-[180px] h-[60px] md:w-[240px] md:h-[70px] transform group-hover:scale-105 transition-transform duration-300">
-                    <Image src="/logo.png" alt="Krckaj.me logo" fill className="object-contain drop-shadow-md" sizes="(max-width: 768px) 180px, 240px" />
+                <div className="relative w-[220px] h-[75px] md:w-[280px] md:h-[90px] transform group-hover:scale-105 transition-transform duration-300">
+                    <Image src="/logo.png" alt="Krckaj.me logo" fill className="object-contain object-left drop-shadow-md" sizes="(max-width: 768px) 220px, 280px" />
                 </div>
             </Link>
 
