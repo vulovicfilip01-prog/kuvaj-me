@@ -27,11 +27,11 @@ export default function CookieBanner() {
     if (!showBanner) return null
 
     return (
-        <div className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 animate-slideUp">
-            <div className="max-w-4xl mx-auto bg-white/95 backdrop-blur-md border border-slate-200 shadow-2xl rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
-                <div className="flex-1">
-                    <h3 className="text-lg font-bold text-slate-900 mb-1">🍪 Kolačići i privatnost</h3>
-                    <p className="text-slate-600 text-sm leading-relaxed">
+        <div className="fixed bottom-16 md:bottom-0 left-0 right-0 z-50 p-3 md:p-6 animate-slideUp">
+            <div className="max-w-4xl mx-auto bg-white/95 backdrop-blur-md border border-slate-200 shadow-2xl rounded-2xl p-4 md:p-6 flex flex-col md:flex-row items-center gap-4 md:gap-6">
+                <div className="flex-1 text-center md:text-left">
+                    <h3 className="text-base md:text-lg font-bold text-slate-900 mb-1">🍪 Kolačići i privatnost</h3>
+                    <p className="text-slate-600 text-[10px] md:text-sm leading-relaxed">
                         Koristimo kolačiće kako bismo poboljšali tvoje iskustvo na Krckaj.me i analizirali posete.
                         Nastavkom korišćenja sajta pristaješ na našu
                         <Link href="/privacy" className="text-primary hover:underline ml-1 font-medium">Politiku privatnosti</Link>.

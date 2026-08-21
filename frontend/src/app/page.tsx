@@ -67,15 +67,14 @@ export default async function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-transparent text-slate-900 overflow-x-hidden">
+    <main className="min-h-screen bg-transparent text-slate-900">
+      <Navbar />
+      
       {/* Hero Section - Updated Deployment Trigger */}
-      <div className="relative min-h-[80vh] flex flex-col">
+      <div className="relative min-h-[80vh] flex flex-col -mt-[76px] md:-mt-[88px]">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-[url('/hero-bg-beige.png')] bg-cover bg-center opacity-90"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#F2E6D9]"></div>
-
-        {/* Navbar */}
-        <Navbar transparent />
 
         {/* Hero Content */}
         <div className="relative z-10 container mx-auto px-6 flex-grow flex flex-col md:flex-row items-center gap-12 pt-10 pb-20">
