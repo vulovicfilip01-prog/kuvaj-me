@@ -29,7 +29,7 @@ export default function MobileHamburgerMenu({ userId, isAdmin }: MobileHamburger
         <div className="md:hidden relative" ref={menuRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 text-slate-700 hover:text-primary transition-colors focus:outline-none"
+                className="p-2 text-primary hover:text-primary-dark transition-colors focus:outline-none"
                 aria-label="Otvori meni"
             >
                 {isOpen ? <FiX className="w-7 h-7" /> : <FiMenu className="w-7 h-7" />}

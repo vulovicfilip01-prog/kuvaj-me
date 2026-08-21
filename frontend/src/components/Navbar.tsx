@@ -37,10 +37,11 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
     const unreadCount = user ? await getUnreadCount() : 0
 
     return (
-        <nav className={`relative z-50 container mx-auto px-6 py-6 flex justify-between items-center gap-4 ${!transparent ? 'bg-white/80 backdrop-blur-md shadow-sm rounded-b-3xl mb-8' : ''}`}>
+        <nav className={`sticky top-0 z-50 mx-auto px-4 py-2 md:px-6 md:py-4 flex justify-between items-center gap-4 ${!transparent ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100' : ''}`}>
+            <div className="container mx-auto flex justify-between items-center w-full">
             <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-                <div className="relative w-[200px] h-[200px] transform group-hover:rotate-12 transition-transform duration-300">
-                    <Image src="/logo.png" alt="Krckaj.me logo" fill className="object-contain drop-shadow-md" sizes="200px" />
+                <div className="relative w-[120px] h-[40px] md:w-[150px] md:h-[50px] transform group-hover:scale-105 transition-transform duration-300">
+                    <Image src="/logo.png" alt="Krckaj.me logo" fill className="object-contain drop-shadow-md" sizes="(max-width: 768px) 120px, 150px" />
                 </div>
             </Link>
 
@@ -170,6 +171,7 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
                         <MobileHamburgerMenu />
                     </>
                 )}
+            </div>
             </div>
         </nav>
     )

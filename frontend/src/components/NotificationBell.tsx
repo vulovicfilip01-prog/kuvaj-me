@@ -75,7 +75,7 @@ export default function NotificationBell({ initialUnreadCount }: NotificationBel
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative p-2 text-slate-600 hover:text-slate-900 transition-colors rounded-full hover:bg-slate-100 cursor-pointer"
+                className="relative p-2 text-primary hover:text-primary-dark transition-colors rounded-full hover:bg-slate-100 cursor-pointer"
             >
                 <LuBell className="w-6 h-6" />
                 {unreadCount > 0 && (
