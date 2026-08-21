@@ -38,7 +38,7 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
 
     return (
         <>
-            {!transparent && <div className="h-[60px] md:h-[90px] w-full shrink-0"></div>}
+            {!transparent && <div className="h-[80px] min-[400px]:h-[100px] md:h-[140px] w-full shrink-0"></div>}
             <nav className={`fixed top-0 left-0 right-0 w-full z-50 mx-auto px-4 py-2 md:px-6 md:py-4 flex justify-between items-center gap-4 ${!transparent ? 'bg-white/50 backdrop-blur-md shadow-sm border-b border-slate-100' : ''}`}>
             <div className="container mx-auto flex justify-between items-center w-full">
             <Link href="/" className="flex items-center gap-3 group flex-shrink-0">

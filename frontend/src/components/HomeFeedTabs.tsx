@@ -33,10 +33,10 @@ export default function HomeFeedTabs({
 
                 {/* Tabs Header */}
                 <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-6">
-                    <div className="glass-panel p-1.5 rounded-full flex gap-1 shadow-md">
+                    <div className="glass-panel p-1.5 rounded-full flex gap-1 shadow-md overflow-x-auto whitespace-nowrap hide-scrollbar max-w-full">
                         <button
                             onClick={() => setActiveTab('trending')}
-                            className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all cursor-pointer ${activeTab === 'trending'
+                            className={`flex-shrink-0 flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all cursor-pointer ${activeTab === 'trending'
                                 ? 'bg-gradient-to-r from-[#d4a373] to-[#bc8a5f] text-white shadow-lg'
                                 : 'text-slate-600 hover:text-[#bc8a5f] hover:bg-[#d4a373]/5'
                                 }`}
@@ -48,7 +48,7 @@ export default function HomeFeedTabs({
                         {isAuthenticated && (
                             <button
                                 onClick={() => setActiveTab('feed')}
-                                className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all cursor-pointer ${activeTab === 'feed'
+                                className={`flex-shrink-0 flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all cursor-pointer ${activeTab === 'feed'
                                     ? 'bg-gradient-to-r from-primary to-primary-dark text-white shadow-lg'
                                     : 'text-slate-600 hover:text-primary hover:bg-green-50'
                                     }`}
@@ -60,7 +60,7 @@ export default function HomeFeedTabs({
 
                         <button
                             onClick={() => setActiveTab('newest')}
-                            className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all cursor-pointer ${activeTab === 'newest'
+                            className={`flex-shrink-0 flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all cursor-pointer ${activeTab === 'newest'
                                 ? 'bg-gradient-to-r from-primary to-primary-dark text-white shadow-lg'
                                 : 'text-slate-600 hover:text-primary hover:bg-green-50'
                                 }`}
