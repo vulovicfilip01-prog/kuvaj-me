@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { createClient } from '@/utils/supabase/server'
+import { signOut } from '@/app/actions'
 import ChefHatIcon from '@/components/ChefHatIcon'
 import HeartIcon from '@/components/HeartIcon'
 import CollectionIcon from '@/components/CollectionIcon'
@@ -141,7 +142,7 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
                                 </Link>
                             )}
 
-                            <form action="/auth/signout" method="post">
+                            <form action={signOut}>
                                 <button
                                     className="p-2 text-slate-500 hover:text-red-500 transition-colors cursor-pointer"
                                     title="Odjavi se"

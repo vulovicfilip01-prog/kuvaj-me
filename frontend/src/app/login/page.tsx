@@ -3,6 +3,7 @@
 import { login } from '../actions'
 import { useState } from 'react'
 import Link from 'next/link'
+import GoogleSignInButton from '@/components/GoogleSignInButton'
 
 export default function LoginPage() {
     const [error, setError] = useState<string | null>(null)
@@ -22,6 +23,17 @@ export default function LoginPage() {
         <div className="min-h-screen flex items-center justify-center bg-transparent">
             <div className="w-full max-w-md p-8 bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-slate-200">
                 <h1 className="text-4xl font-bold text-slate-900 mb-8 text-center">Prijavi se</h1>
+
+                <GoogleSignInButton text="Prijavi se preko Google-a" />
+
+                <div className="relative my-6">
+                    <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-slate-200"></div>
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-white/80 text-slate-500">Ili sa emailom</span>
+                    </div>
+                </div>
 
                 <form action={handleSubmit} className="space-y-6">
                     <div>

@@ -8,6 +8,8 @@ import RecipeCard from '@/components/RecipeCard'
 import CollectionCard from '@/components/CollectionCard'
 import FollowButton from './FollowButton'
 import WheatOffIcon from './WheatOffIcon'
+import { getUserBadges } from '@/utils/badges'
+import UserBadges from './UserBadges'
 
 
 interface ProfileViewProps {
@@ -31,6 +33,7 @@ export default function ProfileView({ profile, recipes, collections, stats, isOw
 
 
     const socialLinks = profile.social_links || {}
+    const badges = getUserBadges(stats, followCounts)
 
     return (
         <div className="container mx-auto px-4 py-12">
@@ -101,9 +104,15 @@ export default function ProfileView({ profile, recipes, collections, stats, isOw
 
 
                         {profile.bio && (
-                            <p className="text-slate-600 text-lg mb-6 max-w-2xl">
+                            <p className="text-slate-600 text-lg mb-4 max-w-2xl">
                                 {profile.bio}
                             </p>
+                        )}
+
+                        {badges.length > 0 && (
+                            <div className="mb-6 flex justify-center md:justify-start">
+                                <UserBadges badges={badges} />
+                            </div>
                         )}
 
                         <div className="flex flex-wrap items-center justify-center md:justify-start gap-6 text-slate-600 mb-6">
