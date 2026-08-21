@@ -37,11 +37,13 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
     const unreadCount = user ? await getUnreadCount() : 0
 
     return (
-        <nav className={`sticky top-0 w-full z-50 mx-auto px-4 py-2 md:px-6 md:py-4 flex justify-between items-center gap-4 ${!transparent ? 'bg-white/50 backdrop-blur-md shadow-sm border-b border-slate-100' : ''}`}>
+        <>
+            {!transparent && <div className="h-[60px] md:h-[90px] w-full shrink-0"></div>}
+            <nav className={`fixed top-0 left-0 right-0 w-full z-50 mx-auto px-4 py-2 md:px-6 md:py-4 flex justify-between items-center gap-4 ${!transparent ? 'bg-white/50 backdrop-blur-md shadow-sm border-b border-slate-100' : ''}`}>
             <div className="container mx-auto flex justify-between items-center w-full">
             <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-                <div className="relative w-[280px] h-[95px] md:w-[350px] md:h-[115px] transform group-hover:scale-105 transition-transform duration-300">
-                    <Image src="/logo.png" alt="Krckaj.me logo" fill className="object-contain object-left drop-shadow-md" sizes="(max-width: 768px) 280px, 350px" />
+                <div className="relative w-[180px] h-[60px] min-[400px]:w-[240px] min-[400px]:h-[80px] md:w-[320px] md:h-[105px] transform group-hover:scale-105 transition-transform duration-300">
+                    <Image src="/logo.png" alt="Krckaj.me logo" fill className="object-contain object-left drop-shadow-md" sizes="(max-width: 400px) 180px, (max-width: 768px) 240px, 320px" />
                 </div>
             </Link>
 
@@ -174,5 +176,6 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
             </div>
             </div>
         </nav>
+        </>
     )
 }
