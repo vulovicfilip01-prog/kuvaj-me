@@ -81,11 +81,7 @@ export default async function Home() {
 
           {/* Left Side - Text */}
           <div className="flex-1 text-center md:text-left">
-            <div className="animate-slideUp" style={{ animationDelay: '0.1s' }}>
-              <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6 backdrop-blur-sm">
-                ✨ Najbolji recepti na Balkanu
-              </span>
-            </div>
+
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight heading-font animate-slideUp" style={{ animationDelay: '0.2s' }}>
               <span className="text-amber-gold">Tvoja digitalna</span> <br />
               <span className="text-gradient">knjiga recepata</span>
