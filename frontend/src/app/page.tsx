@@ -77,7 +77,7 @@ export default async function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#F2E6D9]"></div>
 
         {/* Hero Content */}
-        <div className="relative z-10 container mx-auto px-6 flex-grow flex flex-col md:flex-row items-center gap-12 pt-10 pb-20">
+        <div className="relative z-10 container mx-auto px-6 flex-grow flex flex-col md:flex-row items-center gap-12 pt-28 md:pt-32 pb-20">
 
           {/* Left Side - Text */}
           <div className="flex-1 text-center md:text-left">
