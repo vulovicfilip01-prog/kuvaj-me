@@ -42,13 +42,13 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
             <nav className={`fixed top-0 left-0 right-0 w-full z-50 mx-auto px-4 py-2 md:px-6 md:py-4 flex justify-between items-center gap-4 ${!transparent ? 'bg-white/50 backdrop-blur-md shadow-sm border-b border-slate-100' : ''}`}>
             <div className="container mx-auto flex justify-between items-center w-full">
             <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-                <div className="relative w-[180px] h-[60px] min-[400px]:w-[240px] min-[400px]:h-[80px] md:w-[320px] md:h-[105px] transform group-hover:scale-105 transition-transform duration-300">
+                <div className="relative w-[180px] h-[60px] min-[400px]:w-[240px] min-[400px]:h-[80px] md:w-[240px] md:h-[80px] lg:w-[280px] lg:h-[90px] transform group-hover:scale-105 transition-transform duration-300">
                     <Image src="/logo.png" alt="Krckaj.me logo" fill className="object-contain object-left drop-shadow-md" sizes="(max-width: 400px) 180px, (max-width: 768px) 240px, 320px" />
                 </div>
             </Link>
 
             {/* Desktop Search Bar */}
-            <div className="hidden md:flex flex-1 max-w-xl">
+            <div className="hidden md:flex flex-1 max-w-xl min-w-[200px] mx-2 lg:mx-4">
                 <SearchBar />
             </div>
 
@@ -77,28 +77,28 @@ export default async function Navbar({ transparent = false }: NavbarProps) {
                             className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2 cursor-pointer"
                         >
                             <HeartIcon className="w-8 h-8" />
-                            <span className="hidden lg:inline">Favoriti</span>
+                            <span className="hidden xl:inline">Favoriti</span>
                         </Link>
                         <Link
                             href="/collections"
                             className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2 cursor-pointer"
                         >
                             <CollectionIcon className="w-8 h-8" />
-                            <span className="hidden lg:inline">Kolekcije</span>
+                            <span className="hidden xl:inline">Kolekcije</span>
                         </Link>
                         <Link
                             href="/profile/planner"
                             className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2 cursor-pointer"
                         >
                             <PlannerIcon className="w-8 h-8" />
-                            <span className="hidden lg:inline">Planer</span>
+                            <span className="hidden xl:inline">Planer</span>
                         </Link>
                         <Link
                             href="/shopping-list"
                             className="hidden md:flex px-4 py-2 text-slate-600 hover:text-slate-900 transition-colors font-medium items-center gap-2 cursor-pointer"
                         >
                             <ListIcon className="w-8 h-8" />
-                            <span className="hidden lg:inline">Lista</span>
+                            <span className="hidden xl:inline">Lista</span>
                         </Link>
 
 
