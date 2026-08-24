@@ -54,7 +54,7 @@ export default function HomeFeedTabs({
                                     }`}
                             >
                                 <LuUsers className={activeTab === 'feed' ? 'text-white' : 'text-primary'} />
-                                Omiljeni kuvari
+                                Omiljeni krčkari
                             </button>
                         )}
 
@@ -74,7 +74,7 @@ export default function HomeFeedTabs({
                     <div className="text-center md:text-right animate-fadeIn">
                         {activeTab === 'trending' && (
                             <>
-                                <h2 className="text-2xl font-bold text-slate-900 heading-font">Šta se kuva danas?</h2>
+                                <h2 className="text-2xl font-bold text-slate-900 heading-font">Šta se krčka danas?</h2>
                                 <p className="text-slate-500">Recepti koje naša zajednica obožava</p>
                             </>
                         )}
@@ -128,13 +128,13 @@ export default function HomeFeedTabs({
                                     </div>
                                     <h3 className="text-xl font-bold text-slate-900 mb-2">Tvoj feed je prazan</h3>
                                     <p className="text-slate-600 mb-6 max-w-md mx-auto">
-                                        Zaprati druge kuvare da bi video njihove najnovije recepte ovde.
+                                        Zaprati druge krčkare da bi video njihove najnovije recepte ovde.
                                     </p>
                                     <Link
                                         href="/explore"
                                         className="px-6 py-3 bg-primary text-white rounded-full font-bold hover:bg-primary-dark transition-colors"
                                     >
-                                        Istraži kuvare
+                                        Istraži krčkare
                                     </Link>
                                 </div>
                             )}

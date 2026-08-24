@@ -24,7 +24,7 @@ export function getUserBadges(stats: UserStats, followCounts?: FollowCounts): Ba
     if (stats.recipesCount >= 20) {
         badges.push({
             id: 'master-kuvar',
-            name: 'Master Kuvar',
+            name: 'Master Krčkar',
             description: 'Objavljeno 20 ili više recepata.',
             icon: '🥇',
             color: 'bg-yellow-100 text-yellow-700 border-yellow-300',
@@ -33,7 +33,7 @@ export function getUserBadges(stats: UserStats, followCounts?: FollowCounts): Ba
     } else if (stats.recipesCount >= 5) {
         badges.push({
             id: 'aktivni-kuvar',
-            name: 'Aktivni Kuvar',
+            name: 'Aktivni Krčkar',
             description: 'Objavljeno 5 ili više recepata.',
             icon: '🥈',
             color: 'bg-slate-100 text-slate-700 border-slate-300',
@@ -42,7 +42,7 @@ export function getUserBadges(stats: UserStats, followCounts?: FollowCounts): Ba
     } else if (stats.recipesCount >= 1) {
         badges.push({
             id: 'novi-kuvar',
-            name: 'Novi Kuvar',
+            name: 'Novi Krčkar',
             description: 'Objavljen prvi recept.',
             icon: '🥉',
             color: 'bg-orange-100 text-orange-800 border-orange-300',

@@ -88,7 +88,7 @@ export default async function Home() {
             </h1>
             <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto md:mx-0 leading-relaxed animate-slideUp" style={{ animationDelay: '0.3s' }}>
               Otkrij, kreiraj i podeli najukusnije recepte sa zajednicom ljubitelja hrane.
-              Pridruži se hiljadama kuvara koji već dele svoje tajne.
+              Pridruži se hiljadama krčkara koji već dele svoje tajne.
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start animate-slideUp" style={{ animationDelay: '0.4s' }}>
               <Link

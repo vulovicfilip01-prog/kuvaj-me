@@ -343,7 +343,7 @@ export async function sendWeeklyDigest() {
         }
 
         // 2. Construct digest content
-        const subject = `Nedeljni kuvar: Top 3 recepta ove nedelje 🥗`;
+        const subject = `Nedeljni krčkar: Top 3 recepta ove nedelje 🥗`;
         let content = "Pogledajte najbolje recepte koje ste možda propustili ove nedelje:\n\n";
         topRecipes.forEach((r, i) => {
             content += `${i + 1}. ${r.title} (Ocena: ${r.average_rating || 'Još nema ocena'})\n`;

@@ -51,7 +51,7 @@ export default function CookingIconPreview() {
                                 key={name}
                                 className="px-8 py-4 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full font-bold text-lg hover:shadow-lg hover:shadow-primary/25 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
                             >
-                                <Icon className="w-5 h-5" /> Šta da kuvam?
+                                <Icon className="w-5 h-5" /> Šta da krčkam?
                             </button>
                         ))}
                     </div>

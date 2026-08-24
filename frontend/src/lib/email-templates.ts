@@ -57,11 +57,11 @@ export const weeklyDigestTemplate = (recipes: any[]) => {
     `).join('');
 
     return baseEmailTemplate(`
-        <h1>Nedeljni kuvar: Najbolje sa trpeze 🥗</h1>
+        <h1>Nedeljni krčkar: Najbolje sa trpeze 🥗</h1>
         <p>Zdravo! Pogledaj recepte koji su obeležili proteklu nedelju na našoj platformi. Možda pronađeš inspiraciju za današnji ručak!</p>
         <div class="divider"></div>
         ${recipesHtml}
         <div class="divider"></div>
         <p>Srećno kuvanje,<br>Tim Krckaj.me</p>
-    `, "Nedeljni kuvar 🥗");
+    `, "Nedeljni krčkar 🥗");
 };
