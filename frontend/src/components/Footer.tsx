@@ -17,7 +17,7 @@ export default function Footer() {
                             <img src="/logo.png" alt="Krckaj.me logo" className="w-[200px] h-[200px] object-contain drop-shadow-sm" />
                         </div>
                         <p className="text-slate-600 max-w-xs transition-colors">
-                            Najveća baza domaćih recepata. Kuvajmo zajedno svakog dana.
+                            Najveća baza domaćih recepata. Krčkajmo zajedno svakog dana.
                         </p>
                         <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
                             <Link href="/privacy" className="hover:text-primary transition-colors">

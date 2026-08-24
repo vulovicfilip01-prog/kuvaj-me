@@ -1,8 +1,8 @@
 // Service Worker for Krckaj.me PWA
 // Version 1.0.0
 
-const CACHE_NAME = 'kuvaj-me-v1';
-const OFFLINE_CACHE = 'kuvaj-me-offline-v1';
+const CACHE_NAME = 'krckaj-me-v1';
+const OFFLINE_CACHE = 'krckaj-me-offline-v1';
 
 // Assets to cache on install
 const STATIC_ASSETS = [

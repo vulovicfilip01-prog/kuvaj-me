@@ -193,7 +193,7 @@ export default function FridgeSearch() {
                         <FiCloudLightning className="w-6 h-6" />
                     </div>
                     <h4 className="font-bold text-slate-800 mb-2">Ušteda vremena</h4>
-                    <p className="text-xs text-slate-500">Zaboravi na dugu pretragu - kuvaj ono što već imaš.</p>
+                    <p className="text-xs text-slate-500">Zaboravi na dugu pretragu - krčkaj ono što već imaš.</p>
                 </div>
                 <div className="bg-white/50 backdrop-blur-sm p-6 rounded-3xl border border-white/50 text-center">
                     <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 text-primary">

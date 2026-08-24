@@ -1,7 +1,7 @@
 // IndexedDB wrapper for offline shopping list
 // Provides local storage for shopping list items when offline
 
-const DB_NAME = 'kuvaj-me-offline';
+const DB_NAME = 'krckaj-me-offline';
 const DB_VERSION = 1;
 const STORE_NAME = 'shopping-list';
 const SYNC_QUEUE_STORE = 'sync-queue';
