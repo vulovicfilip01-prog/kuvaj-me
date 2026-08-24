@@ -54,7 +54,7 @@ export default function MobileSearchModal({ isOpen, onClose }: MobileSearchModal
                             onChange={(e) => setQuery(e.target.value)}
                             placeholder="Pretraži po nazivu, opisu ili sastojku..."
                             autoFocus
-                            className="w-full pl-12 pr-4 py-4 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-lg"
+                            className="w-full pl-12 pr-4 py-4 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-lg text-slate-900"
                         />
                         <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-6 h-6" />
                     </div>

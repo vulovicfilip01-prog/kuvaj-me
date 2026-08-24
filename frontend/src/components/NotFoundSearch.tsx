@@ -22,7 +22,7 @@ export default function NotFoundSearch() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Pretraži recepte..."
-                className="w-full pl-6 pr-12 py-4 bg-white border-2 border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all shadow-sm"
+                className="w-full pl-6 pr-12 py-4 bg-white border-2 border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all shadow-sm text-slate-900"
             />
             <button
                 type="submit"
